@@ -1,0 +1,10 @@
+image: robertofilho/maven-java8:java8-awscli # java7 com maven
+stages:
+  - compile
+cache:
+  paths:
+    - .m2/
+site:
+  stage: compile
+  script:
+    - mvn compile -Dmaven.repo.local=$PWD/.m2 # Cache maven repository
