@@ -20,12 +20,12 @@ public class ${className} extends GenericEAOImpl<${class.classNameBasic}> implem
     <#include "defaultConstructor.ftl">
 
     public Long getNextCode() {
-        //TODO auto generated
+        // TODO Auto-generated
         return super.getNextVal("${class.classNameBasic?upper_case}_CODIGO");
     }
 
     public Optional<${class.classNameBasic}> findFetch(Long id) {
-        //TODO auto generated
+        // TODO Auto-generated
         return Optional.empty();
     }
 

@@ -49,7 +49,8 @@ public class ${className} implements ${class.classNameBasic}Remote {
 
     @Override
     public List<${class.classNameBasic}> find(List<Long> ids) {
-        return ${eao}.find(ids);
+        // Transforma para array e chama o método que busca por IDs
+        return ${eao}.find(ids.toArray(new Long[]{}));
     }
 
     @Override

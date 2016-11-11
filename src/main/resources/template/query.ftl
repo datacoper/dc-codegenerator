@@ -10,7 +10,7 @@ import com.${company}.cooperate.${module}.server.consultas.Query${class.classNam
 public class ${className} extends AbstractConsulta<${class.classNameBasic}VO> {
     @Override
     public String getQuery() {
-        //TODO auto generated
+        // TODO Auto-generated
         StringBuffer sb = new StringBuffer();
 
         sb.append("SELECT ");<#include "attributesQuery.ftl">

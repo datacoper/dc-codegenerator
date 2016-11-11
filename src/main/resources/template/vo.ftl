@@ -29,7 +29,7 @@ public class ${className} extends EqualsIdentifier implements IDescricaoCustomiz
     <#include "getterAndSetter.ftl">
     @Override
     public String getDescricaoCustomizada() {
-        //TODO auto generated
+        // TODO Auto-generated
         return getId();
     }
 
