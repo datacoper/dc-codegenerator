@@ -1,17 +1,17 @@
 package com.datacoper.maven.mojos;
 
-import br.com.datacoper.maven.mojos.MojoConstants;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
+
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.exception.DcRuntimeException;
 import com.datacoper.maven.util.ClassLoaderUtil;
 import com.datacoper.maven.util.ConsoleUtil;
 import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.LogUtil;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
 
 public abstract class AbstractDCMojo extends AbstractMojo {
 

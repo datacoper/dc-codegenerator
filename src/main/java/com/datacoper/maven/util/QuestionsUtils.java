@@ -5,10 +5,6 @@
  */
 package com.datacoper.maven.util;
 
-import br.com.datacoper.maven.mojos.MojoConstants;
-import com.datacoper.maven.enums.options.IOptions;
-import com.datacoper.maven.exception.DcRuntimeException;
-import com.datacoper.maven.exception.OperationCanceledByUser;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +13,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import com.datacoper.maven.enums.options.IOptions;
+import com.datacoper.maven.exception.DcRuntimeException;
+import com.datacoper.maven.exception.OperationCanceledByUser;
+import com.datacoper.maven.mojos.MojoConstants;
 
 /**
  *

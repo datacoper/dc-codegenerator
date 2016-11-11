@@ -5,16 +5,17 @@
  */
 package com.datacoper.maven.generators;
 
-import com.datacoper.maven.configuration.PackageProperties;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.maven.project.MavenProject;
+
 import com.datacoper.maven.enums.properties.ToFromModule;
 import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
 import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.StringUtil;
-import java.util.Arrays;
-import java.util.List;
-import org.apache.maven.project.MavenProject;
 
 /**
  *
@@ -55,7 +56,7 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     }
     
     protected String getPackage() {
-        return PackageProperties.get().getValue(layout) StringUtil.format("com.{0}.cooperate.{1}.common.consultas", data.getCompany().getPackag(), getModuleToPackage());
+        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", data.getCompany().getPackag(), getModuleToPackage());
     }
     
     protected String getModuleToPackage() {
