@@ -4,7 +4,7 @@ stages:
 cache:
   paths:
     - .m2/
-site:
+compile:
   stage: compile
   script:
     - mvn compile -Dmaven.repo.local=$PWD/.m2 # Cache maven repository
