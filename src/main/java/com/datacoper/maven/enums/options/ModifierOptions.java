@@ -66,7 +66,7 @@ public enum ModifierOptions implements IOptions {
             }
         }
 
-        throw new RuntimeException(StringUtil.format("Inválid Modifier {0}", encapsulation));
+        throw new RuntimeException(StringUtil.format("Invalid Modifier {0}", encapsulation));
     }
 
     public static ModifierOptions of(int encapsulation) {
@@ -76,7 +76,7 @@ public enum ModifierOptions implements IOptions {
             }
         }
 
-        throw new RuntimeException(StringUtil.format("Inválid Modifier {0}", encapsulation));
+        throw new RuntimeException(StringUtil.format("Invalid Modifier {0}", encapsulation));
     }
 
     @Override
