@@ -10,12 +10,11 @@ import java.util.List;
 
 import org.apache.maven.project.MavenProject;
 
-import com.datacoper.maven.enums.properties.ToFromModule;
+import com.datacoper.maven.enums.properties.ModuleMapper;
 import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
 import com.datacoper.maven.util.DCProjectUtil;
-import com.datacoper.maven.util.StringUtil;
 
 /**
  *
@@ -55,11 +54,7 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
                 .build();
     }
     
-    protected String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", data.getCompany().getPackag(), getModuleToPackage());
-    }
-    
     protected String getModuleToPackage() {
-        return ToFromModule.from(data.getModuleBasic());
+        return ModuleMapper.from(data.getModuleBasic()).toLowerCase();
     }
 }

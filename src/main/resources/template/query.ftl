@@ -1,6 +1,7 @@
 <#assign className = class.className>
 <#assign company = class.company.packag>
 <#assign module = class.moduleBasic?lower_case>
+<#assign attributes = class.attributes>
 package ${class.package};
 
 import com.datacoper.arquitetura.server.consultas.AbstractConsulta;

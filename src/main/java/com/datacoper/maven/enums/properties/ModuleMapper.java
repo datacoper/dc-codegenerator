@@ -9,13 +9,13 @@ package com.datacoper.maven.enums.properties;
  *
  * @author alessandro.abegg
  */
-public enum ToFromModule {
+public enum ModuleMapper {
     BUSINESS_CORE("businesscore", "nucleo");
     
     private final String to;
     private final String from;
 
-    private ToFromModule(String de, String para) {
+    private ModuleMapper(String de, String para) {
         this.to = de;
         this.from = para;
     }
@@ -29,7 +29,7 @@ public enum ToFromModule {
     }
     
     public static String from(String to) {
-        for (ToFromModule value : values()) {
+        for (ModuleMapper value : values()) {
             if (value.getTo().equalsIgnoreCase(to)) {
                 return value.from;
             }

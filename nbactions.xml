@@ -24,8 +24,11 @@
             <actionName>CUSTOM-generateScaffold</actionName>
             <displayName>generateScaffold</displayName>
             <goals>
-                <goal>com.datacoper.maven.plugin:DCPlugin:0.0.1:generateScaffold</goal>
+                <goal>com.datacoper.maven.plugin:dcgeneratecode-maven-plugin:1.0.1-SNAPSHOT:generateScaffold</goal>
             </goals>
+            <properties>
+                <jpda.listen>maven</jpda.listen>
+            </properties>
         </action>
         <action>
             <actionName>CUSTOM-generateBuilder</actionName>

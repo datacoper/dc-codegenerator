@@ -1,22 +1,21 @@
 <#assign className = class.className>
 <#assign variableName = class.className?uncap_first>
 <#assign company = class.company.packag>
-<#assign module = class.moduleBasic?lower_case>
+<#assign module = class.moduleBasic>
 package ${class.package};
 
 import java.util.List;
-import java.util.Optional;
 
 import com.datacoper.arquitetura.common.lookup.ILookup;
 import com.datacoper.arquiteturarest.cooperate.AbstractResourceContexto;
 import com.datacoper.arquiteturarest.dto.DTOConverter;
 import com.datacoper.arquiteturarest.resposta.RespostaId;
-import com.${company}.cooperate.${module}.rest.common.resources.${class.classNameBasic}Resource;
-import com.${company}.cooperate.${module}.common.consultas.${class.classNameBasic}VO;
-import com.${company}.cooperate.${module}.common.entities.${class.classNameBasic};
-import com.${company}.cooperate.${module}.common.remote.${class.classNameBasic}Remote;
-import com.${company}.cooperate.${module}.rest.common.dto.${class.classNameBasic}DTO;
-import com.${company}.cooperate.${module}.common.remote.Enum${module?cap_first}<#if company != "datacoper">${company?cap_first}</#if>Remote;
+import com.${company}.cooperate.${module?lower_case}.rest.common.resources.${class.classNameBasic}Resource;
+import com.${company}.cooperate.${module?lower_case}.common.consultas.${class.classNameBasic}VO;
+import com.${company}.cooperate.${module?lower_case}.common.entities.${class.classNameBasic};
+import com.${company}.cooperate.${module?lower_case}.common.remote.${class.classNameBasic}Remote;
+import com.${company}.cooperate.${module?lower_case}.rest.common.dto.${class.classNameBasic}DTO;
+import com.${company}.cooperate.${module?lower_case}.common.remote.Enum${module?cap_first}<#if company != "datacoper">${company?cap_first}</#if>Remote;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanConsultaGroup;
 import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityState;
@@ -51,7 +50,7 @@ public class ${className} extends AbstractResourceContexto<${class.classNameBasi
 
     @Override
     public ${class.classNameBasic}DTO buscarPorId(Long id) {
-        Optional<${class.classNameBasic}> ${class.classNameBasic?uncap_first} = doLookup().find(id);
+        ${class.classNameBasic} ${class.classNameBasic?uncap_first} = doLookup().find(id);
 
         return getDTOConverter().converterEntityParaDTO(${class.classNameBasic?uncap_first});
     }

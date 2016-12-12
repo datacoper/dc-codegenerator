@@ -34,7 +34,10 @@ public enum EnumScaffold {
     QUERYGENERATOR(QueryGenerator.class, SERVER),
     DTOGENERATOR(DtoGenerator.class, REST_COMMON),
     RESOURCEGENERATOR(ResourceGenerator.class, REST_COMMON),
-    RESOURCEIMPLGENERATOR(ResourceImplGenerator.class, REST);
+    RESOURCEIMPLGENERATOR(ResourceImplGenerator.class, REST),
+    LISTAGEMMANAGERGENERATOR(ListagemManagerGenerator.class, WEB),   
+    FORMMANAGERGENERATOR(FormManagerGenerator.class, WEB),
+    ;
     
     private final Class<? extends  AbstractGenerator> generator;
     
@@ -56,10 +59,10 @@ public enum EnumScaffold {
     public static List<AbstractGenerator> getAllGeneratorsForProjectType(MavenProject parentProject, TClass data) {
         List<AbstractGenerator> list = new ArrayList<>();
         
-        for (EnumDCProjectType value : Arrays.asList(COMMON, SERVER, REST_COMMON, REST)) {
+        for (EnumDCProjectType value : Arrays.asList(COMMON, SERVER, REST_COMMON, REST, WEB)) {
             try {
                 MavenProject project = DCProjectUtil.getMavenProjectFromParent(value, parentProject);
-                list.addAll(getGenerators(value, project, data));
+                list.addAll(getAllGeneratorsForType(value, project, data));
             } catch (Throwable e) {
                 LogUtil.error(e.getMessage());
             }
@@ -69,11 +72,7 @@ public enum EnumScaffold {
         return list;
     }
     
-    public static List<AbstractGenerator> getGeneratorsForProjectType(EnumDCProjectType projectType, MavenProject project, TClass data) {
-        return getGenerators(projectType, project, data);
-    }
-    
-    private static List<AbstractGenerator> getGenerators(EnumDCProjectType projectType, MavenProject project, TClass data) {
+    private static List<AbstractGenerator> getAllGeneratorsForType(EnumDCProjectType projectType, MavenProject project, TClass data) {
         List<AbstractGenerator> list = new ArrayList<>();
         
         for (EnumScaffold value : values()) {

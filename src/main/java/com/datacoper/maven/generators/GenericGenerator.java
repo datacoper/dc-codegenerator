@@ -6,6 +6,7 @@ import com.datacoper.freemaker.conf.ConfigurationFreeMarker;
 import com.datacoper.freemaker.conf.TemplateFreeMarker;
 import com.datacoper.maven.exception.DcRuntimeException;
 import com.datacoper.maven.metadata.TAbstract;
+import com.datacoper.maven.util.ConsoleUtil;
 import com.datacoper.maven.util.FileUtil;
 import com.datacoper.maven.util.LogUtil;
 import com.datacoper.maven.util.MavenUtil;
@@ -57,7 +58,7 @@ public final class GenericGenerator {
     private File createAndValidateNewFile(String pathClass) {
         File arquive = new File(pathClass);
         
-        if (arquive.exists()) {
+        if (arquive.exists()) {            
             throw new DcRuntimeException("class already exists and will not be generated");
         }
         

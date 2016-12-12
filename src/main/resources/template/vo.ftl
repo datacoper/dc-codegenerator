@@ -30,7 +30,7 @@ public class ${className} extends EqualsIdentifier implements IDescricaoCustomiz
     @Override
     public String getDescricaoCustomizada() {
         // TODO Auto-generated
-        return getId();
+        return getId() + " - ";
     }
 
     @Override

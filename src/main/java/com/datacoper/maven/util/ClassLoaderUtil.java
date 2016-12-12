@@ -12,8 +12,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
@@ -47,8 +45,6 @@ public abstract class ClassLoaderUtil {
         try {
             List<String> elements = CollectionsUtil.concat(project.getRuntimeClasspathElements(), project.getTestClasspathElements());
             
-            elements.forEach(item -> LogUtil.error("ALESSANDRO {0}", item));
-            
             return initializeClassLoader(elements);
 
         } catch (DependencyResolutionRequiredException | MalformedURLException ex) {
@@ -65,10 +61,6 @@ public abstract class ClassLoaderUtil {
         URL[] runtimeUrls = convertPathToURI(elements);
         
         final ClassLoader currentContext = Thread.currentThread().getContextClassLoader();
-        
-        for (URL runtimeUrl : runtimeUrls) {
-            LogUtil.error("ALESSANDRO {0}", runtimeUrl);
-        }
         
         classLoader = new URLClassLoader(runtimeUrls, currentContext);
         

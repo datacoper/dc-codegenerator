@@ -3,7 +3,6 @@
 <#assign company = class.company.packag>
 package ${class.package};
 
-import com.datacoper.cooperate.arquitetura.common.exception.MandatoryFieldsException;
 import com.${company}.cooperate.${module}.common.entities.${class.classNameBasic};
 import com.datacoper.cooperate.arquitetura.common.util.ValidateMandatoryFields;
 <#list class.imports as import>
@@ -14,11 +13,11 @@ public class ${className} {
     
     <#include "defaultConstructor.ftl">
 
-    public void requiredFields(${class.classNameBasic} ${class.classNameBasic?uncap_first}) throws MandatoryFieldsException {
+    public void validateRequiredFields(${class.classNameBasic} ${class.classNameBasic?uncap_first}) {
         new ValidateMandatoryFields()
         <#list class.attributes as attribute>
                 .add(${class.classNameBasic?uncap_first}.get${attribute.name?cap_first}(), "${attribute.name}")
-                <#if !attribute?has_next>.doValidate();</#if>
         </#list>
+                .validate();
     }
 }

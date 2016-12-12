@@ -16,8 +16,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import com.${company}.cooperate.${module}.common.consultas.${class.classNameBasic}VO;
+import com.${company}.cooperate.${module}.rest.common.constants.Constants${class.moduleBasic}ResourcePath;
 import com.${company}.cooperate.${module}.rest.common.dto.${class.classNameBasic}DTO;
+import com.${company}.cooperate.${module}.common.consultas.${class.classNameBasic}VO;
 import com.datacoper.arquiteturarest.resposta.RespostaId;
 import com.datacoper.arquiteturarest.interfaces.ICRUDResource;
 import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
@@ -25,7 +26,7 @@ import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
 import ${import};
 </#list>
 
-@Path("")
+@Path(Constants${class.moduleBasic}ResourcePath.RESOURCE_${class.classNameBasic?upper_case})
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface ${className} extends ICRUDResource<${class.classNameBasic}VO, ${class.classNameBasic}DTO> {

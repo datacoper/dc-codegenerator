@@ -27,7 +27,7 @@ public abstract class MavenUtil {
         
         defaultPackage = ".".concat(defaultPackage != null ? defaultPackage : "src.main.java").concat(".");
         
-        //defaultPackage = project.getBasedir().getPath().concat(".").concat(project.getArtifactId()).concat(defaultPackage);
+        defaultPackage = project.getBasedir().getPath().concat(".").concat(project.getArtifactId()).concat(defaultPackage);
         
         String path = defaultPackage.concat(packag).replace('.', File.separatorChar);
         

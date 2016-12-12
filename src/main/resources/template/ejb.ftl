@@ -1,19 +1,18 @@
 <#assign className = class.className>
 <#assign company = class.company.packag>
-<#assign module = class.moduleBasic?lower_case>
-<#assign eao = module + "EAO.get" + class.classNameBasic + "EAO()">
+<#assign module = class.moduleBasic>
 <#assign gerenciador = "gerenciador" + class.classNameBasic>
+<#assign eao=${class.classNameBasic?uncap_first} + "EAO">
 package ${class.package};
 
-import java.util.Optional;
 import java.util.List;
 
 import javax.ejb.Stateless;
 
-import com.${company}.cooperate.${module}.server.eao.${module?cap_first}EAO;
-import com.${company}.cooperate.${module}.common.remote.${class.classNameBasic}Remote;
-import com.${company}.cooperate.${module}.common.entities.${class.classNameBasic};
-import com.${company}.cooperate.${module}.common.consultas.${class.classNameBasic}VO;
+import com.${company}.cooperate.${module?lower_case}.server.eao.${module?cap_first}EAO;
+import com.${company}.cooperate.${module?lower_case}.common.remote.${class.classNameBasic}Remote;
+import com.${company}.cooperate.${module?lower_case}.common.entities.${class.classNameBasic};
+import com.${company}.cooperate.${module?lower_case}.common.consultas.${class.classNameBasic}VO;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanConsultaGroup;
 import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
 import com.datacoper.cooperate.arquitetura.common.exception.DCLogicException;
@@ -26,19 +25,21 @@ import ${import};
 @Stateless
 public class ${className} implements ${class.classNameBasic}Remote {
 
-    private ${module?cap_first}EAO ${module}EAO = new ${module?cap_first}EAO();
+    private ${module}EAO ${module?uncap_first}EAO = new ${module}EAO();
+
+    private ${class.classNameBasic}EAO ${eao} = ${module?uncap_first}EAO.get${class.classNameBasic}EAO();
     
     private Gerenciador${class.classNameBasic} gerenciador = new Gerenciador${class.classNameBasic}();
     
     <#include "defaultConstructor.ftl">    
 
     @Override
-    public Optional<${class.classNameBasic}> find(Long id) {
-        return ${eao}.findOptional(id);
+    public ${class.classNameBasic} find(Long id) {
+        return ${eao}.find(id);
     }
 
     @Override
-    public Optional<${class.classNameBasic}> findFetch(Long id) {
+    public ${class.classNameBasic} findFetch(Long id) {
         return ${eao}.findFetch(id);
     }
 

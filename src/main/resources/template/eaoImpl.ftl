@@ -3,7 +3,6 @@
 <#assign module = class.moduleBasic?lower_case>
 package ${class.package};
 
-import java.util.Optional;
 import com.${company}.cooperate.${module}.common.entities.${class.classNameBasic};
 import com.${company}.cooperate.${module}.common.consultas.${class.classNameBasic}VO;
 import com.${company}.cooperate.${module}.server.eao.${class.classNameBasic}EAO;
@@ -24,9 +23,9 @@ public class ${className} extends GenericEAOImpl<${class.classNameBasic}> implem
         return super.getNextVal("${class.classNameBasic?upper_case}_CODIGO");
     }
 
-    public Optional<${class.classNameBasic}> findFetch(Long id) {
+    public ${class.classNameBasic} findFetch(Long id) {
         // TODO Auto-generated
-        return Optional.empty();
+        return null;
     }
 
     public PageResult<${class.classNameBasic}VO> find(BeanConsultaGroup consultaGroup) {
