@@ -27,7 +27,7 @@ public class Form${class.classNameBasic}Manager extends FormGenericManager<${cla
     
     @Override
     protected PaginaItemMenuBean getListPageItem() {
-        return PaginaItemMenu.${module?upper_case}_${class.classNameBasic?upper_case}_EDITAR;
+        return PaginaItemMenu.${module?upper_case}_${class.classNameBasic?upper_case}_LISTAR;
     }
 
     @Override

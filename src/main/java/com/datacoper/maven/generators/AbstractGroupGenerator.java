@@ -6,7 +6,6 @@
 package com.datacoper.maven.generators;
 
 import com.datacoper.maven.util.LogUtil;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public abstract class AbstractGroupGenerator implements IGenerator {
             try {
                 generator.generate();
             } catch (Throwable e) {
-                LogUtil.error(e.getMessage());
+                LogUtil.error(e);
             }
         });
     }

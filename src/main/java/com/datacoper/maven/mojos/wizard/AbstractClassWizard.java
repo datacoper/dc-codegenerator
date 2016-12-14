@@ -2,6 +2,7 @@ package com.datacoper.maven.mojos.wizard;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.exception.OperationCanceledByUser;
+import com.datacoper.maven.generators.SourceType;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
@@ -81,6 +82,7 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
         String canonicalNameSuperClass = superClass.map(ext -> ext.getCanonicalName()).orElse(null);
         
         clazz = new TClass(
+                SourceType.JAVA,
                 company,
                 packag,
                 className,

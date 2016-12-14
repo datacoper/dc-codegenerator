@@ -32,16 +32,12 @@ public abstract class LogUtil {
         log.info(throwable);
     }
     
-    public static void error(String message, Object... params) {
-        error(StringUtil.format(message, params));
-    }
-    
-    public static void error(String message) {
-        log.error(message);
-    }
-    
     public static void error(Throwable throwable) {
-        log.error(throwable);
+        if(throwable.getMessage() != null){
+            log.error(throwable.getMessage());            
+        }else{
+            log.error(throwable);
+        }
     }
     
     public static void warn(String message, Object... params) {

@@ -6,6 +6,7 @@
 package com.datacoper.maven.metadata;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.generators.SourceType;
 
 /**
  *
@@ -19,4 +20,6 @@ public interface TAbstract {
     public CompanyOptions getCompany();
     
     public String getModuleBasic();
+    
+    public SourceType getSourceType();
 }

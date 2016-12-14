@@ -2,7 +2,7 @@
 <#assign company = class.company.packag>
 <#assign module = class.moduleBasic>
 <#assign gerenciador = "gerenciador" + class.classNameBasic>
-<#assign eao=${class.classNameBasic?uncap_first} + "EAO">
+<#assign eao = class.classNameBasic?uncap_first + "EAO">
 package ${class.package};
 
 import java.util.List;

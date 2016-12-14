@@ -36,23 +36,29 @@ public final class GenericGenerator {
     }
     
     private void process() {
-        String folderClass = MavenUtil.getPathForPackage(project, data.getPackage());
+        String pathClass = generatePathForFile();
 
-        FileUtil.createFolderIfNecessary(folderClass);
-
-        String className = data.getClassName().concat(".java");
+        ConsoleUtil.sysOutl("\n*****************\n");
         
-        String pathClass = folderClass.concat(getFileSeparator()).concat(className);
-
-        System.out.println("\n*****************\n");
-        
-        LogUtil.info("generating class {0}", pathClass);
+        LogUtil.info("generating file {0}", pathClass);
         
         File arquive = createAndValidateNewFile(pathClass);
         
         template.generateTemplate(arquive);
         
-        LogUtil.info("\ngenerated class");
+        LogUtil.info("\ngenerated file");
+    }
+
+    private String generatePathForFile() {
+        SourceType sourceType = data.getSourceType();
+        
+        String folderClass = MavenUtil.getPathForPackage(project, data.getPackage(), sourceType);
+        
+        FileUtil.createFolderIfNecessary(folderClass);
+        
+        String className = data.getClassName().concat(".").concat(sourceType.getFileExtension());
+        
+        return  folderClass.concat(getFileSeparator()).concat(className);
     }
 
     private File createAndValidateNewFile(String pathClass) {

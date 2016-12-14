@@ -31,7 +31,7 @@ public abstract class AbstractDCMojo extends AbstractMojo {
         try {
             validate();
         } catch (Throwable e) {
-            LogUtil.error(e.getMessage());
+            LogUtil.error(e);
             return;
         }
         

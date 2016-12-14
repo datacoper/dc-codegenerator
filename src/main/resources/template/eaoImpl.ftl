@@ -19,13 +19,16 @@ public class ${className} extends GenericEAOImpl<${class.classNameBasic}> implem
     <#include "defaultConstructor.ftl">
 
     public Long getNextCode() {
-        // TODO Auto-generated
         return super.getNextVal("${class.classNameBasic?upper_case}_CODIGO");
     }
-
+    
     public ${class.classNameBasic} findFetch(Long id) {
-        // TODO Auto-generated
-        return null;
+        <#assign alias = class.classNameBasic?substring(0, 1)?lower_case>
+        return createDCTypedQuery()
+                .append("select ${alias} ")
+                .append("  from ${class.classNameBasic} ${alias} ")
+                .appendAndSetParameter(" where ${alias}.id${class.classNameBasic} = :id${class.classNameBasic}", id)
+                .getSingleResultOrThrowNoResultException();
     }
 
     public PageResult<${class.classNameBasic}VO> find(BeanConsultaGroup consultaGroup) {

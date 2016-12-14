@@ -112,7 +112,7 @@ public final class QuestionsUtils {
                 
                 return Optional.ofNullable(converter.apply(answer));
             } catch (Throwable e) {
-                LogUtil.error(e.getMessage());
+                LogUtil.error(e);
             }
         }
     }
@@ -151,7 +151,7 @@ public final class QuestionsUtils {
                 
             } catch (Throwable e) {
                 if (e instanceof OperationCanceledByUser) break;
-                LogUtil.error(e.getMessage());
+                LogUtil.error(e);
             }
         }
 

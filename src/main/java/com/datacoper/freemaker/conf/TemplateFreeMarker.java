@@ -4,7 +4,6 @@ import com.datacoper.maven.exception.DcRuntimeException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +11,6 @@ import java.util.Map;
 import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 
 public class TemplateFreeMarker {

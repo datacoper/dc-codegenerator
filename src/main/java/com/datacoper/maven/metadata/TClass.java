@@ -1,11 +1,14 @@
 package com.datacoper.maven.metadata;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.generators.SourceType;
 import com.datacoper.maven.util.StringUtil;
 import java.util.Collections;
 import java.util.Set;
 
 public class TClass implements TAbstract {
+    
+    private final SourceType sourceType;
     
     private  final CompanyOptions company;
     
@@ -27,11 +30,12 @@ public class TClass implements TAbstract {
 
     private final Set<TAnnotation> annotations;
     
-    public TClass(CompanyOptions empresa, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
-        this(empresa, "", packag, className, classNameBasic, superClass, imports, implement, attributes, annotations);
+    public TClass(SourceType sourceType, CompanyOptions empresa, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+        this(sourceType, empresa, "", packag, className, classNameBasic, superClass, imports, implement, attributes, annotations);
     }
     
-    public TClass(CompanyOptions empresa, String moduleBasic, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+    public TClass(SourceType sourceType, CompanyOptions empresa, String moduleBasic, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+        this.sourceType = sourceType;
         this.company = empresa;
         this.moduleBasic = moduleBasic;
         this.packag = packag;
@@ -42,6 +46,11 @@ public class TClass implements TAbstract {
         this.attributes = attributes;
         this.annotations = annotations;
         this.implement = implement;
+    }
+
+    @Override
+    public SourceType getSourceType() {
+        return sourceType;
     }
 
     @Override

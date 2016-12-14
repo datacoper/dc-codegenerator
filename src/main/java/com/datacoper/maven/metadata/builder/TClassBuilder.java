@@ -6,6 +6,7 @@
 package com.datacoper.maven.metadata.builder;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.generators.SourceType;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
@@ -17,6 +18,8 @@ import java.util.Set;
  * @author alessandro
  */
 public class TClassBuilder {
+    
+    private SourceType sourceType;
     
     private CompanyOptions company;
     
@@ -51,6 +54,13 @@ public class TClassBuilder {
         this.implement = clazz.getImplement();
         this.attributes = clazz.getAttributes();
         this.annotations = clazz.getAnnotations();
+        this.sourceType = clazz.getSourceType();
+    }
+    
+    public TClassBuilder withSourceType(SourceType sourceType) {
+        this.sourceType = sourceType;
+        
+        return this;
     }
     
     public TClassBuilder withClassNameBasic(String classNameBasic) {
@@ -120,6 +130,6 @@ public class TClassBuilder {
     }
     
     public TClass build() {
-        return new TClass(company, moduleBasic, packag, className, classNameBasic, superClass, imports, implement, attributes, annotations);
+        return new TClass(sourceType, company, moduleBasic, packag, className, classNameBasic, superClass, imports, implement, attributes, annotations);
     }
 }

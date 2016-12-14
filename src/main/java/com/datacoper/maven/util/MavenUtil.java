@@ -6,6 +6,7 @@
 package com.datacoper.maven.util;
 
 import com.datacoper.maven.exception.DcRuntimeException;
+import com.datacoper.maven.generators.SourceType;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,16 +23,16 @@ public abstract class MavenUtil {
 
     private MavenUtil() { }
     
-    public static String getPathForPackage(MavenProject project, String packag) {
-        String defaultPackage = project.getBuild().getSourceDirectory();
+    public static String getPathForPackage(MavenProject project, String packag, SourceType sourceType) {
+        String defaultPackage = sourceType.getDirectory(project);
         
-        defaultPackage = ".".concat(defaultPackage != null ? defaultPackage : "src.main.java").concat(".");
+        defaultPackage = ".".concat(defaultPackage).concat(".");
         
-        defaultPackage = project.getBasedir().getPath().concat(".").concat(project.getArtifactId()).concat(defaultPackage);
+        final String pathBaseDir = project.getBasedir().getPath();
         
-        String path = defaultPackage.concat(packag).replace('.', File.separatorChar);
+        defaultPackage = pathBaseDir.concat(".").concat(project.getArtifactId()).concat(defaultPackage);
         
-        return path;
+        return defaultPackage.concat(packag).replace('.', File.separatorChar);
     }
     
     public static MavenProject startNewProject(String pathProject) {
