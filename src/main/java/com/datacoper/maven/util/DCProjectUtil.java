@@ -5,11 +5,14 @@
  */
 package com.datacoper.maven.util;
 
+import java.util.Arrays;
+
+import org.apache.maven.project.MavenProject;
+
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.enums.properties.EnumPackaging;
 import com.datacoper.maven.exception.DcRuntimeException;
-import org.apache.maven.project.MavenProject;
 
 /**
  *
@@ -86,17 +89,19 @@ public abstract class DCProjectUtil {
         return name.substring(0, name.length() - 7);
     }
     
+    /**
+     * Retorna o nome do módulo extraído do artifactId do projeto maven.
+     * @param project o projeto Maven.
+     * @return o nome do módulo contido no projeto
+     */
     public static String getName(MavenProject project) {
         String name = project.getArtifactId();
         
-        return name.replaceAll("RestAPI", "")
-                .replaceAll("RestAPICommon", "")
-                .replaceAll("RestAPICommon", "")
-                .replaceAll("EM", "")
-                .replaceAll("Common", "")
-                .replaceAll("Client", "")
-                .replaceAll("-Parent", "")
-                .replaceAll("Web", "");
+        for (EnumDCProjectType enumDCProjectType : Arrays.asList(EnumDCProjectType.values())) {
+            name = name.replace(enumDCProjectType.getQualifier(), "");
+        }
+        
+        return name;
     }
     
     public static MavenProject getMavenProjectFromParent(EnumDCProjectType projectType, MavenProject parentProject) {

@@ -7,4 +7,4 @@ cache:
 compile:
   stage: compile
   script:
-    - mvn compile -Dmaven.repo.local=$PWD/.m2 # Cache maven repository
+    - mvn test -Dmaven.repo.local=$PWD/.m2 # Cache maven repository
