@@ -13,6 +13,11 @@ import com.datacoper.maven.util.StringUtil;
  */
 public class DcRuntimeException extends RuntimeException implements DcException {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2141200372906252549L;
+
     public DcRuntimeException(Throwable throwable) {
         super(throwable);
     }
