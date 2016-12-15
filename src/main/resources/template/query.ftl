@@ -12,11 +12,10 @@ public class ${className} extends AbstractConsulta<${class.classNameBasic}VO> {
     @Override
     public String getQuery() {
         // TODO Auto-generated
-        StringBuffer sb = new StringBuffer();
-
-        sb.append("SELECT ");<#include "attributesQuery.ftl">
-        sb.append("  FROM ${className?upper_case}");
-
-        return sb.toString();
+        return new StringBuffer()
+                .append("SELECT ")
+                <#include "attributesQuery.ftl">
+                .append("  FROM ${className?upper_case}")
+                .toString();
     }
 }

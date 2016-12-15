@@ -1,3 +1,3 @@
 <#list attributes as attribute>		
-    ${attribute.name?upper_case},
+    .append("${attribute.name?upper_case},")
 </#list>
