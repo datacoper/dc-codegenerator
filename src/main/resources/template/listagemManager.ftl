@@ -12,7 +12,7 @@ import com.datacoper.arquitetura.common.itemmenu.PaginaItemMenuBean;
 import com.datacoper.cooperate.arquitetura.web.generic.form.RestConfigurationBase;
 import com.datacoper.cooperate.arquitetura.web.generic.list.ListagemGenericaManager;
 
-import com.${company}.cooperate.${module?lower_case}.Enum${module}ResourceConfiguration;
+import com.${company}.cooperate.${module?lower_case}.web.Enum${module}ResourceConfiguration;
 import com.${company}.cooperate.${module?lower_case}.common.consultas.${class.classNameBasic}VO;
 import com.${company}.cooperate.${module?lower_case}.rest.common.dto.${class.classNameBasic}DTO;
 import com.${company}.cooperate.${module?lower_case}.rest.common.resources.${class.classNameBasic}Resource;
