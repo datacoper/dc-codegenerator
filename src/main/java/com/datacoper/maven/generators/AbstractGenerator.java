@@ -5,7 +5,7 @@
  */
 package com.datacoper.maven.generators;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.maven.project.MavenProject;
@@ -27,28 +27,28 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     
     protected T data;
     
-    protected String layout;
+    protected String layoutFileName;
     
-    public AbstractGenerator(MavenProject project, String layout, T data, AbstractGenerator... generators) {
-        this(project, layout, data, Arrays.asList(generators));
+    public AbstractGenerator(MavenProject project, String layoutFileName, T data) {
+        this(project, layoutFileName, data, Collections.emptyList());
     }
     
-    public AbstractGenerator(MavenProject project, String layout, T data, List<AbstractGenerator> generators) {
+    public AbstractGenerator(MavenProject project, String layoutFileName, T data, List<AbstractGenerator<T>> generators) {
         this.project = project;
-        this.data = prepareForGenerate(project, data);
-        this.layout = layout;
+        this.data = prepareForGeneration(project, data);
+        this.layoutFileName = layoutFileName;
     }
     
     @Override
     public void generate() {
-        GenericGenerator.generate(project, layout, prepareForGenerate(data));
+        GenericGenerator.generate(project, layoutFileName, prepareForGenerate(data));
     }
     
     protected T prepareForGenerate(T clazz) {
         return clazz;
     }
 
-    private T prepareForGenerate(MavenProject project, T data) {
+    private T prepareForGeneration(MavenProject project, T data) {
         return (T) new TClassBuilder((TClass) data)
                 .withModuleBasic(DCProjectUtil.getName(project))
                 .build();
