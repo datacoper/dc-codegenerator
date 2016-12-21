@@ -23,7 +23,7 @@ public class ${className} extends FormGenericManager<${class.classNameBasic}VO, 
     
     @Override
     protected PaginaItemMenuBean getListPageItem() {
-        return PaginaItemMenu.${module?upper_case}_${class.classNameBasic?UPPER_CASE}_LISTAR;
+        return PaginaItemMenu.${module?upper_case}_${class.classNameBasic?upper_case}_LISTAR;
     }
 
     @Override
