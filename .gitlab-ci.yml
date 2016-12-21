@@ -1,10 +1,11 @@
 image: robertofilho/maven-java8:java8-awscli # java7 com maven
 stages:
   - test
-cache:
-  paths:
-    - .m2/
+
+variables:
+  MAVEN_OPTS: -Dmaven.repo.local=/cache/maven.repository # Cache maven repository
+  
 test:
   stage: test
   script:
-    - mvn test -Dmaven.repo.local=/cache/.m2 # Cache maven repository
+    - mvn test
