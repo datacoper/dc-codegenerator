@@ -23,13 +23,13 @@ public class ${className} implements EntityBuilder<${class.classNameBasic}> {
     }
 
     public ${className} withId${classVariableName?cap_first}(Long id${class.classNameBasic}) {
-        ${classVariableName}.setId${class.classNameBasic}(id${class.classNameBasic});
+        this.${classVariableName}.setId${class.classNameBasic}(id${class.classNameBasic});
         return this;
     }
 
     <#list attributes as attribute>
     public ${className} with${attribute.name?cap_first}(${attribute.type} ${attribute.name?uncap_first}) {
-        ${classVariableName}.set${attribute.name?cap_first}(${attribute.name?uncap_first});
+        this.${classVariableName}.set${attribute.name?cap_first}(${attribute.name?uncap_first});
         return this;
     }
 
