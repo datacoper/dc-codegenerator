@@ -1,10 +1,12 @@
 package com.datacoper.maven.metadata;
 
-import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.generators.SourceType;
-import com.datacoper.maven.util.StringUtil;
 import java.util.Collections;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.generators.SourceType;
 
 public class TClass implements TAbstract {
     
@@ -39,8 +41,8 @@ public class TClass implements TAbstract {
         this.company = empresa;
         this.moduleBasic = moduleBasic;
         this.packag = packag;
-        this.className = StringUtil.upperFirstCharacter(className);
-        this.classNameBasic = StringUtil.upperFirstCharacter(classNameBasic);
+        this.className = StringUtils.capitalize(className);
+        this.classNameBasic = StringUtils.capitalize(classNameBasic);
         this.superClass = superClass;
         this.imports = imports;
         this.attributes = attributes;
