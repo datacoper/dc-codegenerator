@@ -12,10 +12,8 @@ import java.util.Optional;
  * @author alessandro
  */
 public enum CompanyOptions implements IOptions {
-    DATACOPER(0, 1, "Datacoper", "datacoper", Optional.empty()),
-    ALFA(1, 2, "Agricola Cooperalfa" , "cooperalfa", Optional.of("Cooperalfa"));
-    
-    private final int id;
+    DATACOPER(1, "Datacoper", "datacoper", Optional.empty()),
+    ALFA(2, "Agricola Cooperalfa" , "cooperalfa", Optional.of("Cooperalfa"));
     
     private final int code;
     
@@ -25,16 +23,11 @@ public enum CompanyOptions implements IOptions {
     
     private final Optional<String> projectIdentifier;
 
-    private CompanyOptions(int id, int codigo, String descricao, String packag, Optional<String> projectIdentifier) {
-        this.id = id;
+    private CompanyOptions(int codigo, String descricao, String packag, Optional<String> projectIdentifier) {
         this.code = codigo;
         this.name = descricao;
         this.packag = packag;
         this.projectIdentifier = projectIdentifier;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getCode() {
