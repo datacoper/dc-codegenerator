@@ -1,4 +1,4 @@
-package com.datacoper.freemaker.conf;
+package com.datacoper.freemarker.conf;
 
 import com.datacoper.maven.exception.DcRuntimeException;
 import java.io.File;

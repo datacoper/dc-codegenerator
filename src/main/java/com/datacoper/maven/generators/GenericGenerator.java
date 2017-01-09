@@ -2,8 +2,8 @@ package com.datacoper.maven.generators;
 
 import org.apache.maven.project.MavenProject;
 
-import com.datacoper.freemaker.conf.ConfigurationFreeMarker;
-import com.datacoper.freemaker.conf.TemplateFreeMarker;
+import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
+import com.datacoper.freemarker.conf.TemplateFreeMarker;
 import com.datacoper.maven.exception.DcRuntimeException;
 import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.util.ConsoleUtil;

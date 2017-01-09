@@ -1,4 +1,4 @@
-package com.datacoper.freemaker.conf;
+package com.datacoper.freemarker.conf;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
