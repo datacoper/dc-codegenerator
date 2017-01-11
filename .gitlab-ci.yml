@@ -1,4 +1,4 @@
-image: robertofilho/maven-java8:java8-awscli # java7 com maven
+image: frekele/maven:3.3.9-jdk8 # java7 com maven
 stages:
   - test
 
