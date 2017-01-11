@@ -21,7 +21,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
  * @author alessandro
  */
 @Mojo(name = "generateBuilder", requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class BuilderImpl extends AbstractDCMojo {
+public class BuilderGeneratorMojo extends AbstractDCMojo {
     
     @Override
     public void init() {

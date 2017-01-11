@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author alessandro
  */
-public abstract class AbstractGroupGenerator implements IGenerator {
+public class AbstractGroupGenerator implements IGenerator {
     private final List<? extends IGenerator> generators;
     
     public AbstractGroupGenerator(List<? extends IGenerator> generators) {

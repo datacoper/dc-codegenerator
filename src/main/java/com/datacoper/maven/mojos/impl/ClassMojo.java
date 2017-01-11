@@ -46,7 +46,7 @@ public class ClassMojo extends AbstractDCMojo {
         TClass clazz = null;//carregarEntity();
 
         if (BooleanUtil.toBoolean(_wizzard)) {
-            clazz = new ClassWizard().start();
+            clazz = new ClassWizard(this).start();
         }
 
         ClassGenerator.generate(_project, clazz);

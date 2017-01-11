@@ -5,30 +5,34 @@
  */
 package com.datacoper.maven.mojos.agrupado;
 
-import com.datacoper.maven.generators.impl.ScaffoldGenerator;
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
+import com.datacoper.maven.generators.impl.ClassGroupGenerator;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.mojos.AbstractDCMojo;
 import com.datacoper.maven.mojos.wizard.impl.datacoper.ClassDatacoperWizard;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  *
- * @author alessandro
+ * @author Roberto Filho
  */
-@Mojo(name = "scaffold", requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class ScaffoldMojo extends AbstractDCMojo {
-    
+public abstract class AbstractGroupGeneratorMojo extends AbstractDCMojo {
+
+    private EnumDCProjectType projectType;
+
+    protected AbstractGroupGeneratorMojo(EnumDCProjectType projectType) {
+        this.projectType = projectType;
+    }
+
     @Override
     public void init() {
         TClass clazz = new ClassDatacoperWizard(getLog(), this).start();
-        
-        new ScaffoldGenerator(_project, clazz).generate();
+
+        new ClassGroupGenerator(projectType,_project, clazz).generate();
     }
 
     @Override
     public String getMojoName() {
-        return "Scaffold";
+        return String.format("%s scaffold", projectType.name());
     }
 
     @Override

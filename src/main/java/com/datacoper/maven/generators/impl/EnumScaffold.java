@@ -66,7 +66,7 @@ public enum EnumScaffold {
         for (EnumDCProjectType value : Arrays.asList(COMMON, SERVER, REST_COMMON, REST, WEB)) {
             try {
                 MavenProject project = DCProjectUtil.getMavenProjectFromParent(value, parentProject);
-                list.addAll(getAllGeneratorsForType(value, project, data));
+                list.addAll(forProjectType(value, project, data));
             } catch (Throwable e) {
                 LogUtil.error(e);
             }
@@ -76,7 +76,7 @@ public enum EnumScaffold {
         return list;
     }
     
-    private static List<AbstractGenerator<TClass>> getAllGeneratorsForType(EnumDCProjectType projectType, MavenProject project, TClass data) {
+    public static List<AbstractGenerator<TClass>> forProjectType(EnumDCProjectType projectType, MavenProject project, TClass data) {
         List<AbstractGenerator<TClass>> list = new ArrayList<>();
 
         for (EnumScaffold value : values()) {
