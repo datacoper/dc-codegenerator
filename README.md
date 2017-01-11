@@ -1,6 +1,6 @@
 # dcgeneratecode
 Gerador de códigos Datacoper
 
-## Ainda faltam algumas funcionalidades.
+## Ainda faltam algumas funcionalidades:
 
-* [ ] Terminar algo.
+* [ ] Separar a geração de código por *seção*.
