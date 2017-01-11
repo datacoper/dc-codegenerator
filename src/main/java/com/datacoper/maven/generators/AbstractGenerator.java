@@ -26,8 +26,8 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     protected MavenProject project;
     
     protected T data;
-    
-    protected String layoutFileName;
+
+    private String layoutFileName;
     
     public AbstractGenerator(MavenProject project, String layoutFileName, T data) {
         this(project, layoutFileName, data, Collections.emptyList());

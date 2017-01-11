@@ -23,7 +23,7 @@ public class ScaffoldGenerator extends AbstractGroupGenerator {
         super(getGenerators(project, data));
     }
     
-    private static List<AbstractGenerator> getGenerators(MavenProject project, TClass data) {
+    private static List<AbstractGenerator<TClass>> getGenerators(MavenProject project, TClass data) {
         return EnumScaffold.getAllGeneratorsForProjectType(project, data);
     }
 }

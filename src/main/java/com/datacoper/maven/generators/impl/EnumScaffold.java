@@ -43,16 +43,16 @@ public enum EnumScaffold {
     FORMGEMXHTMLGENERATOR(FormXHTMLGenerator.class, WEB),
     ;
     
-    private final Class<? extends  AbstractGenerator> generator;
+    private final Class<? extends  AbstractGenerator<TClass>> generator;
     
     private final EnumDCProjectType projectType;
 
-    private EnumScaffold(Class<? extends AbstractGenerator> generator, EnumDCProjectType projectType) {
+    private EnumScaffold(Class<? extends AbstractGenerator<TClass>> generator, EnumDCProjectType projectType) {
         this.generator = generator;
         this.projectType = projectType;
     }
 
-    public Class<? extends AbstractGenerator> getGenerator() {
+    public Class<? extends AbstractGenerator<TClass>> getGenerator() {
         return generator;
     }
 
@@ -60,8 +60,8 @@ public enum EnumScaffold {
         return projectType;
     }
     
-    public static List<AbstractGenerator> getAllGeneratorsForProjectType(MavenProject parentProject, TClass data) {
-        List<AbstractGenerator> list = new ArrayList<>();
+    public static List<AbstractGenerator<TClass>> getAllGeneratorsForProjectType(MavenProject parentProject, TClass data) {
+        List<AbstractGenerator<TClass>> list = new ArrayList<>();
         
         for (EnumDCProjectType value : Arrays.asList(COMMON, SERVER, REST_COMMON, REST, WEB)) {
             try {
@@ -76,13 +76,13 @@ public enum EnumScaffold {
         return list;
     }
     
-    private static List<AbstractGenerator> getAllGeneratorsForType(EnumDCProjectType projectType, MavenProject project, TClass data) {
-        List<AbstractGenerator> list = new ArrayList<>();
+    private static List<AbstractGenerator<TClass>> getAllGeneratorsForType(EnumDCProjectType projectType, MavenProject project, TClass data) {
+        List<AbstractGenerator<TClass>> list = new ArrayList<>();
 
         for (EnumScaffold value : values()) {
             if (value.getProjectType().equals(projectType)) {
                 try {
-                    AbstractGenerator newInstance = value.getGenerator().getConstructor(MavenProject.class, TClass.class).newInstance(project, data);
+                    AbstractGenerator<TClass> newInstance = value.getGenerator().getConstructor(MavenProject.class, TClass.class).newInstance(project, data);
                     
                     list.add(newInstance);
                 } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
