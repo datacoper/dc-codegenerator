@@ -11,7 +11,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  *
- * @author alessandro
+ * @author Roberto Filho
  */
 @Mojo(name = "rest", requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class RestClassesGeneratorMojo extends AbstractGroupGeneratorMojo {

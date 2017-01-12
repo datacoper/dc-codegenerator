@@ -11,7 +11,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  *
- * @author alessandro
+ * @author Roberto Filho
  */
 @Mojo(name = "client", requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class ClientClassesGeneratorMojo extends AbstractGroupGeneratorMojo {
