@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by Roberto Filho on 1/12/17.
+ * @author Roberto Filho
  */
 public class MavenUtilTest {
 
