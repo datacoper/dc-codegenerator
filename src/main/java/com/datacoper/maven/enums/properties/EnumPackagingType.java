@@ -9,7 +9,7 @@ package com.datacoper.maven.enums.properties;
  *
  * @author aline.cardoso
  */
-public enum EnumPackaging {
+public enum EnumPackagingType {
     JAR("jar"),
     POM("pom"),
     EJB("ejb"),
@@ -18,11 +18,11 @@ public enum EnumPackaging {
     
     private final String packaging;
 
-    private EnumPackaging(String packag) {
+    private EnumPackagingType(String packag) {
         this.packaging = packag;
     }
 
-    public String getPackaging() {
+    public String getName() {
         return packaging;
     }
 }
