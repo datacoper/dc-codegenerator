@@ -5,6 +5,7 @@
  */
 package com.datacoper.maven.mojos.wizard.impl;
 
+import com.datacoper.maven.mojos.IMojo;
 import com.datacoper.maven.mojos.wizard.AbstractClassWizard;
 
 /**
@@ -12,6 +13,10 @@ import com.datacoper.maven.mojos.wizard.AbstractClassWizard;
  * @author alessandro
  */
 public class ClassWizard extends AbstractClassWizard {
+
+    public ClassWizard(IMojo mojo) {
+        super(mojo);
+    }
 
     @Override
     protected boolean questionSuperClass() {

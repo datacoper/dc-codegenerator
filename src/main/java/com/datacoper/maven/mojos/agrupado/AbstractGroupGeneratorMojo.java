@@ -25,7 +25,7 @@ public abstract class AbstractGroupGeneratorMojo extends AbstractDCMojo {
 
     @Override
     public void init() {
-        TClass clazz = new ClassDatacoperWizard(getLog(), this).start();
+        TClass clazz = new ClassDatacoperWizard(this).start();
 
         new ClassGroupGenerator(projectType,_project, clazz).generate();
     }

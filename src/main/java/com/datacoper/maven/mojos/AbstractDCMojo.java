@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.exception.DcRuntimeException;
 import com.datacoper.maven.util.ClassLoaderUtil;
@@ -13,13 +14,16 @@ import com.datacoper.maven.util.ConsoleUtil;
 import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.LogUtil;
 
-public abstract class AbstractDCMojo extends AbstractMojo {
+public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
 
     @Parameter(property = "project", required = true, readonly = true)
     protected MavenProject _project;
 
     @Parameter(property = "class", defaultValue = MojoConstants.PROPERTY_NOT_INFORMED)
     protected String _completeEntityName;
+    
+    @Parameter(property = "company", required=true, readonly=true)
+    private String company;
 
     public AbstractDCMojo() {
         super();
@@ -58,7 +62,7 @@ public abstract class AbstractDCMojo extends AbstractMojo {
 
     public void validateTypeProjectForExecution() {
         if (!DCProjectUtil.isProjectType(EnumDCProjectType.PARENT, _project)) {
-            throw new DcRuntimeException("SKIP - the plugin can only be run from a parent project");
+            throw new DcRuntimeException("SKIP - the plugin can only be run from a parent project.");
         }
     }
 
@@ -68,5 +72,13 @@ public abstract class AbstractDCMojo extends AbstractMojo {
     
     public boolean isValidateTypeProjectToRun() {
         return false;
+    }
+    
+    /* (non-Javadoc)
+     * @see com.datacoper.maven.mojos.IMojo#getCompanyParameter()
+     */
+    @Override
+    public CompanyOptions getCompany() {
+        return CompanyOptions.of(Integer.valueOf(company));
     }
 }

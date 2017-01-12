@@ -23,7 +23,7 @@ public class ServerClassesGeneratorMojo extends AbstractDCMojo {
     
     @Override
     public void init() {
-        TClass clazz = new ClassDatacoperWizard(getLog(), this).start();
+        TClass clazz = new ClassDatacoperWizard(this).start();
 
         getLog().info("Generating classes for the [{0}] generator!");
 

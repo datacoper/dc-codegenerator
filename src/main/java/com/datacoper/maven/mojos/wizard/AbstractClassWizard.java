@@ -1,26 +1,39 @@
 package com.datacoper.maven.mojos.wizard;
 
+import static com.datacoper.maven.util.QuestionsUtils.question;
+import static com.datacoper.maven.util.QuestionsUtils.questionGroupSingleQuestion;
+import static com.datacoper.maven.util.QuestionsUtils.questionNonEmpty;
+import static com.datacoper.maven.util.QuestionsUtils.questionParamterNonEmpty;
+import static com.datacoper.maven.util.QuestionsUtils.sysOutSeparatorHelper;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.apache.maven.plugin.logging.Log;
+
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.exception.OperationCanceledByUser;
 import com.datacoper.maven.generators.SourceType;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
+import com.datacoper.maven.mojos.IMojo;
 import com.datacoper.maven.mojos.wizard.impl.AnnotationWizard;
 import com.datacoper.maven.mojos.wizard.impl.AttributeWizard;
 import com.datacoper.maven.util.Converters;
-import com.datacoper.maven.util.LogUtil;
-import static com.datacoper.maven.util.QuestionsUtils.*;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
 
     private TClass clazz;
+    private Log logger;
+    private IMojo mojo;
 
-    public AbstractClassWizard() { }
+    public AbstractClassWizard(IMojo mojo) {
+        this.logger = mojo.getLog();
+        this.mojo = mojo;
+    }
 
     @Override
     public TClass start() {
@@ -32,7 +45,7 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
             
             sysOutSeparatorHelper("END CLASS");
         } catch (OperationCanceledByUser e) {
-            LogUtil.warn("Operation Canceled by User");
+            getLog().warn("Operation Canceled by User");
         }
         
 
@@ -101,7 +114,7 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
     }
     
     protected boolean questionCompany() {
-        return true;
+        return mojo.getCompany() == null;
     }
     
     protected boolean questionEntityName() {
@@ -126,6 +139,14 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
 
     protected AbstractAnnotationWizard getAnnotationWizard() {
         return new AnnotationWizard();
+    }
+    
+    protected Log getLog() {
+        return logger;
+    }
+    
+    protected IMojo getMojo() {
+        return mojo;
     }
     
 }

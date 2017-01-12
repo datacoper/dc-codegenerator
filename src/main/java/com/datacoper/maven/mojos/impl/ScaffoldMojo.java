@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.datacoper.maven.mojos.agrupado;
+package com.datacoper.maven.mojos.impl;
 
 import com.datacoper.maven.generators.impl.ScaffoldGenerator;
 import com.datacoper.maven.metadata.TClass;
@@ -21,7 +21,7 @@ public class ScaffoldMojo extends AbstractDCMojo {
     
     @Override
     public void init() {
-        TClass clazz = new ClassDatacoperWizard(getLog(), this).start();
+        TClass clazz = new ClassDatacoperWizard(this).start();
         
         new ScaffoldGenerator(_project, clazz).generate();
     }
