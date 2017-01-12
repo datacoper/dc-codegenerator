@@ -1,7 +1,5 @@
 package com.datacoper.maven.generators;
 
-import org.apache.maven.project.MavenProject;
-
 import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
 import com.datacoper.freemarker.conf.TemplateFreeMarker;
 import com.datacoper.maven.exception.DcRuntimeException;
@@ -10,8 +8,11 @@ import com.datacoper.maven.util.ConsoleUtil;
 import com.datacoper.maven.util.FileUtil;
 import com.datacoper.maven.util.LogUtil;
 import com.datacoper.maven.util.MavenUtil;
+import org.apache.maven.project.MavenProject;
+
 import java.io.File;
-import static com.datacoper.maven.util.SystemUtil.*;
+
+import static com.datacoper.maven.util.SystemUtil.getFileSeparator;
 
 public final class GenericGenerator {
 
@@ -58,7 +59,7 @@ public final class GenericGenerator {
         
         String className = data.getClassName().concat(".").concat(sourceType.getFileExtension());
         
-        return  folderClass.concat(getFileSeparator()).concat(className);
+        return folderClass.concat(getFileSeparator()).concat(className);
     }
 
     private File createAndValidateNewFile(String pathClass) {

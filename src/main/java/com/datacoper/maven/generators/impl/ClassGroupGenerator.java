@@ -15,8 +15,7 @@ import org.apache.maven.project.MavenProject;
 import java.util.List;
 
 /**
- *
- * @author alessandro
+ * @author Roberto Filho
  */
 public class ClassGroupGenerator implements IGenerator {
 

@@ -77,13 +77,14 @@ public abstract class DCProjectUtil {
     }
     
     public static boolean isProjectType(EnumDCProjectType projectType, MavenProject project) {
-        return projectType.getPackagingType().getName().equals(project.getPackaging()) && isTerminateWith(project, projectType.getQualifier());
+        return project.getPackaging().equals(projectType.getPackagingType().getName()) &&
+                isTerminateWith(project, projectType.getQualifier());
     }
 
-    public static String getModuleNameThroughParent(MavenProject parentProject) {
+    public static String getModuleNameFromParent(MavenProject parentProject) {
         final String name = parentProject.getArtifactId();
         if (!isProjectType(EnumDCProjectType.PARENT, parentProject)) {
-            throw new DcRuntimeException("The project {0} not is a project Parent", name);
+            throw new DcRuntimeException("The project {0} not is a project Parent. It does not have the suffix \"-Parent\".", name);
         }
 
         return name.substring(0, name.length() - 7);
@@ -105,7 +106,7 @@ public abstract class DCProjectUtil {
     }
     
     public static MavenProject getMavenProjectFromParent(EnumDCProjectType projectType, MavenProject parentProject) {
-        return startModule(parentProject, projectType.getQualifier()); 
+        return parentModuleName(parentProject, projectType.getQualifier());
     }
 
     private static boolean isTerminateWith(MavenProject project, String terminate) {
@@ -114,23 +115,23 @@ public abstract class DCProjectUtil {
         return StringUtil.isTerminateWith(name, terminate);
     }
     
-    private static MavenProject startModule(MavenProject parentProject, String qualifier) {
-        String moduleName = getModuleNameThroughParent(parentProject);
+    private static MavenProject parentModuleName(MavenProject parentProject, String qualifier) {
+        String moduleName = getModuleNameFromParent(parentProject);
         
-        moduleName = moduleName.concat(qualifier);
+        String projectName = moduleName.concat(qualifier);
         
-        return validateAndStartModule(parentProject, moduleName);
+        return validateAndStartModule(parentProject, projectName);
     }
     
     //Precisa tratar para pegar o module name atraves do pom, ja que os modulos podem estar em outro padrao de pasta
-    private static MavenProject validateAndStartModule(MavenProject parentProjetct, String moduleName) throws DcRuntimeException {
-        if(!parentProjetct.getModules().contains(moduleName)) {
-            throw new DcRuntimeException("Module {0} is not located in parent project {0}", moduleName, parentProjetct.getName());
+    private static MavenProject validateAndStartModule(MavenProject parentProject, String projectName) throws DcRuntimeException {
+        if(!parentProject.getModules().contains(projectName)) {
+            throw new DcRuntimeException("Module {0} is not located in parent project {1}", projectName, parentProject.getName());
         }
         
-        String pathParent = parentProjetct.getBasedir().getPath();
+        String pathParent = parentProject.getBasedir().getPath();
         
-        MavenProject mavenProject = MavenUtil.startNewProject(pathParent.concat("/").concat(moduleName));
+        MavenProject mavenProject = MavenUtil.createNewMavenProject(pathParent.concat("/").concat(projectName));
         
         return mavenProject;
     }

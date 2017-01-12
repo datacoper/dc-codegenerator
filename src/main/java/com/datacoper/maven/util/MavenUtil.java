@@ -35,11 +35,11 @@ public abstract class MavenUtil {
         return defaultPackage.concat(packag).replace('.', File.separatorChar);
     }
     
-    public static MavenProject startNewProject(String pathProject) {
-        return startNewProject(new File(pathProject));
+    public static MavenProject createNewMavenProject(String projectPath) {
+        return createNewMavenProject(new File(projectPath));
     }
     
-    public static MavenProject startNewProject(File folderProject) {
+    public static MavenProject createNewMavenProject(File folderProject) {
         try {
             File pomFile = getPomFile(folderProject);
             

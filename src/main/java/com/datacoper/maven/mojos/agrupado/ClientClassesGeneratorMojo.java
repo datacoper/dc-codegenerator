@@ -13,10 +13,10 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
  *
  * @author alessandro
  */
-@Mojo(name = "server", requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class ServerClassesGeneratorMojo extends AbstractGroupGeneratorMojo {
+@Mojo(name = "client", requiresDependencyResolution = ResolutionScope.RUNTIME)
+public class ClientClassesGeneratorMojo extends AbstractGroupGeneratorMojo {
 
-    protected ServerClassesGeneratorMojo() {
-        super(EnumDCProjectType.SERVER);
+    public ClientClassesGeneratorMojo() {
+        super(EnumDCProjectType.WEB);
     }
 }

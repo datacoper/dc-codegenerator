@@ -11,28 +11,34 @@ import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.mojos.AbstractDCMojo;
 import com.datacoper.maven.mojos.wizard.impl.datacoper.ClassDatacoperWizard;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author Roberto Filho
  */
 public abstract class AbstractGroupGeneratorMojo extends AbstractDCMojo {
 
-    private EnumDCProjectType projectType;
+    private List<EnumDCProjectType> projectTypes;
 
-    protected AbstractGroupGeneratorMojo(EnumDCProjectType projectType) {
-        this.projectType = projectType;
+    protected AbstractGroupGeneratorMojo(EnumDCProjectType... projectType) {
+        this.projectTypes = Arrays.asList(projectType);
     }
 
     @Override
     public void init() {
         TClass clazz = new ClassDatacoperWizard(this).start();
-
-        new ClassGroupGenerator(projectType,_project, clazz).generate();
+        // Roda o generate para cada tipo de projeto.
+        projectTypes.forEach(
+            projectType -> new ClassGroupGenerator(projectType,_project, clazz).generate()
+        );
     }
 
     @Override
     public String getMojoName() {
-        return String.format("%s scaffold", projectType.name());
+        return String.format("%s scaffold", projectTypes.stream().map(EnumDCProjectType::name).collect(Collectors.joining(",")));
     }
 
     @Override
