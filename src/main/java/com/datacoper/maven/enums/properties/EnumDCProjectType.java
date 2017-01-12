@@ -5,7 +5,7 @@
  */
 package com.datacoper.maven.enums.properties;
 
-import static com.datacoper.maven.enums.properties.EnumPackaging.*;
+import static com.datacoper.maven.enums.properties.EnumPackagingType.*;
 
 /**
  *
@@ -22,9 +22,9 @@ public enum EnumDCProjectType {
     
     private final String qualifier;
     
-    private final EnumPackaging packaging;
+    private final EnumPackagingType packaging;
 
-    private EnumDCProjectType(String qualifier, EnumPackaging packaging) {
+    private EnumDCProjectType(String qualifier, EnumPackagingType packaging) {
         this.qualifier = qualifier;
         this.packaging = packaging;
     }
@@ -33,7 +33,7 @@ public enum EnumDCProjectType {
         return qualifier;
     }
 
-    public EnumPackaging getPackaging() {
+    public EnumPackagingType getPackagingType() {
         return packaging;
     }
 }

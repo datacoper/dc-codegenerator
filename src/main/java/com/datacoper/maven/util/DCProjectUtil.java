@@ -11,7 +11,7 @@ import org.apache.maven.project.MavenProject;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
-import com.datacoper.maven.enums.properties.EnumPackaging;
+import com.datacoper.maven.enums.properties.EnumPackagingType;
 import com.datacoper.maven.exception.DcRuntimeException;
 
 /**
@@ -48,7 +48,7 @@ public abstract class DCProjectUtil {
     }
     
     public static void validateTypeAndPackaging(MavenProject project, EnumDCProjectType enumDCProjectType) {
-        validatePackaging(enumDCProjectType.getPackaging(), project);
+        validatePackaging(enumDCProjectType.getPackagingType(), project);
         
         validateQualifierForProject(enumDCProjectType, project);
     }
@@ -62,8 +62,8 @@ public abstract class DCProjectUtil {
         }
     }
 
-    public static void validatePackaging(EnumPackaging enumPackaging, MavenProject project) throws DcRuntimeException {
-        String packaging = enumPackaging.getPackaging();
+    public static void validatePackaging(EnumPackagingType enumPackagingType, MavenProject project) throws DcRuntimeException {
+        String packaging = enumPackagingType.getName();
         
         if (!project.getPackaging().equals(packaging)) {
             throw new DcRuntimeException("The project packaging does not match with ({0})", packaging);
@@ -77,12 +77,12 @@ public abstract class DCProjectUtil {
     }
     
     public static boolean isProjectType(EnumDCProjectType projectType, MavenProject project) {
-        return projectType.getPackaging().getPackaging().equals(project.getPackaging()) && isTerminateWith(project, projectType.getQualifier());
+        return projectType.getPackagingType().getName().equals(project.getPackaging()) && isTerminateWith(project, projectType.getQualifier());
     }
 
-    public static String getModuleNameThroughParent(MavenProject parentProjetct) {
-        final String name = parentProjetct.getArtifactId();
-        if (!isProjectType(EnumDCProjectType.PARENT, parentProjetct)) {
+    public static String getModuleNameThroughParent(MavenProject parentProject) {
+        final String name = parentProject.getArtifactId();
+        if (!isProjectType(EnumDCProjectType.PARENT, parentProject)) {
             throw new DcRuntimeException("The project {0} not is a project Parent", name);
         }
 
@@ -114,12 +114,12 @@ public abstract class DCProjectUtil {
         return StringUtil.isTerminateWith(name, terminate);
     }
     
-    private static MavenProject startModule(MavenProject parentProjetct, String qualifier) {
-        String moduleName = getModuleNameThroughParent(parentProjetct);
+    private static MavenProject startModule(MavenProject parentProject, String qualifier) {
+        String moduleName = getModuleNameThroughParent(parentProject);
         
         moduleName = moduleName.concat(qualifier);
         
-        return validateAndStartModule(parentProjetct, moduleName);
+        return validateAndStartModule(parentProject, moduleName);
     }
     
     //Precisa tratar para pegar o module name atraves do pom, ja que os modulos podem estar em outro padrao de pasta
