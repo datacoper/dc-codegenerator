@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class ResourceGenerator extends AbstractGenerator<TClass> {
     
-    public ResourceGenerator(MavenProject project, TClass data) {
+    public ResourceGenerator(String project, TClass data) {
         super(project, "resource", data);
     }
 

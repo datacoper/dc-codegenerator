@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class ListagemXHTMLGenerator extends AbstractGenerator<TClass> {
     
-    public ListagemXHTMLGenerator(MavenProject project, TClass data) {
+    public ListagemXHTMLGenerator(String project, TClass data) {
         super(project, "listagemXHTML", data);
     }
 

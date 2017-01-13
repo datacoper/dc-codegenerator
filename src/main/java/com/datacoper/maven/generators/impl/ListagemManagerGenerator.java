@@ -14,7 +14,7 @@ import org.apache.maven.project.MavenProject;
 
 public class ListagemManagerGenerator extends AbstractGenerator<TClass>{
     
-    public ListagemManagerGenerator(MavenProject project, TClass tClass) {
+    public ListagemManagerGenerator(String project, TClass tClass) {
         super(project, "listagemManager", tClass);
     }
     

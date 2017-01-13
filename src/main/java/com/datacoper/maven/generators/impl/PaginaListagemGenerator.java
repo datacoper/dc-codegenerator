@@ -13,7 +13,7 @@ import org.apache.maven.project.MavenProject;
 
 public class PaginaListagemGenerator extends AbstractGenerator<TClass> {
 
-    public PaginaListagemGenerator(MavenProject project, TClass data) {
+    public PaginaListagemGenerator(String project, TClass data) {
         super(project, "paginaListagem", data);
     }
 

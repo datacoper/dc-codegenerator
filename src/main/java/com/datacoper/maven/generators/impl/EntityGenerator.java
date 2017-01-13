@@ -18,7 +18,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class EntityGenerator extends AbstractGenerator<TClass> {
     
-    public EntityGenerator(MavenProject project, TClass data) {
+    public EntityGenerator(String project, TClass data) {
         super(project, "entity", data);
     }
 

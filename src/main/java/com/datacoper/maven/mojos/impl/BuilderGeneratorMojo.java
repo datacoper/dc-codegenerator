@@ -30,8 +30,8 @@ public class BuilderGeneratorMojo extends AbstractDCMojo {
         Class<?> clazz = DCProjectUtil.loadEntityByName(_project, entityName);
         
         TClass tClazz = ReflectionToModelUtil.loadClassToModel(clazz, _project);
-        
-        new BuilderGenerator(_project, tClazz).generate();
+
+        new BuilderGenerator(DCProjectUtil.getModuleName(_project), tClazz).generate();
     }
 
     @Override

@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class GerenciadorGenerator extends AbstractGenerator<TClass> {
     
-    public GerenciadorGenerator(MavenProject project, TClass data) {
+    public GerenciadorGenerator(String project, TClass data) {
         super(project, "gerenciador", data);
     }
 

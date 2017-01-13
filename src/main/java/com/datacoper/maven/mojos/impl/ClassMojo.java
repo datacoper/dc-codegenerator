@@ -6,6 +6,7 @@
 package com.datacoper.maven.mojos.impl;
 
 
+import com.datacoper.maven.util.DCProjectUtil;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
@@ -49,7 +50,7 @@ public class ClassMojo extends AbstractDCMojo {
             clazz = new ClassWizard(this).start();
         }
 
-        ClassGenerator.generate(_project, clazz);
+        ClassGenerator.generate(DCProjectUtil.getModuleName(_project), clazz);
     }
 
     @Override

@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class QueryGenerator extends AbstractGenerator<TClass>  {
     
-    public QueryGenerator(MavenProject project, TClass data) {
+    public QueryGenerator(String project, TClass data) {
         super(project, "query", data);
     }
 

@@ -6,11 +6,11 @@ import org.apache.maven.project.MavenProject;
 
 public class ClassGenerator extends AbstractGenerator {
 
-    private ClassGenerator(MavenProject project, TAbstract data) {
+    private ClassGenerator(String project, TAbstract data) {
         super(project, "class", data);
     }
      
-    public static void generate(MavenProject project, TAbstract data) {
+    public static void generate(String project, TAbstract data) {
         new ClassGenerator(project, data).generate();
     }
 }

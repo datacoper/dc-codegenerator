@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class VoGenerator extends AbstractGenerator<TClass> {
     
-    public VoGenerator(MavenProject project, TClass data) {
+    public VoGenerator(String project, TClass data) {
         super(project, "vo", data);
     }
 

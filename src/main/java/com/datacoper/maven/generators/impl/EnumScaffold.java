@@ -65,6 +65,7 @@ public enum EnumScaffold {
         
         for (EnumDCProjectType value : Arrays.asList(COMMON, SERVER, REST_COMMON, REST, WEB)) {
             try {
+                // TODO Separar a criação dos arquivos do projeto da lógica de criar os geradores.
                 MavenProject project = DCProjectUtil.getMavenProjectFromParent(value, parentProject);
                 list.addAll(forProjectType(value, project, data));
             } catch (Throwable e) {
@@ -79,10 +80,12 @@ public enum EnumScaffold {
     public static List<AbstractGenerator<TClass>> forProjectType(EnumDCProjectType projectType, MavenProject parentProject, TClass data) {
         List<AbstractGenerator<TClass>> list = new ArrayList<>();
 
+        String moduleName = DCProjectUtil.getModuleName(parentProject);
+
         for (EnumScaffold value : values()) {
             if (value.getProjectType().equals(projectType)) {
                 try {
-                    AbstractGenerator<TClass> newInstance = value.getGenerator().getConstructor(MavenProject.class, TClass.class).newInstance(parentProject, data);
+                    AbstractGenerator<TClass> newInstance = value.getGenerator().getConstructor(String.class, TClass.class).newInstance(moduleName, data);
                     list.add(newInstance);
                 } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     LogUtil.error(e);

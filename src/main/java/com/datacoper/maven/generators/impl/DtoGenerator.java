@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class DtoGenerator extends AbstractGenerator<TClass> {
     
-    public DtoGenerator(MavenProject project, TClass data) {
+    public DtoGenerator(String project, TClass data) {
         super(project, "dto", data);
     }
 

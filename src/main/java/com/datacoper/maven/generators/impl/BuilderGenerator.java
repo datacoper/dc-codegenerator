@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class BuilderGenerator extends AbstractGenerator<TClass> {
     
-    public BuilderGenerator(MavenProject project, TClass data) {
+    public BuilderGenerator(String project, TClass data) {
         super(project, "builder", data);
     }
 

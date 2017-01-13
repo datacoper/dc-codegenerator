@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class EjbGenerator extends AbstractGenerator<TClass> {
     
-    public EjbGenerator(MavenProject project, TClass data) {
+    public EjbGenerator(String project, TClass data) {
         super(project, "ejb", data);
     }
 

@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class FormXHTMLGenerator extends AbstractGenerator<TClass> {
     
-    public FormXHTMLGenerator(MavenProject project, TClass data) {
+    public FormXHTMLGenerator(String project, TClass data) {
         super(project, "formXHTML", data);
     }
 

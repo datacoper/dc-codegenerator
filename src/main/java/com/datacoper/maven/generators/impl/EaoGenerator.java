@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class EaoGenerator extends AbstractGenerator<TClass> {
     
-    public EaoGenerator(MavenProject project, TClass data) {
+    public EaoGenerator(String project, TClass data) {
         super(project, "eao", data);
     }
 

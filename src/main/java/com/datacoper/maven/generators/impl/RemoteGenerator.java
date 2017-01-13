@@ -17,7 +17,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class RemoteGenerator extends AbstractGenerator<TClass> {
     
-    public RemoteGenerator(MavenProject project, TClass data) {
+    public RemoteGenerator(String project, TClass data) {
         super(project, "remote", data);
     }
 

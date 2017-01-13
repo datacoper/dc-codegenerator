@@ -19,7 +19,7 @@ import org.apache.maven.project.MavenProject;
  */
 public class ValidatorTestGenerator extends AbstractGenerator<TClass> {
     
-    public ValidatorTestGenerator(MavenProject project, TClass data) {
+    public ValidatorTestGenerator(String project, TClass data) {
         super(project, "validatorTest", data);
     }
 

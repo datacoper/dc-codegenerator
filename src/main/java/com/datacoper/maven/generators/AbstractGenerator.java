@@ -24,10 +24,10 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     protected T data;
 
     private String layoutFileName;
-    
-    public AbstractGenerator(MavenProject project, String layoutFileName, T data) {
+
+    public AbstractGenerator(String moduleName, String layoutFileName, T data) {
         this.project = project;
-        this.data = prepareForGeneration(project, data);
+        this.data = prepareForGeneration(moduleName, data);
         this.layoutFileName = layoutFileName;
     }
     
@@ -40,9 +40,9 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
         return clazz;
     }
 
-    private T prepareForGeneration(MavenProject project, T data) {
+    private T prepareForGeneration(String moduleName, T data) {
         return (T) new TClassBuilder((TClass) data)
-                .withModuleBasic(DCProjectUtil.getModuleName(project))
+                .withModuleBasic(moduleName)
                 .build();
     }
     

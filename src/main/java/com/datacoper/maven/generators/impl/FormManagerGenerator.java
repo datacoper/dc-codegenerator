@@ -14,7 +14,7 @@ import org.apache.maven.project.MavenProject;
 
 public class FormManagerGenerator extends AbstractGenerator<TClass>{
     
-    public FormManagerGenerator(MavenProject project, TClass tClass) {
+    public FormManagerGenerator(String project, TClass tClass) {
         super(project, "formManager", tClass);
     }
     
