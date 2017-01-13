@@ -21,11 +21,14 @@ public final class SourceFileGenerator {
     private final MavenProject project;
     
     private final TAbstract data;
-    
-    private SourceFileGenerator(MavenProject project, String templateName, TAbstract data) {
+
+    private String encoding;
+
+    private SourceFileGenerator(MavenProject project, String templateName, TAbstract data, String encoding) {
         this.project = project;
         this.template = initTemplate(templateName);
         this.data = data;
+        this.encoding = encoding;
 
         // Passa os dados da classe para o arquivo template
         template.add("class", data);
@@ -46,7 +49,7 @@ public final class SourceFileGenerator {
         
         File arquive = createAndValidateNewFile(pathClass);
         
-        template.generateTemplate(arquive, "ISO-8859-1");
+        template.generateTemplate(arquive, encoding);
         
         LogUtil.info("\ngenerated file");
     }
@@ -74,6 +77,10 @@ public final class SourceFileGenerator {
     }
 
     public static void generate(MavenProject project, String templateName, TAbstract data) {
-        new SourceFileGenerator(project, templateName, data).process();
+        generate(project, templateName, data, "ISO-8859-1");
+    }
+
+    public static void generate(MavenProject project, String templateName, TAbstract data, String charset) {
+        new SourceFileGenerator(project, templateName, data, charset).process();
     }
 }
