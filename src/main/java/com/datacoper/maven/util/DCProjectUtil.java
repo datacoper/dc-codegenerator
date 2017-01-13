@@ -5,14 +5,13 @@
  */
 package com.datacoper.maven.util;
 
-import java.util.Arrays;
-
-import org.apache.maven.project.MavenProject;
-
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.enums.properties.EnumPackagingType;
 import com.datacoper.maven.exception.DcRuntimeException;
+import org.apache.maven.project.MavenProject;
+
+import java.util.Arrays;
 
 /**
  *
@@ -22,7 +21,7 @@ public abstract class DCProjectUtil {
     private DCProjectUtil() { }
     
     public static Class<?> loadEntityByName(MavenProject project, String entityName) {
-        String moduleName = getName(project);
+        String moduleName = getModuleName(project);
         
         for (CompanyOptions company : CompanyOptions.values()) {
             String className = StringUtil.format("com.{0}.cooperate.{1}.common.entities.{2}", company.getPackag(), moduleName.toLowerCase(), entityName);
@@ -71,7 +70,7 @@ public abstract class DCProjectUtil {
     }
 
     public static String getQualifier(MavenProject project) {
-        String name = getName(project);
+        String name = getModuleName(project);
         
         return project.getArtifactId().replaceAll(name, "");
     }
@@ -95,7 +94,7 @@ public abstract class DCProjectUtil {
      * @param project o projeto Maven.
      * @return o nome do módulo contido no projeto
      */
-    public static String getName(MavenProject project) {
+    public static String getModuleName(MavenProject project) {
         String name = project.getArtifactId();
         
         for (EnumDCProjectType enumDCProjectType : Arrays.asList(EnumDCProjectType.values())) {

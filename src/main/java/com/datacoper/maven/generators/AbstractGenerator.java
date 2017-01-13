@@ -5,16 +5,12 @@
  */
 package com.datacoper.maven.generators;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.maven.project.MavenProject;
-
 import com.datacoper.maven.enums.properties.ModuleMapper;
 import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
 import com.datacoper.maven.util.DCProjectUtil;
+import org.apache.maven.project.MavenProject;
 
 /**
  *
@@ -46,7 +42,7 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
 
     private T prepareForGeneration(MavenProject project, T data) {
         return (T) new TClassBuilder((TClass) data)
-                .withModuleBasic(DCProjectUtil.getName(project))
+                .withModuleBasic(DCProjectUtil.getModuleName(project))
                 .build();
     }
     

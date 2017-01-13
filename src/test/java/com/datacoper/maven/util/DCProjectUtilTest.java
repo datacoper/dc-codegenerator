@@ -16,7 +16,6 @@ public class DCProjectUtilTest {
     @Before
     public void setUp() throws Exception {
         project = new MavenProject();
-        project.setName("FaturamentoParent");
         project.setArtifactId("Faturamento-Parent");
         project.setPackaging("pom");
 
@@ -32,7 +31,7 @@ public class DCProjectUtilTest {
 
     @Test
     public void deveRetornarONomeDoModuloDoProjeto() {
-        String modulo = DCProjectUtil.getName(project);
+        String modulo = DCProjectUtil.getModuleName(project);
         
         assertThat(modulo, is("Faturamento"));
     }

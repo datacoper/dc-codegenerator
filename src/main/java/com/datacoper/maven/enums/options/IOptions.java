@@ -10,7 +10,7 @@ package com.datacoper.maven.enums.options;
  * @author alessandro
  */
 public interface IOptions {
-    public String print();
+    String print();
 
-    public IOptions of(String answer);
+    IOptions of(String answer);
 }

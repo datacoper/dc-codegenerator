@@ -1,7 +1,6 @@
 package com.datacoper.maven.metadata;
 
 import com.datacoper.maven.metadata.builder.TClassBuilder;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.equalTo;

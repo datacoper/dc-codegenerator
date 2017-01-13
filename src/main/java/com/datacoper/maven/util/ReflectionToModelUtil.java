@@ -11,12 +11,13 @@ import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TAttributeBuilder;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
+import org.apache.maven.project.MavenProject;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.maven.project.MavenProject;
 
 /**
  *
@@ -33,8 +34,8 @@ public class ReflectionToModelUtil {
                 .withClassName(clazz.getSimpleName())
                 .withAttributes(getAttributes(clazz))
                 .withClassNameBasic(clazz.getSimpleName())
-                .withModuleBasic(DCProjectUtil.getName(project))
-                .withCompany(CompanyOptions.ofProjectName(DCProjectUtil.getName(project)))
+                .withModuleBasic(DCProjectUtil.getModuleName(project))
+                .withCompany(CompanyOptions.ofProjectName(DCProjectUtil.getModuleName(project)))
                 .build();
     }
 
