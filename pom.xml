@@ -10,7 +10,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
+    <scm>
+        <connection>scm:git:https://github.com/datacoper/dc-codegenerator.git</connection>
+        <developerConnection>scm:git:https://github.com/datacoper/dc-codegenerator.git</developerConnection>
+        <url>https://github.com/datacoper/dc-codegenerator</url>
+    </scm>
+
     <distributionManagement>
         <repository>
             <id>releases</id>
