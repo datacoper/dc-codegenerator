@@ -30,10 +30,6 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     private String layoutFileName;
     
     public AbstractGenerator(MavenProject project, String layoutFileName, T data) {
-        this(project, layoutFileName, data, Collections.emptyList());
-    }
-    
-    public AbstractGenerator(MavenProject project, String layoutFileName, T data, List<AbstractGenerator<T>> generators) {
         this.project = project;
         this.data = prepareForGeneration(project, data);
         this.layoutFileName = layoutFileName;
