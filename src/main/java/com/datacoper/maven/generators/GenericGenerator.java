@@ -53,7 +53,7 @@ public final class GenericGenerator {
     private String generatePathForFile() {
         SourceType sourceType = data.getSourceType();
         
-        String folderClass = MavenUtil.getPathForPackage(project, data.getPackage(), sourceType);
+        String folderClass = MavenUtil.getSourcePathForPackage(project, data.getPackage(), sourceType);
         
         FileUtil.createFolderIfNecessary(folderClass);
         

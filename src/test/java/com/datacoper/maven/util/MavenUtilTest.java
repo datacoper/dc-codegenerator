@@ -33,9 +33,9 @@ public class MavenUtilTest {
 
     @Test
     public void deveRetornarOCaminhoParaGerarOsFontes() throws Exception {
-        String pathRetornadoPeloMetodo = MavenUtil.getPathForPackage(project, "com.datacoper.teste", SourceType.JAVA);
-
-        String pathEsperado = "diretorioBase.TestProject.src.main.java.com.datacoper.teste".replace(".", File.separator);
+        String packag = "com.datacoper.teste";
+        String pathEsperado = "diretorioBase.TestProject.src.main.java.".concat(packag).replace(".", File.separator);
+        String pathRetornadoPeloMetodo = MavenUtil.getSourcePathForPackage(project, packag, SourceType.JAVA);
 
         assertThat(pathRetornadoPeloMetodo, is(pathEsperado));
     }
@@ -45,7 +45,9 @@ public class MavenUtilTest {
         build.setSourceDirectory("diretorioSource");
         String pathThatShouldReturn = "diretorioBase.TestProject.diretorioSource.com.datacoper.teste".replace(".", File.separator);
 
-        assertThat(MavenUtil.getPathForPackage(project, "com.datacoper.teste", SourceType.JAVA), is(pathThatShouldReturn));
+        String pathReturned = MavenUtil.getSourcePathForPackage(project, "com.datacoper.teste", SourceType.JAVA);
+
+        assertThat(pathReturned, is(pathThatShouldReturn));
     }
 
 }

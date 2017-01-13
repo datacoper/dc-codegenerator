@@ -23,23 +23,23 @@ public abstract class MavenUtil {
 
     private MavenUtil() { }
     
-    public static String getPathForPackage(MavenProject project, String packag, SourceType sourceType) {
+    public static String getSourcePathForPackage(MavenProject project, String packag, SourceType sourceType) {
         String defaultPackage = sourceType.getDirectory(project);
-        
+
         defaultPackage = ".".concat(defaultPackage).concat(".");
-        
+
         final String pathBaseDir = project.getBasedir().getPath();
-        
+
         defaultPackage = pathBaseDir.concat(".").concat(project.getArtifactId()).concat(defaultPackage);
-        
+
         return defaultPackage.concat(packag).replace('.', File.separatorChar);
     }
-    
-    public static MavenProject createNewMavenProject(String projectPath) {
+
+    static MavenProject createNewMavenProject(String projectPath) {
         return createNewMavenProject(new File(projectPath));
     }
     
-    public static MavenProject createNewMavenProject(File folderProject) {
+    private static MavenProject createNewMavenProject(File folderProject) {
         try {
             File pomFile = getPomFile(folderProject);
             
@@ -56,7 +56,7 @@ public abstract class MavenUtil {
         }
     }
     
-    public static File getPomFile(File folderProject) {
+    private static File getPomFile(File folderProject) {
         FileUtil.validateExistsFolder(folderProject);
         
         final String pathFolder = folderProject.getPath();
