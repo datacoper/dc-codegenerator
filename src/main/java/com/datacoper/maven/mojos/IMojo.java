@@ -10,6 +10,12 @@ public interface IMojo {
 
     CompanyOptions getCompany();
 
+    /**
+     * O nome da entidade sendo manipulada.
+     * @return
+     */
+    String getEntityName();
+
     Log getLog();
 
 }

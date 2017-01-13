@@ -21,7 +21,10 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
 
     @Parameter(property = "class", defaultValue = MojoConstants.PROPERTY_NOT_INFORMED)
     protected String _completeEntityName;
-    
+
+    @Parameter(property = "entidade", defaultValue = MojoConstants.PROPERTY_NOT_INFORMED)
+    protected String entityName;
+
     @Parameter(property = "company", required=true, readonly=true)
     private String company;
 
@@ -80,5 +83,10 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
     @Override
     public CompanyOptions getCompany() {
         return CompanyOptions.of(Integer.valueOf(company));
+    }
+
+    @Override
+    public String getEntityName() {
+        return entityName;
     }
 }

@@ -26,18 +26,19 @@ public final class SourceFileGenerator {
         this.project = project;
         this.template = initTemplate(templateName);
         this.data = data;
-        
+
+        // Passa os dados da classe para o arquivo template
         template.add("class", data);
     }
 
     private TemplateFreeMarker initTemplate(String templateName) {
         ConfigurationFreeMarker config = new ConfigurationFreeMarker();
-        
+
         return new TemplateFreeMarker(templateName + ".ftl", config);
     }
     
     private void process() {
-        String pathClass = generatePathForFile();
+        String pathClass = generatePathForSourceFile();
 
         ConsoleUtil.sysOutl("\n*****************\n");
         
@@ -50,7 +51,7 @@ public final class SourceFileGenerator {
         LogUtil.info("\ngenerated file");
     }
 
-    private String generatePathForFile() {
+    private String generatePathForSourceFile() {
         SourceType sourceType = data.getSourceType();
         
         String folderClass = MavenUtil.getSourcePathForPackage(project, data.getPackage(), sourceType);

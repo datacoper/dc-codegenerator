@@ -8,7 +8,8 @@ package com.datacoper.maven.mojos.wizard.impl.datacoper;
 import com.datacoper.maven.mojos.IMojo;
 import com.datacoper.maven.mojos.wizard.AbstractAttributeWizard;
 import com.datacoper.maven.mojos.wizard.AbstractClassWizard;
-import org.apache.maven.plugin.logging.Log;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /**
  *
@@ -38,6 +39,17 @@ public class ClassDatacoperWizard extends AbstractClassWizard {
     @Override
     protected boolean questionAttributes() {
         return true;
+    }
+
+
+    /**
+     * Verifica se deve ser perguntado o nome da entidade.
+     * @return <code>true</code> se o nome da entidade não foi
+     * informado por parâmetro.
+     */
+    @Override
+    protected boolean questionEntityName() {
+        return isEmpty(getMojo().getEntityName());
     }
 
     @Override

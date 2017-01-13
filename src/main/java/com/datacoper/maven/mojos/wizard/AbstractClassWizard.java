@@ -5,12 +5,14 @@ import static com.datacoper.maven.util.QuestionsUtils.questionGroupSingleQuestio
 import static com.datacoper.maven.util.QuestionsUtils.questionNonEmpty;
 import static com.datacoper.maven.util.QuestionsUtils.questionParamterNonEmpty;
 import static com.datacoper.maven.util.QuestionsUtils.sysOutSeparatorHelper;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
@@ -56,7 +58,7 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
         AbstractAnnotationWizard annotationWizard = getAnnotationWizard();
         AbstractAttributeWizard attributeWizard = getAttributeWizard();
         
-        String className = "";
+        String className = StringUtils.defaultIfEmpty(mojo.getEntityName(), EMPTY);
         String packag = "";
         Optional<Class<?>> superClass = Optional.empty();
         Set<Class<?>> implement = new HashSet<>();
@@ -71,9 +73,9 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
         if (questionPackage()) {
             className = questionNonEmpty("Package for class generate: ");
         }
-        
+
         if (questionEntityName()) {
-            className = questionNonEmpty("Name for entity generate: ");
+            className = questionNonEmpty("Name for the entity to be generated: ");
         }
         
         if(questionSuperClass()) {
@@ -116,10 +118,8 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
     protected boolean questionCompany() {
         return mojo.getCompany() == null;
     }
-    
-    protected boolean questionEntityName() {
-        return true;
-    }
+
+    protected boolean questionEntityName() { return true; }
     
     protected boolean questionPackage() {
         return false;
