@@ -23,12 +23,11 @@ public class ClassDatacoperWizardTest {
 
         when(mojoMock.getEntityName()).thenReturn("EntidadeTeste");
 
-
         classWizard = new ClassDatacoperWizard(mojoMock);
     }
 
     @Test
-    public void deveNaoPedirONomeDaEntidade() throws Exception {
+    public void deveNaoPedirONomeDaEntidadeQuandoJaFoiInformadoComoParametro() throws Exception {
         assertThat(classWizard.questionEntityName(), is(false));
     }
 }
