@@ -38,7 +38,7 @@ public abstract class AbstractGroupGeneratorMojo extends AbstractDCMojo {
 
     @Override
     public String getMojoName() {
-        return String.format("%s scaffold", projectTypes.stream().map(EnumDCProjectType::name).collect(Collectors.joining(",")));
+        return String.format("[%s] scaffold", projectTypes.stream().map(EnumDCProjectType::name).collect(Collectors.joining(",")));
     }
 
     @Override

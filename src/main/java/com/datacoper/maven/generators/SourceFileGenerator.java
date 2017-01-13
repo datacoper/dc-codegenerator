@@ -38,7 +38,7 @@ public final class SourceFileGenerator {
     }
     
     private void process() {
-        String pathClass = generatePathForSourceFile();
+        String pathClass = createFolderForGeneratedFiles();
 
         ConsoleUtil.sysOutl("\n*****************\n");
         
@@ -46,18 +46,18 @@ public final class SourceFileGenerator {
         
         File arquive = createAndValidateNewFile(pathClass);
         
-        template.generateTemplate(arquive);
+        template.generateTemplate(arquive, "ISO-8859-1");
         
         LogUtil.info("\ngenerated file");
     }
 
-    private String generatePathForSourceFile() {
+    private String createFolderForGeneratedFiles() {
         SourceType sourceType = data.getSourceType();
         
         String folderClass = MavenUtil.getSourcePathForPackage(project, data.getPackage(), sourceType);
         
         FileUtil.createFolderIfNecessary(folderClass);
-        
+
         String className = data.getClassName().concat(".").concat(sourceType.getFileExtension());
         
         return folderClass.concat(getFileSeparator()).concat(className);

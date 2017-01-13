@@ -1,10 +1,8 @@
 package com.datacoper.freemarker.conf;
 
 import com.datacoper.maven.exception.DcRuntimeException;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +25,9 @@ public class TemplateFreeMarker {
         this.data.put(key, value);
     }
 
-    public void generateTemplate(File arquive) {
+    public void generateTemplate(File arquive, String charsetName) {
         try {
-            Writer file = new FileWriter(arquive);
+            Writer file = new OutputStreamWriter(new FileOutputStream(arquive), charsetName);
             this.template.process(data, file);
             file.flush();
             file.close();

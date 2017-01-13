@@ -75,15 +75,14 @@ public enum EnumScaffold {
         
         return list;
     }
-    
-    public static List<AbstractGenerator<TClass>> forProjectType(EnumDCProjectType projectType, MavenProject project, TClass data) {
+
+    public static List<AbstractGenerator<TClass>> forProjectType(EnumDCProjectType projectType, MavenProject parentProject, TClass data) {
         List<AbstractGenerator<TClass>> list = new ArrayList<>();
 
         for (EnumScaffold value : values()) {
             if (value.getProjectType().equals(projectType)) {
                 try {
-                    MavenProject generatedProject = DCProjectUtil.getMavenProjectFromParent(projectType, project);
-                    AbstractGenerator<TClass> newInstance = value.getGenerator().getConstructor(MavenProject.class, TClass.class).newInstance(generatedProject, data);
+                    AbstractGenerator<TClass> newInstance = value.getGenerator().getConstructor(MavenProject.class, TClass.class).newInstance(parentProject, data);
                     list.add(newInstance);
                 } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     LogUtil.error(e);
