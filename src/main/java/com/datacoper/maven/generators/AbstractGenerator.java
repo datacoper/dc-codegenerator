@@ -41,7 +41,7 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     
     @Override
     public void generate() {
-        GenericGenerator.generate(project, layoutFileName, prepareForGenerate(data));
+        SourceFileGenerator.generate(project, layoutFileName, prepareForGenerate(data));
     }
     
     protected T prepareForGenerate(T clazz) {

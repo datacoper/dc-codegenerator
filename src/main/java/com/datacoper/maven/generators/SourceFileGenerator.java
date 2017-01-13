@@ -14,7 +14,7 @@ import java.io.File;
 
 import static com.datacoper.maven.util.SystemUtil.getFileSeparator;
 
-public final class GenericGenerator {
+public final class SourceFileGenerator {
 
     private final TemplateFreeMarker template;
     
@@ -22,7 +22,7 @@ public final class GenericGenerator {
     
     private final TAbstract data;
     
-    private GenericGenerator(MavenProject project, String templateName, TAbstract data) {
+    private SourceFileGenerator(MavenProject project, String templateName, TAbstract data) {
         this.project = project;
         this.template = initTemplate(templateName);
         this.data = data;
@@ -73,6 +73,6 @@ public final class GenericGenerator {
     }
 
     public static void generate(MavenProject project, String templateName, TAbstract data) {
-        new GenericGenerator(project, templateName, data).process();
+        new SourceFileGenerator(project, templateName, data).process();
     }
 }
