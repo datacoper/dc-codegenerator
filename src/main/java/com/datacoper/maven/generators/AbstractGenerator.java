@@ -9,7 +9,6 @@ import com.datacoper.maven.enums.properties.ModuleMapper;
 import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
-import com.datacoper.maven.util.DCProjectUtil;
 import org.apache.maven.project.MavenProject;
 
 /**
@@ -26,7 +25,6 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     private String layoutFileName;
 
     public AbstractGenerator(String moduleName, String layoutFileName, T data) {
-        this.project = project;
         this.data = prepareForGeneration(moduleName, data);
         this.layoutFileName = layoutFileName;
     }

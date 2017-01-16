@@ -2,7 +2,6 @@ package com.datacoper.maven.generators.impl;
 
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TAbstract;
-import org.apache.maven.project.MavenProject;
 
 public class ClassGenerator extends AbstractGenerator {
 

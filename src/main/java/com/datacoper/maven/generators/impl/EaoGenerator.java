@@ -5,11 +5,10 @@
  */
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
-import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.util.StringUtil;
-import org.apache.maven.project.MavenProject;
 
 /**
  *

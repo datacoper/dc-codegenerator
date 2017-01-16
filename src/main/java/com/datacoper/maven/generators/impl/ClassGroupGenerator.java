@@ -28,7 +28,8 @@ public class ClassGroupGenerator implements IGenerator {
         MavenProject newProject = DCProjectUtil.createMavenProjectFromParent(projectType, project);
 
         // Primeiro busca as classes do tipo de projeto
-        List<AbstractGenerator<TClass>> generators = EnumScaffold.forProjectType(projectType, newProject, data);
+        String moduleName = DCProjectUtil.getModuleName(project);
+        List<AbstractGenerator<TClass>> generators = EnumScaffold.forProjectType(projectType, moduleName, data);
 
         this.generator = new AbstractGroupGenerator(generators);
     }
