@@ -66,7 +66,7 @@ public enum EnumScaffold {
         for (EnumDCProjectType value : Arrays.asList(COMMON, SERVER, REST_COMMON, REST, WEB)) {
             try {
                 // TODO Separar a criação dos arquivos do projeto da lógica de criar os geradores.
-                MavenProject project = DCProjectUtil.getMavenProjectFromParent(value, parentProject);
+                MavenProject project = DCProjectUtil.createMavenProjectFromParent(value, parentProject);
                 list.addAll(forProjectType(value, project, data));
             } catch (Throwable e) {
                 LogUtil.error(e);

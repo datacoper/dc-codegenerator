@@ -104,7 +104,7 @@ public abstract class DCProjectUtil {
         return name;
     }
     
-    public static MavenProject getMavenProjectFromParent(EnumDCProjectType projectType, MavenProject parentProject) {
+    public static MavenProject createMavenProjectFromParent(EnumDCProjectType projectType, MavenProject parentProject) {
         return parentModuleName(parentProject, projectType.getQualifier());
     }
 

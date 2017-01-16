@@ -25,7 +25,7 @@ public class ClassGroupGenerator implements IGenerator {
 
     public ClassGroupGenerator(EnumDCProjectType projectType, MavenProject project, TClass data) {
         // Cria os arquivos do novo projeto sendo gerado
-        MavenProject newProject = DCProjectUtil.getMavenProjectFromParent(projectType, project);
+        MavenProject newProject = DCProjectUtil.createMavenProjectFromParent(projectType, project);
 
         // Primeiro busca as classes do tipo de projeto
         List<AbstractGenerator<TClass>> generators = EnumScaffold.forProjectType(projectType, newProject, data);
