@@ -22,7 +22,7 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
     @Parameter(property = "class", defaultValue = MojoConstants.PROPERTY_NOT_INFORMED)
     protected String _completeEntityName;
 
-    @Parameter(property = "entidade", required = true, defaultValue = MojoConstants.PROPERTY_NOT_INFORMED)
+    @Parameter(property = "entidade")
     protected String entityName;
 
     @Parameter(property = "company", readonly=true)
