@@ -7,9 +7,7 @@ package com.datacoper.maven.util;
 
 import java.io.PrintStream;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -20,8 +18,6 @@ import java.util.Set;
  * @author aline.cardoso
  */
 public class LinkedProperties extends Properties {
-    private final HashSet<Object> keys = new LinkedHashSet<>();
-
     private static final long serialVersionUID = 1L;
 
     private final Map<Object, Object> linkMap = new LinkedHashMap<>();

@@ -40,7 +40,9 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
         return clazz;
     }
 
-    private T prepareForGeneration(MavenProject project, T data) {
+    
+    @SuppressWarnings("unchecked")
+	private T prepareForGeneration(MavenProject project, T data) {
         return (T) new TClassBuilder((TClass) data)
                 .withModuleBasic(DCProjectUtil.getModuleName(project))
                 .build();
