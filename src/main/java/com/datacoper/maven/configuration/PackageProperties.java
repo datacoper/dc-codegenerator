@@ -28,7 +28,7 @@ public class PackageProperties {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
         
         try {
-            PROPERTIES.load (inputStream);
+            PROPERTIES.load(inputStream);
             
             processProperties(company);
         } catch (IOException e) {
@@ -69,8 +69,6 @@ public class PackageProperties {
             
             value = matcher.replaceAll(propertyValue);
         }
-        
-        System.out.println(value);
         
         return value;
     }
