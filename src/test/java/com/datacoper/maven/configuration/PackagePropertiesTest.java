@@ -8,7 +8,7 @@ import com.datacoper.maven.enums.options.CompanyOptions;
 
 public class PackagePropertiesTest {
 
-	private PackageProperties packageProperties = new PackageProperties(CompanyOptions.DATACOPER);
+	private PackageProperties packageProperties = new PackageProperties(CompanyOptions.DATACOPER, "agricola", "teste");
 	
 	@Test
 	public void deveSubstituirValorDePropriedadesExternas() {
