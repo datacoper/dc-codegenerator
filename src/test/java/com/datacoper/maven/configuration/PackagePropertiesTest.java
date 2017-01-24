@@ -14,7 +14,7 @@ public class PackagePropertiesTest {
 	public void deveSubstituirValorDePropriedadesExternas() {
 		String value = packageProperties.getValue("default.basedir");
 		
-		assertEquals("com.datacoper.cooperate", value);
+		assertEquals("com.datacoper.cooperate.agricola", value);
 	}
 	
 	@Test
