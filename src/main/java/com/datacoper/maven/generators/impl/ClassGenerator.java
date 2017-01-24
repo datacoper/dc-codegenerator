@@ -1,16 +1,17 @@
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.metadata.TAbstract;
 import org.apache.maven.project.MavenProject;
 
-public class ClassGenerator extends AbstractGenerator {
+import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.metadata.TClass;
 
-    private ClassGenerator(MavenProject project, TAbstract data) {
+public class ClassGenerator extends AbstractGenerator<TClass> {
+
+    private ClassGenerator(MavenProject project, TClass data) {
         super(project, "class", data);
     }
      
-    public static void generate(MavenProject project, TAbstract data) {
+    public static void generate(MavenProject project, TClass data) {
         new ClassGenerator(project, data).generate();
     }
 }

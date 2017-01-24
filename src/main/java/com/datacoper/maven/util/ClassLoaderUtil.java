@@ -41,7 +41,8 @@ public abstract class ClassLoaderUtil {
         return classLoader;
     }
     
-    public static ClassLoader loadClassLoader(MavenProject project) {
+    @SuppressWarnings("unchecked")
+	public static ClassLoader loadClassLoader(MavenProject project) {
         try {
             List<String> elements = CollectionsUtil.concat(project.getRuntimeClasspathElements(), project.getTestClasspathElements());
             

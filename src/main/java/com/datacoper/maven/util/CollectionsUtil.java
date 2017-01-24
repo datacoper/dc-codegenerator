@@ -26,10 +26,11 @@ public abstract class CollectionsUtil {
         return collection != null && collection.isEmpty();
     }
     
-    public static <E, T extends Collection<E>> List<E> concat(T... collections) {
-        Iterable<?> concat = Iterables.concat(collections);
+    @SuppressWarnings("unchecked")
+	public static <E, T extends Collection<E>> List<E> concat(T... collections) {
+        Iterable<E> concat = Iterables.concat(collections);
         
-        List list = new ArrayList();
+        List<E> list = new ArrayList<>();
         concat.forEach(item -> {
             list.add(item);
         });

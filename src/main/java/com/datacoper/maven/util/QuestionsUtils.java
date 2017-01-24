@@ -122,7 +122,7 @@ public final class QuestionsUtils {
     }
     
     public static <T> Set<T> questionGroupSingleQuestion(Function<String, T> converter, String groupName, String question, Object... params) {
-        Supplier questionMethod = () -> QuestionsUtils.questionForGroup(converter, question, true, params);
+        Supplier<Optional<T>> questionMethod = () -> QuestionsUtils.questionForGroup(converter, question, true, params);
         
         return questionGroup(groupName, questionMethod);
     }
@@ -206,9 +206,8 @@ public final class QuestionsUtils {
         return questionWithParamter(question, options, true, true, params);
     }
     
-    private static <T extends IOptions> Optional<T> questionWithParamter(String question, Class<T> options, boolean required, boolean inGroup, Object... params) throws OperationCanceledByUser {
-        Optional<T> value = Optional.empty();
-        
+    @SuppressWarnings("unchecked")
+	private static <T extends IOptions> Optional<T> questionWithParamter(String question, Class<T> options, boolean required, boolean inGroup, Object... params) throws OperationCanceledByUser {
         IOptions[] enumConstants = options.getEnumConstants();
         IOptions enums = enumConstants[0];
         
@@ -226,132 +225,4 @@ public final class QuestionsUtils {
     private static <T> Optional<T> questionForGroup(Function<String, T> converter, String question, boolean required, Object... params) {
         return question(converter, question, required, params);
     }
-    
-    
-
-//    public static String question(String question, Object... params) {
-//        return questionWithParamterRequired(question, false, params);
-//    }
-//    
-//    public static String questionNonEmpty(String question, Object... params) {
-//        return questionWithParamterRequired(question, true, params);
-//    }
-//    
-//    public static void question(String question, Consumer<String> setMethod, Object... params) {
-//        QuestionsUtils.question(question, false, setMethod, QuestionsUtils::converterStringToString, params);
-//    }
-//    
-//    public static <T> void question(String question, Consumer<T> setMethod, Function<String, T> converter, Object... params) {
-//        QuestionsUtils.question(question, false, setMethod, converter, params);
-//    }
-//    
-//    public static String questionNonEmpty(String question, Consumer<String> setMethod, Object... params) {
-//        return QuestionsUtils.question(question, true, setMethod, QuestionsUtils::converterStringToString, params);
-//    }
-//    
-//    public static <T> void questionNonEmpty(String question, Consumer<T> setMethod, Function<String, T> converter, Object... params) {
-//        QuestionsUtils.question(question, true, setMethod, converter, params);
-//    }
-//    
-//    public static <T> void questionGroup(String groupName, Consumer<T> addValue, Function<Consumer<T>, Boolean> groupQuestionMethod) {
-//        sysOutSeparatorHelper("INICIO {0}", groupName);
-//
-//        sysOutEndHelper();
-//
-//        while (true) {
-//
-//            boolean procced = true;
-//            
-//            try {
-//                procced = groupQuestionMethod.apply(addValue);
-//            } catch (Throwable e) {
-//                LogUtil.error(e.getMessage());
-//            }
-//
-//            if (!procced) break;
-//        }
-//
-//        sysOutSeparatorHelper("FIM  {0}", groupName);
-//    }
-//    
-//    public static <K, V> Map<String, String> questionMapValues(String groupName, boolean acceptEmptyValue) {
-//        return questionMapValues(groupName, QuestionsUtils::converterStringToString, QuestionsUtils::converterStringToString, acceptEmptyValue);
-//    }
-//    
-//    public static <K, V> Map<K, V> questionMapValues(String groupName, Function<String, K> convertKey, Function<String, V> conrvertValue, boolean acceptEmptyValue) {
-//        sysOutSeparatorHelper("INICIO PARAMS {0}", groupName);
-//        
-//        Map<K, V> map= new HashMap<>();
-//        
-//        while(true) {
-//            String key = QuestionsUtils.questionNonEmpty("Informe o nome da propriedade: ");
-//            if (MojoConstants.isStopInformationParams(key)) {
-//                break;
-//            }
-//            
-//            String value = questionWithParamterRequired("Informe o valor para propriedade {0}", !acceptEmptyValue, key);
-//            
-//            if (MojoConstants.isStopInformationParams(value)) {
-//                LogUtil.warn("A propriedade {0} não foi adicionada.", key);
-//                break;
-//            }
-//        }
-//        
-//        sysOutSeparatorHelper("FIM PARAMS {0}", groupName);
-//        
-//        return map;
-//    }
-//    
-//    public static String questionWithOption(String question, IOptions[] enums, Consumer<String> setMethod) {
-//        return questionWithOption(question, enums, setMethod, true);
-//    }
-//    
-//    public static String questionWithOptionNonEmpty(String question, IOptions[] enums, Consumer<String> setMethod) {
-//        return questionWithOption(question, enums, setMethod, false);
-//    }
-//    
-//    private static String questionWithOption(String question, IOptions[] enums, Consumer<String> setValue, boolean required) {
-//        questionWithParamterRequired(question, required);
-//        
-//        return "";
-//    }
-//    
-//    private static <T> String question(String question, boolean required, Consumer<T> setMethod, Function<String, T> converter, Object... params) {
-//
-//        String value = "";
-//        
-//        while(true) {
-//            value = questionWithParamterRequired(question, required, params);
-//            
-//            try {
-//                T valueConverted = converter.apply(value);
-//                
-//                setMethod.accept(valueConverted);
-//
-//                break;
-//            } catch (Throwable e) {
-//                LogUtil.error(e.getMessage());
-//            }
-//        }
-//        
-//        return value;
-//    }
-//    
-//    private static String questionWithParamterRequired(String question, boolean required, Object... params) {
-//        String value = "";
-//        
-//        while(true) {
-//            sysOutSeparatorHelper();
-//            
-//            value = ConsoleUtil.answer(question, params);
-//            
-//            if (!value.isEmpty()) break;
-//            
-//            if (!required) break;
-//            
-//            LogUtil.warn("Não é permitido valor vazio!");
-//        }
-//        
-//        return value;
-//    }
 }

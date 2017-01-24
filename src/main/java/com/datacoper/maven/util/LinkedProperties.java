@@ -7,7 +7,6 @@ package com.datacoper.maven.util;
 
 import java.io.PrintStream;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -17,11 +16,9 @@ import java.util.Set;
 
 /**
  *
- * @author aline.cardoso
+ * @author alessandro.abegg
  */
 public class LinkedProperties extends Properties {
-    private final HashSet<Object> keys = new LinkedHashSet<>();
-
     private static final long serialVersionUID = 1L;
 
     private final Map<Object, Object> linkMap = new LinkedHashMap<>();
@@ -66,5 +63,21 @@ public class LinkedProperties extends Properties {
     @Override
     public void list(PrintStream out) {
         linkMap.forEach((k, v) -> out.println(k.toString().concat(" = ").concat(v.toString())));
+    }
+    
+    @Override
+    public Set<String> stringPropertyNames() {
+    	Set<String> keys = new LinkedHashSet<>();
+    	
+    	linkMap.forEach((K, V) -> {
+    		keys.add(K.toString());
+    	});
+    	
+    	return keys;
+    }
+    
+    @Override
+    public String getProperty(String key) {
+    	return (String)linkMap.get(key);
     }
 }

@@ -1,5 +1,14 @@
 package com.datacoper.maven.mojos.wizard;
 
+import static com.datacoper.maven.util.QuestionsUtils.questionGroup;
+import static com.datacoper.maven.util.QuestionsUtils.questionInGroupNonEmpty;
+import static com.datacoper.maven.util.QuestionsUtils.questionMapValues;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,13 +19,6 @@ import com.datacoper.maven.exception.OperationCanceledByUser;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.util.Converters;
 import com.datacoper.maven.util.LambdaExceptionUtil;
-import static com.datacoper.maven.util.QuestionsUtils.questionGroup;
-import static com.datacoper.maven.util.QuestionsUtils.questionInGroupNonEmpty;
-import static com.datacoper.maven.util.QuestionsUtils.questionMapValues;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  *
@@ -28,21 +30,8 @@ public abstract class AbstractAnnotationWizard extends AbstractMojoWizard<Set<TA
         ATTRIBUTE, CLASS, METHOD
     }
 
-    private AnnotationLacale locale;
-
-    private String attribute;
-
     public AbstractAnnotationWizard() {
-        this("");
-    }
-    
-    public AbstractAnnotationWizard(String defaultPackage) {
-        this(AnnotationLacale.CLASS, null);
-    }
-    
-    public AbstractAnnotationWizard(AnnotationLacale annotationLacale, String attribute) {
-        this.locale = annotationLacale;
-        this.attribute = attribute;
+        
     }
 
     @Override
@@ -56,7 +45,7 @@ public abstract class AbstractAnnotationWizard extends AbstractMojoWizard<Set<TA
     }
     
     private Optional<TAnnotation> questionAttributeAnnotations() throws OperationCanceledByUser {
-        Optional<Class> annotationClass = questionInGroupNonEmpty(Converters::toClass, "Annotation class: ");
+        Optional<Class<?>> annotationClass = questionInGroupNonEmpty(Converters::toClass, "Annotation class: ");
         if (!annotationClass.isPresent()) return Optional.empty();
 
         Map<String, String> properties = null;

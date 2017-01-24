@@ -15,7 +15,7 @@ public class Converters {
         return value;
     }
     
-    public static Class toClass(String value) {
+    public static Class<?> toClass(String value) {
         if (!value.contains(".")) {
             try {
                 return ClassUtil.forName("java.lang.".concat(value));
