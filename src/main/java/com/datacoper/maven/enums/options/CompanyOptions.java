@@ -63,7 +63,7 @@ public enum CompanyOptions implements IOptions {
     @Override
     public CompanyOptions of(String boo) {
         for (CompanyOptions value : CompanyOptions.values()) {
-            if (value.getName().equalsIgnoreCase(boo)) {
+            if (String.valueOf(value.getCode()).equalsIgnoreCase(boo)) {
                 return value;
             }
         }
