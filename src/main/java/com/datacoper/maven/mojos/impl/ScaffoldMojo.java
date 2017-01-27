@@ -29,7 +29,7 @@ public class ScaffoldMojo extends AbstractDCMojo {
     }
 
     @Override
-    public String getMojoName() {
+    public String getMojoName() {                
         return "Scaffold";
     }
 

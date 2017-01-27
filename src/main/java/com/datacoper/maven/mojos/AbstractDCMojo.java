@@ -41,8 +41,6 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             validate();
-            
-            session.getUserProperties().put(key, value)
         } catch (Throwable e) {
             LogUtil.error(e);
             return;
