@@ -5,12 +5,14 @@
  */
 package com.datacoper.maven.generators;
 
+import org.apache.maven.project.MavenProject;
+
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.enums.properties.ModuleMapper;
 import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
 import com.datacoper.maven.util.DCProjectUtil;
-import org.apache.maven.project.MavenProject;
 
 /**
  *
@@ -40,7 +42,6 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
         return clazz;
     }
 
-    
     @SuppressWarnings("unchecked")
 	private T prepareForGeneration(MavenProject project, T data) {
         return (T) new TClassBuilder((TClass) data)
@@ -51,4 +52,6 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     protected String getModuleToPackage() {
         return ModuleMapper.from(data.getModuleBasic()).toLowerCase();
     }
+    
+    public abstract EnumDCProjectType getProjectTypeForGenerate();
 }

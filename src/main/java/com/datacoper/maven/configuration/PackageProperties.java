@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.exception.DcRuntimeException;
+import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.util.LinkedProperties;
 
 /**
@@ -61,6 +62,16 @@ public class PackageProperties {
     public String getValue(String property, String defaultValue) {
         return PROPERTIES.getProperty(property, defaultValue);
     }
+    
+    public void getValue(AbstractGenerator<?> abstractGenerator) {
+    	String simpleName = abstractGenerator.getClass().getSimpleName();
+    	
+    	int sizeWordGenerator = 9;
+    	
+    	String classForGenerate = simpleName.substring(0, simpleName.length() - sizeWordGenerator);
+    	
+    	//PROPERTIES.getProperty("default.".concat(module).classForGenerate);
+	}
     
     public void listProperties() {
         PROPERTIES.list(System.out);

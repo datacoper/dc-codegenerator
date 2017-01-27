@@ -5,6 +5,7 @@
  */
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
@@ -32,4 +33,9 @@ public class QueryGenerator extends AbstractGenerator<TClass>  {
                 .withClassName("Query".concat(data.getClassName()))
                 .build();
     }
+
+	@Override
+	public EnumDCProjectType getProjectTypeForGenerate() {
+		return EnumDCProjectType.SERVER;
+	}
 }

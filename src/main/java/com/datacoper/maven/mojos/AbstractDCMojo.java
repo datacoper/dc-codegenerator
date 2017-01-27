@@ -1,5 +1,6 @@
 package com.datacoper.maven.mojos;
 
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -16,6 +17,9 @@ import com.datacoper.maven.util.LogUtil;
 
 public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
 
+	@Parameter(defaultValue = "${session}")
+	private MavenSession session;
+	
     @Parameter(property = "project", required = true, readonly = true)
     protected MavenProject _project;
 
@@ -37,6 +41,8 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             validate();
+            
+            session.getUserProperties().put(key, value)
         } catch (Throwable e) {
             LogUtil.error(e);
             return;

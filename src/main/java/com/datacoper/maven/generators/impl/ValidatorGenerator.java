@@ -7,6 +7,7 @@ package com.datacoper.maven.generators.impl;
 
 import org.apache.maven.project.MavenProject;
 
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
@@ -35,4 +36,9 @@ public class ValidatorGenerator extends AbstractGenerator<TClass> {
                 .withClassName("Validador".concat(data.getClassName()))
                 .build();
     }
+
+	@Override
+	public EnumDCProjectType getProjectTypeForGenerate() {
+		return EnumDCProjectType.SERVER;
+	}
 }

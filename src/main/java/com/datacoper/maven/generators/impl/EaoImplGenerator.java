@@ -7,6 +7,7 @@ package com.datacoper.maven.generators.impl;
 
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.util.StringUtil;
 import org.apache.maven.project.MavenProject;
@@ -32,4 +33,9 @@ public class EaoImplGenerator extends AbstractGenerator<TClass> {
                 .withClassName(data.getClassName().concat("EAOImpl"))
                 .build();
     }
+
+	@Override
+	public EnumDCProjectType getProjectTypeForGenerate() {
+		return EnumDCProjectType.SERVER;
+	}
 }
