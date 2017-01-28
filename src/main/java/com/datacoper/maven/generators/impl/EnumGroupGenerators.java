@@ -31,7 +31,8 @@ public enum EnumGroupGenerators {
     		ListagemManagerGenerator.class,
     		FormManagerGenerator.class, 
     		ListagemXHTMLGenerator.class,
-    		FormXHTMLGenerator.class)
+    		FormXHTMLGenerator.class
+    		)
     ;
     
     private final Class<? extends  AbstractGenerator<TClass>>[] generators;

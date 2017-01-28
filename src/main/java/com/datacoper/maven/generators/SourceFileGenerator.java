@@ -43,7 +43,7 @@ public final class SourceFileGenerator {
     private void process() {
         String pathClass = createFolderForGeneratedFiles();
 
-        ConsoleUtil.sysOutl("\n*****************\n");
+        ConsoleUtil.sysOutl("*****************\n\n");
         
         LogUtil.info("generating file {0}", pathClass);
         
@@ -51,7 +51,7 @@ public final class SourceFileGenerator {
         
         template.generateTemplate(arquive, encoding);
         
-        LogUtil.info("\ngenerated file");
+        LogUtil.info("generated file");
     }
 
     private String createFolderForGeneratedFiles() {

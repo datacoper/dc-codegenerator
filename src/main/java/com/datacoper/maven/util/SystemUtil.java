@@ -5,6 +5,8 @@
  */
 package com.datacoper.maven.util;
 
+import java.io.File;
+
 /**
  *
  * @author aline.cardoso
@@ -13,6 +15,6 @@ public abstract class SystemUtil {
     private SystemUtil() { }
     
     public static String getFileSeparator() {
-        return System.getProperty("file.separator");
+        return String.valueOf(File.separatorChar);
     }
 }

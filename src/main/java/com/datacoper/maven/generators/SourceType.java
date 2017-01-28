@@ -7,6 +7,8 @@ package com.datacoper.maven.generators;
 
 import org.apache.maven.project.MavenProject;
 
+import com.datacoper.maven.util.SystemUtil;
+
 public enum SourceType {
     
     JAVA("java"){
@@ -14,23 +16,37 @@ public enum SourceType {
         public String getDirectory(MavenProject mavenProject) {
             final String sourceDirectory = mavenProject.getBuild().getSourceDirectory();
             
-            return sourceDirectory == null ? "src.main.java" : sourceDirectory;
+            return sourceDirectory == null ? processDefaultDirectory(mavenProject) : sourceDirectory;
         }
+
+		@Override
+		public String getDefaultPackage() {
+			return "src.main.java";
+		}
     },
     JAVA_TEST("java"){
         @Override
         public String getDirectory(MavenProject mavenProject) {
             final String testSourceDirectory = mavenProject.getBuild().getTestSourceDirectory();
             
-            return testSourceDirectory == null ? "src.test.java" : testSourceDirectory;
+            return testSourceDirectory == null ? processDefaultDirectory(mavenProject) : testSourceDirectory;
         }
+
+		@Override
+		public String getDefaultPackage() {
+			return "src.test.java";
+		}
     },
-    XHTML("xhtml")
-    {
+    XHTML("xhtml") {
         @Override
         public String getDirectory(MavenProject mavenProject) {
-            return "src.main.webapp";
+            return processDefaultDirectory(mavenProject);
         }
+
+		@Override
+		public String getDefaultPackage() {
+			return "src.main.webapp";
+		}
     },
     
     ;    
@@ -41,9 +57,18 @@ public enum SourceType {
         this.fileExtension = fileExtension;
     }
 
-    public abstract String getDirectory(MavenProject mavenProject);
         
     public String getFileExtension() {
         return fileExtension;
+    }
+    
+    public abstract String getDirectory(MavenProject mavenProject);
+    
+    public abstract String getDefaultPackage();
+    
+    public String processDefaultDirectory(MavenProject mavenProject) {
+    	String defaultPackage = this.getDefaultPackage();
+    	
+    	return mavenProject.getBasedir().getPath().concat(".").concat(defaultPackage).replaceAll("\\.", SystemUtil.getFileSeparator());
     }
 }
