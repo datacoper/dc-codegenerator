@@ -79,6 +79,7 @@ public class TClass implements TAbstract {
         return className;
     }
 
+    @Override
     public String getClassNameBasic() {
         return classNameBasic;
     }

@@ -41,7 +41,7 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
     
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {    
-    	if (isRunOnlyCommon() && !isCommonMavenProject()) return;
+    	if (isRunOnlyCommon() && isParentProject()) return;
     	
         try {
             LogUtil.info("\n\nStart plugin {0} @ {1}", getMojoName(), _project.getName());
@@ -56,8 +56,8 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
         }
     }
 
-    private boolean isCommonMavenProject() {
-		return DCProjectUtil.isProjectType(EnumDCProjectType.COMMON, _project);
+    private boolean isParentProject() {
+		return DCProjectUtil.isProjectType(EnumDCProjectType.PARENT, _project);
 	}
 
 	private boolean isRunOnlyCommon() {

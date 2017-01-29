@@ -17,6 +17,8 @@ public interface TAbstract {
     
     public String getClassName();
     
+    public String getClassNameBasic();
+    
     public CompanyOptions getCompany();
     
     public String getModuleBasic();

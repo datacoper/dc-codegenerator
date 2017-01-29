@@ -7,6 +7,7 @@ package com.datacoper.maven.generators;
 
 import org.apache.maven.project.MavenProject;
 
+import com.datacoper.maven.configuration.PackageProperties;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.enums.properties.ModuleMapper;
 import com.datacoper.maven.metadata.TAbstract;
@@ -40,6 +41,16 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     
     protected T prepareForGenerate(T clazz) {
         return clazz;
+    }
+    
+    public String getPackage() {
+    	PackageProperties properties = new PackageProperties(data.getCompany(), DCProjectUtil.getModuleName(project), data.getClassNameBasic());
+    	
+    	String moduleName = DCProjectUtil.getModuleName(project).toLowerCase();
+		String agrupador = getProjectTypeForGenerate().getAgrupador();
+		String classGenerator = this.getClass().getSimpleName().replaceAll("Generator", "");
+		
+		return properties.getValue(moduleName, agrupador, classGenerator);
     }
 
     @SuppressWarnings("unchecked")

@@ -12,7 +12,6 @@ import com.datacoper.maven.generators.impl.EnumGroupGenerators;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.LogUtil;
-import com.datacoper.maven.util.MavenUtil;
 
 public class ProcessGenerator {
 	
