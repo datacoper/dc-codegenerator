@@ -50,7 +50,6 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
             
             ClassLoaderUtil.loadClassLoader(_project);
             
-            
             init();
         } catch(Throwable e) {
             LogUtil.error(e);

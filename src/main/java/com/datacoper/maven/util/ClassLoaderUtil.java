@@ -45,8 +45,9 @@ public abstract class ClassLoaderUtil {
 	public static ClassLoader loadClassLoader(MavenProject project) {
         try {
             List<String> elements = CollectionsUtil.concat(project.getRuntimeClasspathElements(), project.getTestClasspathElements());
-            
+
             return initializeClassLoader(elements);
+            
 
         } catch (DependencyResolutionRequiredException | MalformedURLException ex) {
             ex.printStackTrace();

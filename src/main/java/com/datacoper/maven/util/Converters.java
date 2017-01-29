@@ -22,6 +22,6 @@ public class Converters {
             } catch (Throwable t) { }
         }
         
-        return ClassUtil.forName(value);
+        return ClassLoaderUtil.loadClass(value);
     }
 }
