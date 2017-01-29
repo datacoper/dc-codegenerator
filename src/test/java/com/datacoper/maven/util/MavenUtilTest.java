@@ -39,14 +39,4 @@ public class MavenUtilTest {
 
         assertThat(pathRetornadoPeloMetodo, is(pathEsperado));
     }
-
-    @Test
-    public void deveRetornarOCaminhoDoProjetoParent() {
-        build.setSourceDirectory("diretorioSource");
-        String pathThatShouldReturn = "diretorioBase.TestProject.diretorioSource.com.datacoper.teste".replace(".", File.separator);
-
-        String pathReturned = MavenUtil.getSourcePathForPackage(project, "com.datacoper.teste", SourceType.JAVA);
-
-        assertThat(pathReturned, is(pathThatShouldReturn));
-    }
 }

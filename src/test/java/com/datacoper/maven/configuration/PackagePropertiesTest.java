@@ -19,10 +19,10 @@ public class PackagePropertiesTest {
 	
 	@Test
 	public void deveSubstituirValorDePropriedadesInternas() {
-		String value = packageProperties.getValue("default.restcommon.dto");
-		assertEquals("com.datacoper.cooperate.rest.common.dto", value);
+		String value = packageProperties.getValue("default.restapicommon.dto");
+		assertEquals("com.datacoper.cooperate.agricola.rest.common.dto", value);
 		
 		value = packageProperties.getValue("default.restapi.resource");
-		assertEquals("com.datacoper.cooperate.rest.resources.impl", value);
+		assertEquals("com.datacoper.cooperate.agricola.rest.resources.impl", value);
 	}
 }
