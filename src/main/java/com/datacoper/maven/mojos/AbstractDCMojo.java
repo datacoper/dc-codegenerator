@@ -8,11 +8,13 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.generators.ProcessGenerator;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.util.ClassLoaderUtil;
 import com.datacoper.maven.util.ConsoleUtil;
+import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.LogUtil;
 
 public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
@@ -38,19 +40,32 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
     }
     
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {        
+    public void execute() throws MojoExecutionException, MojoFailureException {    
+    	if (isRunOnlyCommon() && !isCommonMavenProject()) return;
+    	
         try {
-            LogUtil.info("\n\nStart plugin {0}", getMojoName());
+            LogUtil.info("\n\nStart plugin {0} @ {1}", getMojoName(), _project.getName());
             
             important();
             
             ClassLoaderUtil.loadClassLoader(_project);
+            
+            
+            init();
         } catch(Throwable e) {
             LogUtil.error(e);
         }
     }
 
-    private void important() {
+    private boolean isCommonMavenProject() {
+		return DCProjectUtil.isProjectType(EnumDCProjectType.COMMON, _project);
+	}
+
+	private boolean isRunOnlyCommon() {
+		return true;
+	}
+
+	private void important() {
         ConsoleUtil.sysOutl("\n********************************************************************************************************************\n\n");
     }
 

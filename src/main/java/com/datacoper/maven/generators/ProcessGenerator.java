@@ -10,7 +10,9 @@ import org.apache.maven.project.MavenProject;
 
 import com.datacoper.maven.generators.impl.EnumGroupGenerators;
 import com.datacoper.maven.metadata.TClass;
+import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.LogUtil;
+import com.datacoper.maven.util.MavenUtil;
 
 public class ProcessGenerator {
 	
@@ -33,7 +35,6 @@ public class ProcessGenerator {
 				.stream()
 				.map(this::getConstructor)
 				.map(this::createInstance)
-				//.filter(generator -> generator.getProjectTypeForGenerate()) TODO filtrar para só gerar classes do respectivo modulo
 				.collect(Collectors.toList());
 		
 		process(listGenerators);
@@ -48,7 +49,9 @@ public class ProcessGenerator {
 		generators
 			.forEach(generator -> {					
 				try {
-					generator.generate();
+					if (DCProjectUtil.isType(project, generator.getProjectTypeForGenerate())) {
+						generator.generate();
+					}
 				} catch (Throwable e) {
 					LogUtil.warn(e.getMessage());
 				}
