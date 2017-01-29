@@ -6,7 +6,7 @@ import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TClass;
 
-public class ClassGenerator extends AbstractGenerator<TClass> {
+public class ClassGenerator extends AbstractGenerator {
 
     private ClassGenerator(MavenProject project, TClass data) {
         super(project, "class", data);
@@ -19,5 +19,10 @@ public class ClassGenerator extends AbstractGenerator<TClass> {
 	@Override
 	public EnumDCProjectType getProjectTypeForGenerate() {
 		return null;
+	}
+
+	@Override
+	protected String getClassName(String classNameBasic) {
+		return classNameBasic;
 	}
 }

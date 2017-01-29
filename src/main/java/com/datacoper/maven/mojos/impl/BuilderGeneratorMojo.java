@@ -38,7 +38,8 @@ public class BuilderGeneratorMojo extends AbstractDCMojo {
 	}
 
 	@Override
-	public Class<? extends AbstractGenerator<TClass>>[] getGenerators() {
+	@SuppressWarnings("unchecked")
+	public Class<? extends AbstractGenerator>[] getGenerators() {
 		return convert(BuilderGenerator.class);
 	}
 }

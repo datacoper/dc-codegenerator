@@ -97,10 +97,10 @@ public abstract class AbstractDCMojo extends AbstractMojo implements IMojo {
 
 	public abstract TClass getTClassWithWizard();
 
-	public abstract Class<? extends AbstractGenerator<TClass>>[] getGenerators();
+	public abstract Class<? extends AbstractGenerator>[] getGenerators();
 	
 	@SuppressWarnings("unchecked")
-	protected Class<? extends AbstractGenerator<TClass>>[] convert(Class<? extends AbstractGenerator<TClass>>... classes) {
+	protected Class<? extends AbstractGenerator>[] convert(Class<? extends AbstractGenerator>... classes) {
 		return classes;
 	}
 }

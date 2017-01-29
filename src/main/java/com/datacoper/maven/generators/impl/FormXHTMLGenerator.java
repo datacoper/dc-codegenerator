@@ -5,38 +5,29 @@
  */
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
+import org.apache.maven.project.MavenProject;
+
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.generators.SourceType;
-import org.apache.maven.project.MavenProject;
+import com.datacoper.maven.metadata.TClass;
 
 /**
  *
  * @author alessandro
  */
-public class FormXHTMLGenerator extends AbstractGenerator<TClass> {
+public class FormXHTMLGenerator extends AbstractGenerator {
     
     public FormXHTMLGenerator(MavenProject project, TClass data) {
         super(project, "formXHTML", data);
     }
 
-    public String getPackage() {        
-        return data.getClassNameBasic().toLowerCase();
-    }
-    
-    @Override
-    protected TClass prepareForGenerate(TClass clazz) {
-        return new TClassBuilder(clazz)
-                .withSourceType(SourceType.XHTML)
-                .withPackag(getPackage())
-                .withClassName("form".concat(data.getClassName()))
-                .build();
-    }
-
 	@Override
 	public EnumDCProjectType getProjectTypeForGenerate() {
 		return EnumDCProjectType.WEB_PAGES;
+	}
+
+	@Override
+	protected String getClassName(String classNameBasic) {
+		return "form".concat(classNameBasic);
 	}
 }

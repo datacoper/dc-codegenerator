@@ -98,12 +98,6 @@ public class TClassBuilder {
         
         return this;
     }
-
-//    public TClassBuilder setClassNameBasic(String classNameBasic) {
-//        this.classNameBasic = classNameBasic;
-//        
-//        return this;
-//    }
     
     public TClassBuilder withSuperClass(String superClass) {
         this.superClass = superClass;

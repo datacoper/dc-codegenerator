@@ -42,7 +42,7 @@ public class ClassMojo extends AbstractDCMojo {
 	}
 
 	@Override
-	public Class<? extends AbstractGenerator<TClass>>[] getGenerators() {
+	public Class<? extends AbstractGenerator>[] getGenerators() {
 		return null;
 	}
 }

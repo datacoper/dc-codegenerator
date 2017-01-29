@@ -10,27 +10,24 @@ import org.apache.maven.project.MavenProject;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
 
 /**
  *
  * @author alessandro
  */
-public class EntityGenerator extends AbstractGenerator<TClass> {
+public class EntityGenerator extends AbstractGenerator {
     
     public EntityGenerator(MavenProject project, TClass data) {
         super(project, "entity", data);
     }
 
-    @Override
-    protected TClass prepareForGenerate(TClass clazz) {
-        return new TClassBuilder(clazz)
-                .withPackag(getPackage())
-                .build();
-    }
-
 	@Override
 	public EnumDCProjectType getProjectTypeForGenerate() {
 		return EnumDCProjectType.COMMON;
+	}
+
+	@Override
+	protected String getClassName(String classNameBasic) {
+		return classNameBasic;
 	}
 }

@@ -6,7 +6,6 @@
 package com.datacoper.maven.generators.impl;
 
 import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.metadata.TClass;
 
 /**
  *
@@ -35,14 +34,14 @@ public enum EnumGroupGenerators {
     		)
     ;
     
-    private final Class<? extends  AbstractGenerator<TClass>>[] generators;
+    private final Class<? extends AbstractGenerator>[] generators;
 
     @SafeVarargs
-	private EnumGroupGenerators(Class<? extends AbstractGenerator<TClass>>... generators) {
+	private EnumGroupGenerators(Class<? extends AbstractGenerator>... generators) {
         this.generators = generators;
     }
     
-    public Class<? extends AbstractGenerator<TClass>>[] getGenerators() {
+    public Class<? extends AbstractGenerator>[] getGenerators() {
 		return generators;
 	}
 }

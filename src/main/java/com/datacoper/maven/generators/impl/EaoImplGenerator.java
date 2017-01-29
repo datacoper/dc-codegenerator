@@ -5,37 +5,29 @@
  */
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
+import org.apache.maven.project.MavenProject;
+
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.util.StringUtil;
-import org.apache.maven.project.MavenProject;
+import com.datacoper.maven.metadata.TClass;
 
 /**
  *
  * @author alessandro
  */
-public class EaoImplGenerator extends AbstractGenerator<TClass> {
+public class EaoImplGenerator extends AbstractGenerator {
     
     public EaoImplGenerator(MavenProject project, TClass data) {
         super(project, "eaoImpl", data);
     }
 
-    public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.server.eao.impl", data.getCompany().getPackag(), getModuleToPackage());
-    }
-    
-    @Override
-    protected TClass prepareForGenerate(TClass clazz) {
-        return new TClassBuilder(clazz)
-                .withPackag(getPackage())
-                .withClassName(data.getClassName().concat("EAOImpl"))
-                .build();
-    }
-
 	@Override
 	public EnumDCProjectType getProjectTypeForGenerate() {
 		return EnumDCProjectType.SERVER;
+	}
+
+	@Override
+	protected String getClassName(String classNameBasic) {
+		return classNameBasic.concat("EAOImpl");
 	}
 }

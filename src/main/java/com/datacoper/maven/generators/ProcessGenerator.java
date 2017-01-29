@@ -24,13 +24,13 @@ public class ProcessGenerator {
 		this.data = data;
 	}
 	
-	public void process(AbstractGenerator<?>... generators) {
+	public void process(AbstractGenerator... generators) {
 		process(Arrays.asList(generators));
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void process(Class<? extends AbstractGenerator<TClass>>... generators) {
-		List<AbstractGenerator<TClass>> listGenerators = Arrays.asList(generators)
+	public void process(Class<? extends AbstractGenerator>... generators) {
+		List<AbstractGenerator> listGenerators = Arrays.asList(generators)
 				.stream()
 				.map(this::getConstructor)
 				.map(this::createInstance)
@@ -44,7 +44,7 @@ public class ProcessGenerator {
 		process(groupGenerator.getGenerators());
 	}
 	
-	public void process(List<? extends AbstractGenerator<?>> generators) {
+	public void process(List<? extends AbstractGenerator> generators) {
 		generators
 			.forEach(generator -> {					
 				try {
@@ -57,7 +57,7 @@ public class ProcessGenerator {
 			});
 	}
 
-	private AbstractGenerator<TClass> createInstance(Constructor<? extends AbstractGenerator<TClass>> constructor) {
+	private AbstractGenerator createInstance(Constructor<? extends AbstractGenerator> constructor) {
 		try {
 			return constructor.newInstance(project, data);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -67,7 +67,7 @@ public class ProcessGenerator {
 		return null;
 	}
 
-	private Constructor<? extends AbstractGenerator<TClass>> getConstructor(Class<? extends AbstractGenerator<TClass>> clazz) {
+	private Constructor<? extends AbstractGenerator> getConstructor(Class<? extends AbstractGenerator> clazz) {
 		try {
 			return clazz.getConstructor(MavenProject.class, TClass.class);
 		} catch (NoSuchMethodException | SecurityException e) {

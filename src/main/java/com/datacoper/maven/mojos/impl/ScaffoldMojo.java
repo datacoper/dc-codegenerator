@@ -27,7 +27,7 @@ public class ScaffoldMojo extends AbstractDCMojo {
 	}
 	
 	@Override
-	public Class<? extends AbstractGenerator<TClass>>[] getGenerators() {
+	public Class<? extends AbstractGenerator>[] getGenerators() {
 		return EnumGroupGenerators.SCAFFOLD.getGenerators();
 	}
 
