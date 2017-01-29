@@ -89,8 +89,6 @@ public abstract class StringUtil {
     }
     
     public static String completeWith(String str, int maxCharacterInString, int blankSpace, String complete, boolean extraCompleteRigth) {
-        maxCharacterInString = maxCharacterInString - (blankSpace * 2);
-                
         if (str.length() > maxCharacterInString) {
             str = str.substring(0, maxCharacterInString);
         }
@@ -99,7 +97,7 @@ public abstract class StringUtil {
             str = " ".concat(str).concat(" ");
         }
 
-        int qtdComplete = maxCharacterInString - str.length();
+        int qtdComplete = (maxCharacterInString - (blankSpace * 2) - str.length()) / 2;
 
         if (qtdComplete > 0) {
             for (int i = 0; i < qtdComplete; i++) {

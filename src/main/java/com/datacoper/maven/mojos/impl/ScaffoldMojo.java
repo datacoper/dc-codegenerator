@@ -5,12 +5,14 @@
  */
 package com.datacoper.maven.mojos.impl;
 
-import com.datacoper.maven.generators.impl.ScaffoldGenerator;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+
+import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.generators.impl.EnumGroupGenerators;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.mojos.AbstractDCMojo;
 import com.datacoper.maven.mojos.wizard.impl.datacoper.ClassDatacoperWizard;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.ResolutionScope;
 
 /**
  *
@@ -19,20 +21,18 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 @Mojo(name = "scaffold", requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class ScaffoldMojo extends AbstractDCMojo {
     
-    @Override
-    public void init() {
-        TClass clazz = new ClassDatacoperWizard(this).start();
-        
-        new ScaffoldGenerator(_project, clazz).generate();
-    }
+	@Override
+	public TClass getTClassWithWizard() {
+		return new ClassDatacoperWizard(this).start();
+	}
+	
+	@Override
+	public Class<? extends AbstractGenerator>[] getGenerators() {
+		return EnumGroupGenerators.SCAFFOLD.getGenerators();
+	}
 
     @Override
-    public String getMojoName() {
+    public String getMojoName() {                
         return "Scaffold";
-    }
-
-    @Override
-    public boolean isValidateTypeProjectToRun() {
-        return true;
     }
 }

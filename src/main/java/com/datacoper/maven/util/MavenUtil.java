@@ -24,15 +24,11 @@ public abstract class MavenUtil {
     private MavenUtil() { }
     
     public static String getSourcePathForPackage(MavenProject project, String packag, SourceType sourceType) {
-        String defaultPackage = sourceType.getDirectory(project);
+        String directory = sourceType.getDirectory(project);
+        
+        packag = packag.replaceAll("\\.", "/");
 
-        defaultPackage = ".".concat(defaultPackage).concat(".");
-
-        final String pathBaseDir = project.getBasedir().getPath();
-
-        defaultPackage = pathBaseDir.concat(".").concat(project.getArtifactId()).concat(defaultPackage);
-
-        return defaultPackage.concat(packag).replace('.', File.separatorChar);
+        return directory.concat(SystemUtil.getFileSeparator()).concat(packag);
     }
 
     static MavenProject createNewMavenProject(String projectPath) {

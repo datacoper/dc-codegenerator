@@ -32,10 +32,10 @@ public class MavenUtilTest {
     }
 
     @Test
-    public void deveRetornarOCaminhoParaGerarOsFontes() throws Exception {
+    public void deveRetornarOCaminhoParaGerarOsFontesQuando() throws Exception {
         String packag = "com.datacoper.teste";
-        String pathEsperado = "diretorioBase.TestProject.src.main.java.".concat(packag).replace(".", File.separator);
-        String pathRetornadoPeloMetodo = MavenUtil.getSourcePathForPackage(project, packag, SourceType.JAVA);
+        String pathEsperado = "diretorioBase/src/test/java/".concat(packag).replace(".", File.separator);
+        String pathRetornadoPeloMetodo = MavenUtil.getSourcePathForPackage(project, packag, SourceType.JAVA_TEST);
 
         assertThat(pathRetornadoPeloMetodo, is(pathEsperado));
     }
@@ -49,5 +49,4 @@ public class MavenUtilTest {
 
         assertThat(pathReturned, is(pathThatShouldReturn));
     }
-
 }

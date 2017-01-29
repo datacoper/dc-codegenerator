@@ -5,27 +5,29 @@
  */
 package com.datacoper.maven.generators;
 
+import org.apache.maven.project.MavenProject;
+
+import com.datacoper.maven.configuration.PackageProperties;
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.enums.properties.ModuleMapper;
-import com.datacoper.maven.metadata.TAbstract;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.metadata.builder.TClassBuilder;
 import com.datacoper.maven.util.DCProjectUtil;
-import org.apache.maven.project.MavenProject;
 
 /**
  *
  * @author alessandro
  * @param <T>
  */
-public abstract class AbstractGenerator<T extends TAbstract> implements IGenerator {
+public abstract class AbstractGenerator implements IGenerator {
     
     protected MavenProject project;
     
-    protected T data;
+    protected TClass data;
 
     private String layoutFileName;
     
-    public AbstractGenerator(MavenProject project, String layoutFileName, T data) {
+    public AbstractGenerator(MavenProject project, String layoutFileName, TClass data) {
         this.project = project;
         this.data = prepareForGeneration(project, data);
         this.layoutFileName = layoutFileName;
@@ -36,14 +38,27 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
         SourceFileGenerator.generate(project, layoutFileName, prepareForGenerate(data));
     }
     
-    protected T prepareForGenerate(T clazz) {
-        return clazz;
+    protected TClass prepareForGenerate(TClass clazz) {
+    	return new TClassBuilder(clazz)
+		        .withPackag(getPackage())
+		        .withClassName(getClassName(data.getClassNameBasic()))
+		        .build();
+    }
+    
+    protected abstract String getClassName(String classNameBasic);
+
+    protected String getPackage() {
+    	PackageProperties properties = new PackageProperties(data.getCompany(), DCProjectUtil.getModuleName(project), data.getClassNameBasic());
+    	
+    	String moduleName = DCProjectUtil.getModuleName(project).toLowerCase();
+		String agrupador = getProjectTypeForGenerate().getAgrupador();
+		String classGenerator = this.getClass().getSimpleName().replaceAll("Generator", "");
+		
+		return properties.getValue(moduleName, agrupador, classGenerator);
     }
 
-    
-    @SuppressWarnings("unchecked")
-	private T prepareForGeneration(MavenProject project, T data) {
-        return (T) new TClassBuilder((TClass) data)
+	private TClass prepareForGeneration(MavenProject project, TClass data) {
+        return new TClassBuilder(data)
                 .withModuleBasic(DCProjectUtil.getModuleName(project))
                 .build();
     }
@@ -51,4 +66,6 @@ public abstract class AbstractGenerator<T extends TAbstract> implements IGenerat
     protected String getModuleToPackage() {
         return ModuleMapper.from(data.getModuleBasic()).toLowerCase();
     }
+    
+    public abstract EnumDCProjectType getProjectTypeForGenerate();
 }

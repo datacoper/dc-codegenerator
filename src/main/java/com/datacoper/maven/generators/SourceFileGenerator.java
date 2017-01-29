@@ -1,18 +1,19 @@
 package com.datacoper.maven.generators;
 
+import static com.datacoper.maven.util.SystemUtil.getFileSeparator;
+
+import java.io.File;
+
+import org.apache.maven.project.MavenProject;
+
 import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
 import com.datacoper.freemarker.conf.TemplateFreeMarker;
 import com.datacoper.maven.exception.DcRuntimeException;
-import com.datacoper.maven.metadata.TAbstract;
+import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.util.ConsoleUtil;
 import com.datacoper.maven.util.FileUtil;
 import com.datacoper.maven.util.LogUtil;
 import com.datacoper.maven.util.MavenUtil;
-import org.apache.maven.project.MavenProject;
-
-import java.io.File;
-
-import static com.datacoper.maven.util.SystemUtil.getFileSeparator;
 
 public final class SourceFileGenerator {
 
@@ -20,11 +21,11 @@ public final class SourceFileGenerator {
     
     private final MavenProject project;
     
-    private final TAbstract data;
+    private final TClass data;
 
     private String encoding;
 
-    private SourceFileGenerator(MavenProject project, String templateName, TAbstract data, String encoding) {
+    private SourceFileGenerator(MavenProject project, String templateName, TClass data, String encoding) {
         this.project = project;
         this.template = initTemplate(templateName);
         this.data = data;
@@ -43,7 +44,7 @@ public final class SourceFileGenerator {
     private void process() {
         String pathClass = createFolderForGeneratedFiles();
 
-        ConsoleUtil.sysOutl("\n*****************\n");
+        ConsoleUtil.sysOutl("*****************\n\n");
         
         LogUtil.info("generating file {0}", pathClass);
         
@@ -51,7 +52,7 @@ public final class SourceFileGenerator {
         
         template.generateTemplate(arquive, encoding);
         
-        LogUtil.info("\ngenerated file");
+        LogUtil.info("generated file");
     }
 
     private String createFolderForGeneratedFiles() {
@@ -76,11 +77,11 @@ public final class SourceFileGenerator {
         return arquive;
     }
 
-    public static void generate(MavenProject project, String templateName, TAbstract data) {
+    public static void generate(MavenProject project, String templateName, TClass data) {
         generate(project, templateName, data, "ISO-8859-1");
     }
 
-    public static void generate(MavenProject project, String templateName, TAbstract data, String charset) {
+    public static void generate(MavenProject project, String templateName, TClass data, String charset) {
         new SourceFileGenerator(project, templateName, data, charset).process();
     }
 }

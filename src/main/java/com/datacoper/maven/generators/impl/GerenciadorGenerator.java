@@ -5,33 +5,29 @@
  */
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
-import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.util.StringUtil;
 import org.apache.maven.project.MavenProject;
+
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
+import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.metadata.TClass;
 
 /**
  *
  * @author alessandro
  */
-public class GerenciadorGenerator extends AbstractGenerator<TClass> {
+public class GerenciadorGenerator extends AbstractGenerator {
     
     public GerenciadorGenerator(MavenProject project, TClass data) {
         super(project, "gerenciador", data);
     }
 
-    public String getPackage() {
-        String name = data.getClassName().toLowerCase();
-        
-        return StringUtil.format("com.{0}.cooperate.{1}.server.{2}", data.getCompany().getPackag(), getModuleToPackage(), name);
-    }
-    
-    @Override
-    protected TClass prepareForGenerate(TClass clazz) {
-        return new TClassBuilder(clazz)
-                .withPackag(getPackage())
-                .withClassName("Gerenciador".concat(data.getClassName()))
-                .build();
-    }
+	@Override
+	public EnumDCProjectType getProjectTypeForGenerate() {
+		return EnumDCProjectType.SERVER;
+	}
+
+	@Override
+	protected String getClassName(String classNameBasic) {
+		return "Gerenciador".concat(classNameBasic);
+	}
 }

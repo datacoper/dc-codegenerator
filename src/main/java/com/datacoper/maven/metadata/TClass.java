@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.generators.SourceType;
 
-public class TClass implements TAbstract {
+public class TClass {
     
     private final SourceType sourceType;
     
@@ -50,22 +50,18 @@ public class TClass implements TAbstract {
         this.implement = implement;
     }
 
-    @Override
     public SourceType getSourceType() {
         return sourceType;
     }
 
-    @Override
     public String getModuleBasic() {
         return moduleBasic;
     }
 
-    @Override
     public CompanyOptions getCompany() {
         return company;
     }
 
-    @Override
     public String getPackage() {
         return packag;
     }
@@ -74,7 +70,6 @@ public class TClass implements TAbstract {
         return Collections.unmodifiableSet(imports);
     }
 
-    @Override
     public String getClassName() {
         return className;
     }

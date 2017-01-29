@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- *
  * @author alessandro
  */
 public abstract class AbstractAttributeWizard extends AbstractMojoWizard<Set<TAttribute>> {

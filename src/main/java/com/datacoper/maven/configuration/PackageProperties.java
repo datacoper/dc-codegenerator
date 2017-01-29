@@ -27,19 +27,19 @@ public class PackageProperties {
     
     private static final Properties PROPERTIES = new LinkedProperties();
     
-    public PackageProperties(CompanyOptions company, String module, String entityName) {
-        init(company, module, entityName);
+    public PackageProperties(CompanyOptions company, String moduleName, String entityName) {
+        init(company, moduleName, entityName);
     }
 
-	private void init(CompanyOptions company, String module, String entityName) {
+	private void init(CompanyOptions company, String moduleName, String entityName) {
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
         
         try {
             PROPERTIES.load(inputStream);
             
-            Map<String, Object> externalProperties = loadExternalProperties(company, module, entityName);
+            Map<String, Object> externalProperties = loadExternalProperties(company, moduleName, entityName);
             
-            processProperties(externalProperties, module, entityName);
+            processProperties(externalProperties, moduleName, entityName);
         } catch (IOException e) {
             throw new DcRuntimeException(e);
         }
@@ -62,6 +62,16 @@ public class PackageProperties {
         return PROPERTIES.getProperty(property, defaultValue);
     }
     
+	public String getValue(String moduleName, String module, String classGenerator) {
+		moduleName = moduleName.toLowerCase();
+		module = module.toLowerCase();
+		classGenerator = classGenerator.toLowerCase();
+		
+		String defaultPropertyValue = PROPERTIES.getProperty("default.".concat(module).concat(".").concat(classGenerator));
+		
+		return getValue(moduleName.concat(".").concat(module).concat(".").concat(classGenerator), defaultPropertyValue);
+	}
+    
     public void listProperties() {
         PROPERTIES.list(System.out);
     }
@@ -72,7 +82,7 @@ public class PackageProperties {
             
             value = processExternalProperties(value, propertyName, externalProperties);
             
-            value = processProperties(value, propertyName);
+            value = processInternalProperties(value, propertyName);
             
             System.err.println(propertyName + " - " + value);
             
@@ -80,7 +90,7 @@ public class PackageProperties {
         });
     }
     
-    private String processProperties(String value, String propertyName) {
+    private String processInternalProperties(String value, String propertyName) {
         Pattern compile = Pattern.compile("\\{([a-z].*?)\\}");
         Matcher matcher = compile.matcher(value);
         
@@ -90,6 +100,10 @@ public class PackageProperties {
         
         while (matcher.find()) {
             String propertyValue = PROPERTIES.getProperty(matcher.group(1));
+            
+            if (propertyValue == null) {
+            	throw new DcRuntimeException("Não foi localizada a propriedade Interna ({0})", propertyName);
+            }
             
             matcher.appendReplacement(sb, propertyValue);
             

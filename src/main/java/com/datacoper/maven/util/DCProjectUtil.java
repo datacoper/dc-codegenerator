@@ -134,4 +134,17 @@ public abstract class DCProjectUtil {
         
         return mavenProject;
     }
+
+	public static EnumDCProjectType getModuleType(MavenProject project) {
+		String projectName = project.getName();
+		
+		for(EnumDCProjectType enumDCProjectType : EnumDCProjectType.values()) {
+			String qualifier = enumDCProjectType.getQualifier();
+			if (projectName.contains(qualifier)) {
+				return enumDCProjectType;
+			}
+		}
+		
+		return null;
+	}
 }

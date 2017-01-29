@@ -5,29 +5,27 @@
  */
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
-import com.datacoper.maven.util.StringUtil;
 import org.apache.maven.project.MavenProject;
 
+import com.datacoper.maven.enums.properties.EnumDCProjectType;
+import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.metadata.TClass;
 
-public class FormManagerGenerator extends AbstractGenerator<TClass>{
+
+public class FormManagerGenerator extends AbstractGenerator {
     
     public FormManagerGenerator(MavenProject project, TClass tClass) {
         super(project, "formManager", tClass);
     }
-    
-    public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.{2}", data.getCompany().getPackag(), getModuleToPackage(), data.getClassNameBasic()).toLowerCase();
-    }
-    
-    @Override
-    protected TClass prepareForGenerate(TClass clazz) {
-        return new TClassBuilder(clazz)
-                .withPackag(getPackage())
-                .withClassName("Form".concat(data.getClassName()).concat("Manager"))                
-                .build();
-    }
+
+	@Override
+	public EnumDCProjectType getProjectTypeForGenerate() {
+		return EnumDCProjectType.WEB;
+	}
+
+	@Override
+	protected String getClassName(String classNameBasic) {
+		return "Form".concat(classNameBasic).concat("Manager");
+	}
     
 }
