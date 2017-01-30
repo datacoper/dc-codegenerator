@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.datacoper.maven.metadata.builder;
+package com.datacoper.maven.metadata;
 
 import com.datacoper.maven.enums.options.BooleanOptions;
 import com.datacoper.maven.enums.options.ModifierOptions;
-import com.datacoper.maven.metadata.TAnnotation;
-import com.datacoper.maven.metadata.TAttribute;
+
 import java.util.Set;
 
 /**

@@ -8,9 +8,10 @@ package com.datacoper.maven.util;
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.enums.options.ModifierOptions;
 import com.datacoper.maven.metadata.TAttribute;
+import com.datacoper.maven.metadata.TAttributeBuilder;
 import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TAttributeBuilder;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
+import com.datacoper.maven.metadata.TClassBuilder;
+
 import org.apache.maven.project.MavenProject;
 
 import java.lang.reflect.Field;

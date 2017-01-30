@@ -16,11 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.enums.properties.EnumSourceType;
 import com.datacoper.maven.exception.OperationCanceledByUser;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
+import com.datacoper.maven.metadata.TClassBuilder;
 import com.datacoper.maven.mojos.IMojo;
 import com.datacoper.maven.mojos.wizard.impl.AnnotationWizard;
 import com.datacoper.maven.mojos.wizard.impl.AttributeWizard;
@@ -96,17 +96,16 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
         
         String canonicalNameSuperClass = superClass.map(ext -> ext.getCanonicalName()).orElse(null);
         
-        clazz = new TClass(
-                EnumSourceType.JAVA,
-                company,
-                packag,
-                className,
-                className,
-                canonicalNameSuperClass,
-                new HashSet<>(),
-                prepareToModel(implement),
-                attributes,
-                annotations);
+        clazz = new TClassBuilder()
+        		.withCompany(company)
+        		.withPackag(packag)
+        		.withClassName(className)
+        		.withClassNameBasic(className)
+        		.withSuperClass(canonicalNameSuperClass)
+        		.withImplement(prepareToModel(implement))
+        		.withAttributes(attributes)
+        		.withAnnotations(annotations)
+        		.build();
     }
     
     private Set<String> prepareToModel(Set<Class<?>> values) {

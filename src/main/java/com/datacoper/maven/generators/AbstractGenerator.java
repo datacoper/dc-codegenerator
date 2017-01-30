@@ -12,7 +12,7 @@ import com.datacoper.maven.configuration.PackageProperties;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.enums.properties.ModuleMapper;
 import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
+import com.datacoper.maven.metadata.TClassBuilder;
 import com.datacoper.maven.util.DCProjectUtil;
 
 /**

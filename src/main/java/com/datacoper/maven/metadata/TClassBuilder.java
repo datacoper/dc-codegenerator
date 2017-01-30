@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.datacoper.maven.metadata.builder;
+package com.datacoper.maven.metadata;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
 import com.datacoper.maven.enums.properties.EnumSourceType;
-import com.datacoper.maven.metadata.TAnnotation;
-import com.datacoper.maven.metadata.TAttribute;
-import com.datacoper.maven.metadata.TClass;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +17,7 @@ import java.util.Set;
  */
 public class TClassBuilder {
     
-    private EnumSourceType sourceType;
+    private EnumSourceType sourceType = EnumSourceType.JAVA;
     
     private CompanyOptions company;
     
@@ -88,7 +86,7 @@ public class TClassBuilder {
     }
 
     public TClassBuilder withImports(Set<String> imports) {
-        this.imports = imports;
+        this.imports.addAll(imports);
         
         return this;
     }
@@ -106,19 +104,23 @@ public class TClassBuilder {
     }
 
     public TClassBuilder withImplement(Set<String> implement) {
-        this.implement = implement;
+        this.implement.addAll(implement);
         
         return this;
     }
 
     public TClassBuilder withAttributes(Set<TAttribute> attributes) {
         this.attributes = attributes;
+        attributes
+        		.forEach(attribute -> {
+        			imports.add(attribute.getImport());
+        		});
         
         return this;
     }
 
     public TClassBuilder withAnnotations(Set<TAnnotation> annotations) {
-        this.annotations = annotations;
+        this.annotations.addAll(annotations);
         
         return this;
     }

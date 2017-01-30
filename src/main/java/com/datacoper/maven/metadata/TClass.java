@@ -32,11 +32,11 @@ public class TClass {
 
     private final Set<TAnnotation> annotations;
     
-    public TClass(EnumSourceType sourceType, CompanyOptions empresa, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+    TClass(EnumSourceType sourceType, CompanyOptions empresa, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
         this(sourceType, empresa, "", packag, className, classNameBasic, superClass, imports, implement, attributes, annotations);
     }
     
-    public TClass(EnumSourceType sourceType, CompanyOptions empresa, String moduleBasic, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+    TClass(EnumSourceType sourceType, CompanyOptions empresa, String moduleBasic, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
         this.sourceType = sourceType;
         this.company = empresa;
         this.moduleBasic = moduleBasic;
