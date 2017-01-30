@@ -16,8 +16,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.enums.properties.EnumSourceType;
 import com.datacoper.maven.exception.OperationCanceledByUser;
-import com.datacoper.maven.generators.SourceType;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
@@ -97,7 +97,7 @@ public abstract class AbstractClassWizard extends AbstractMojoWizard<TClass> {
         String canonicalNameSuperClass = superClass.map(ext -> ext.getCanonicalName()).orElse(null);
         
         clazz = new TClass(
-                SourceType.JAVA,
+                EnumSourceType.JAVA,
                 company,
                 packag,
                 className,

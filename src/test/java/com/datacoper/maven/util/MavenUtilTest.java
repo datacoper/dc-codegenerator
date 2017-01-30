@@ -1,11 +1,12 @@
 package com.datacoper.maven.util;
 
-import com.datacoper.maven.generators.SourceType;
 import org.apache.maven.model.Build;
 import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import com.datacoper.maven.enums.properties.EnumSourceType;
 
 import java.io.File;
 
@@ -35,7 +36,7 @@ public class MavenUtilTest {
     public void deveRetornarOCaminhoParaGerarOsFontesQuando() throws Exception {
         String packag = "com.datacoper.teste";
         String pathEsperado = "diretorioBase/src/test/java/".concat(packag).replace(".", File.separator);
-        String pathRetornadoPeloMetodo = MavenUtil.getSourcePathForPackage(project, packag, SourceType.JAVA_TEST);
+        String pathRetornadoPeloMetodo = MavenUtil.getSourcePathForPackage(project, packag, EnumSourceType.JAVA_TEST);
 
         assertThat(pathRetornadoPeloMetodo, is(pathEsperado));
     }

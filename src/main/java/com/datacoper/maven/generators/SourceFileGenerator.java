@@ -8,6 +8,7 @@ import org.apache.maven.project.MavenProject;
 
 import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
 import com.datacoper.freemarker.conf.TemplateFreeMarker;
+import com.datacoper.maven.enums.properties.EnumSourceType;
 import com.datacoper.maven.exception.DcRuntimeException;
 import com.datacoper.maven.metadata.TClass;
 import com.datacoper.maven.util.ConsoleUtil;
@@ -56,7 +57,7 @@ public final class SourceFileGenerator {
     }
 
     private String createFolderForGeneratedFiles() {
-        SourceType sourceType = data.getSourceType();
+        EnumSourceType sourceType = data.getSourceType();
         
         String folderClass = MavenUtil.getSourcePathForPackage(project, data.getPackage(), sourceType);
         

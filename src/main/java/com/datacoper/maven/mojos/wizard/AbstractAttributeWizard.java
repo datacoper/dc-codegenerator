@@ -33,6 +33,7 @@ public abstract class AbstractAttributeWizard extends AbstractMojoWizard<Set<TAt
         AbstractAnnotationWizard annotationWizard = getAbstractAnnotationWizard();
 
         String name = null;
+        String alias = null;
         Optional<Class<?>> type = Optional.empty();
         ModifierOptions encapsulation = ModifierOptions.PRIVATE;
         BooleanOptions staticc = BooleanOptions.FALSE;
@@ -41,11 +42,16 @@ public abstract class AbstractAttributeWizard extends AbstractMojoWizard<Set<TAt
         
         if (questionName()) {
             name = questionInGroupNonEmpty("Attribute name : ");
+            alias = name;
         }
         
         try {
             if (questionType()) {
                 type = questionInGroupNonEmpty(Converters::toClass, "{0} type: ", name);
+            }
+            
+            if (questionAlias()) {
+                alias = questionInGroupNonEmpty("alias for {0}: ", name);
             }
 
             if (questionEncapsulation()) {
@@ -73,6 +79,7 @@ public abstract class AbstractAttributeWizard extends AbstractMojoWizard<Set<TAt
                 staticc,
                 finall,
                 name,
+                alias,
                 BooleanOptions.TRUE,
                 BooleanOptions.TRUE,
                 annotations);
@@ -83,6 +90,10 @@ public abstract class AbstractAttributeWizard extends AbstractMojoWizard<Set<TAt
     
     protected boolean questionName() {
         return true;
+    }
+    
+    protected boolean questionAlias() {
+    	return true;
     }
     
     protected boolean questionType() {

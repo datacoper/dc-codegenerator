@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  *
- * @author aline.cardoso
+ * @author alessandro.abegg
  */
 public class TAttributeBuilder {
     private String importt;
@@ -25,6 +25,8 @@ public class TAttributeBuilder {
     private BooleanOptions finalAttribute;
     
     private String name;
+    
+    private String alias;
 
     private BooleanOptions generateGet;
 
@@ -43,10 +45,11 @@ public class TAttributeBuilder {
         this.generateGet = attribute.getGenerateGet();
         this.generateSet = attribute.getGenerateSet();
         this.annotations = attribute.getAnnotations();
+        this.alias = attribute.getAlias();
     }
     
     public TAttribute build() {
-        return new TAttribute(importt, encapsulation, staticAttribute, finalAttribute, name, generateGet, generateSet, annotations);
+        return new TAttribute(importt, encapsulation, staticAttribute, finalAttribute, name, alias, generateGet, generateSet, annotations);
     }
     
     public TAttributeBuilder withImport(String importt) {
@@ -71,6 +74,11 @@ public class TAttributeBuilder {
     
     public TAttributeBuilder withName(String name) {
         this.name = name;
+        return this;
+    }
+    
+    public TAttributeBuilder withAlias(String alias) {
+        this.alias = alias;
         return this;
     }
     

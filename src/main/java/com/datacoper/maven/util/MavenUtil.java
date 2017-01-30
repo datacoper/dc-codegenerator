@@ -5,8 +5,9 @@
  */
 package com.datacoper.maven.util;
 
+import com.datacoper.maven.enums.properties.EnumSourceType;
 import com.datacoper.maven.exception.DcRuntimeException;
-import com.datacoper.maven.generators.SourceType;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public abstract class MavenUtil {
 
     private MavenUtil() { }
     
-    public static String getSourcePathForPackage(MavenProject project, String packag, SourceType sourceType) {
+    public static String getSourcePathForPackage(MavenProject project, String packag, EnumSourceType sourceType) {
         String directory = sourceType.getDirectory(project);
         
         packag = packag.replaceAll("\\.", "/");

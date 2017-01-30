@@ -7,6 +7,7 @@ package com.datacoper.maven.generators.impl;
 
 import org.apache.maven.project.MavenProject;
 
+import com.datacoper.maven.annotations.GeneratorConfig;
 import com.datacoper.maven.enums.properties.EnumDCProjectType;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TClass;
@@ -15,6 +16,7 @@ import com.datacoper.maven.metadata.TClass;
  *
  * @author alessandro
  */
+@GeneratorConfig(packag = "validator")
 public class ValidatorTestGenerator extends AbstractGenerator {
     
     public ValidatorTestGenerator(MavenProject project, TClass data) {

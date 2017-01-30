@@ -32,6 +32,9 @@ public class PackageProperties {
     }
 
 	private void init(CompanyOptions company, String moduleName, String entityName) {
+		moduleName = moduleName.toLowerCase();
+		entityName = entityName.toLowerCase();
+		
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
         
         try {
@@ -67,9 +70,17 @@ public class PackageProperties {
 		module = module.toLowerCase();
 		classGenerator = classGenerator.toLowerCase();
 		
-		String defaultPropertyValue = PROPERTIES.getProperty("default.".concat(module).concat(".").concat(classGenerator));
+		String propertyDefault = "default.".concat(module).concat(".").concat(classGenerator);
 		
-		return getValue(moduleName.concat(".").concat(module).concat(".").concat(classGenerator), defaultPropertyValue);
+		String property = moduleName.concat(".").concat(module).concat(".").concat(classGenerator);
+		
+		String value = getValue(property, getValue(propertyDefault));
+		
+		if (value == null) {
+			throw new DcRuntimeException("Não foi possível encontrar configuracao de package para:\n\n{0}\n{1}\n", property, propertyDefault);
+		}
+		
+		return value;
 	}
     
     public void listProperties() {
@@ -83,8 +94,6 @@ public class PackageProperties {
             value = processExternalProperties(value, propertyName, externalProperties);
             
             value = processInternalProperties(value, propertyName);
-            
-            System.err.println(propertyName + " - " + value);
             
             PROPERTIES.setProperty(propertyName, value);
         });

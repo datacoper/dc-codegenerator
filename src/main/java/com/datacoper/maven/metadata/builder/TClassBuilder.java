@@ -6,7 +6,7 @@
 package com.datacoper.maven.metadata.builder;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.generators.SourceType;
+import com.datacoper.maven.enums.properties.EnumSourceType;
 import com.datacoper.maven.metadata.TAnnotation;
 import com.datacoper.maven.metadata.TAttribute;
 import com.datacoper.maven.metadata.TClass;
@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public class TClassBuilder {
     
-    private SourceType sourceType;
+    private EnumSourceType sourceType;
     
     private CompanyOptions company;
     
@@ -57,7 +57,7 @@ public class TClassBuilder {
         this.sourceType = clazz.getSourceType();
     }
     
-    public TClassBuilder withSourceType(SourceType sourceType) {
+    public TClassBuilder withSourceType(EnumSourceType sourceType) {
         this.sourceType = sourceType;
         
         return this;

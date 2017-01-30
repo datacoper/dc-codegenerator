@@ -6,11 +6,11 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.generators.SourceType;
+import com.datacoper.maven.enums.properties.EnumSourceType;
 
 public class TClass {
     
-    private final SourceType sourceType;
+    private final EnumSourceType sourceType;
     
     private  final CompanyOptions company;
     
@@ -32,11 +32,11 @@ public class TClass {
 
     private final Set<TAnnotation> annotations;
     
-    public TClass(SourceType sourceType, CompanyOptions empresa, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+    public TClass(EnumSourceType sourceType, CompanyOptions empresa, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
         this(sourceType, empresa, "", packag, className, classNameBasic, superClass, imports, implement, attributes, annotations);
     }
     
-    public TClass(SourceType sourceType, CompanyOptions empresa, String moduleBasic, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
+    public TClass(EnumSourceType sourceType, CompanyOptions empresa, String moduleBasic, String packag, String className, String classNameBasic, String superClass, Set<String> imports, Set<String> implement, Set<TAttribute> attributes, Set<TAnnotation> annotations) {
         this.sourceType = sourceType;
         this.company = empresa;
         this.moduleBasic = moduleBasic;
@@ -50,7 +50,7 @@ public class TClass {
         this.implement = implement;
     }
 
-    public SourceType getSourceType() {
+    public EnumSourceType getSourceType() {
         return sourceType;
     }
 

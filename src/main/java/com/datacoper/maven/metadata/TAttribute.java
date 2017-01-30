@@ -18,6 +18,8 @@ public class TAttribute {
     private final BooleanOptions finalAttribute;
     
     private final String name;
+    
+    private final String alias;
 
     private final BooleanOptions generateGet;
 
@@ -25,12 +27,13 @@ public class TAttribute {
     
     private final Set<TAnnotation> annotations;
 
-    public TAttribute(String importt, ModifierOptions encapsulation, BooleanOptions staticAttribute, BooleanOptions finalAttribute, String name, BooleanOptions generateGet, BooleanOptions generateSet, Set<TAnnotation> annotations) {
+    public TAttribute(String importt, ModifierOptions encapsulation, BooleanOptions staticAttribute, BooleanOptions finalAttribute, String name, String alias, BooleanOptions generateGet, BooleanOptions generateSet, Set<TAnnotation> annotations) {
         this.importt = importt;
         this.encapsulation = encapsulation;
         this.staticAttribute = staticAttribute;
         this.finalAttribute = finalAttribute;
         this.name = name;
+        this.alias = alias;
         this.generateGet = generateGet;
         this.generateSet = generateSet;
         this.annotations = annotations;
@@ -59,6 +62,10 @@ public class TAttribute {
     public String getName() {
         return name;
     }
+    
+    public String getAlias() {
+		return alias;
+	}
 
     public BooleanOptions getGenerateGet() {
         return generateGet;

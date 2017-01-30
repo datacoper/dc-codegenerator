@@ -16,7 +16,7 @@ public class ${className} {
     public void validateRequiredFields(${class.classNameBasic} ${class.classNameBasic?uncap_first}) {
         new ValidateMandatoryFields()
         <#list class.attributes as attribute>
-                .add(${class.classNameBasic?uncap_first}.get${attribute.name?cap_first}(), "${attribute.name}")
+                .add(${class.classNameBasic?uncap_first}.get${attribute.name?cap_first}(), "${attribute.alias}")
         </#list>
                 .validate();
     }
