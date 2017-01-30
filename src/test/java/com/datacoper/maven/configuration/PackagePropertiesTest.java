@@ -22,7 +22,7 @@ public class PackagePropertiesTest {
 		String value = packageProperties.getValue("default.restapicommon.dto");
 		assertEquals("com.datacoper.cooperate.agricola.rest.common.dto", value);
 		
-		value = packageProperties.getValue("default.restapi.resource");
+		value = packageProperties.getValue("default.restapi.resourceimpl");
 		assertEquals("com.datacoper.cooperate.agricola.rest.resources.impl", value);
 	}
 }

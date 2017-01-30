@@ -18,7 +18,6 @@ import com.datacoper.maven.util.DCProjectUtil;
 /**
  *
  * @author alessandro
- * @param <T>
  */
 public abstract class AbstractGenerator implements IGenerator {
     

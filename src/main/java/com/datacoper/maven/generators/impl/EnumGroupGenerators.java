@@ -37,7 +37,7 @@ public enum EnumGroupGenerators {
     private final Class<? extends AbstractGenerator>[] generators;
 
     @SafeVarargs
-	private EnumGroupGenerators(Class<? extends AbstractGenerator>... generators) {
+    private EnumGroupGenerators(Class<? extends AbstractGenerator>... generators) {
         this.generators = generators;
     }
     
