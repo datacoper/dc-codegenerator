@@ -3,7 +3,7 @@ Gerador de códigos Datacoper
 
 ## Utilização
 Para rodar o plugin, utilize o seguinte comando no diretório onde existe um *pom* agregador (*parent pom*). Como, por exemplo, na pasta `Faturamento-Parent`.
-> `com.datacoper.maven.plugin:dcgeneratecode-maven-plugin:<goal>`
+> `mvn com.datacoper.maven.plugin:dcgeneratecode-maven-plugin:<goal>`
 
 Onde `<goal>` pode ser um dos seguintes:
 - `scaffold` : Cria uma entidade nova e toda a stack de classes, do modelo ao REST.
