@@ -13,4 +13,4 @@ Onde `<goal>` pode ser um dos seguintes:
 # Roadmap
 - [x] **v1.2.0** - Gerar o código de um grupo específico (common, server, rest).
 - [x] **v1.3.0** - Gerar código com classes que estão no classpath dos projetos.
-- [ ] **v1.4.9** - Ler uma classe e gerar artefatos específicos baseados nela (builder, resource, etc.).
+- [ ] **v1.4.0** - Ler uma classe e gerar artefatos específicos baseados nela (builder, resource, etc.).
