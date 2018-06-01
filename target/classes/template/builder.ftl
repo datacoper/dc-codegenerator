@@ -1,29 +1,29 @@
 <#assign className = class.className>
-<#assign classVariableName = class.classNameBasic?uncap_first>
+<#assign classVariableName = class.entityName?uncap_first>
 <#assign attributes = class.attributes>
-<#assign company = class.company.packag>
+<#assign company = class.company.packageName>
 <#assign module = class.moduleBasic?lower_case>
 package ${class.package};
 
-import com.${company}.cooperate.${module}.common.entities.${class.classNameBasic};
+import com.${company}.cooperate.${module}.common.entities.${class.entityName};
 import com.datacoper.cooperate.arquitetura.common.entities.builder.EntityBuilder;
 <#list class.imports as import>
 import ${import};
 </#list>
 
-public class ${className} implements EntityBuilder<${class.classNameBasic}> {
+public class ${className} implements EntityBuilder<${class.entityName}> {
     
-    private ${class.classNameBasic} ${classVariableName} = new ${class.classNameBasic}();
+    private ${class.entityName} ${classVariableName} = new ${class.entityName}();
 
     <#include "defaultConstructor.ftl">
 
     @Override
-    public ${class.classNameBasic} build() {
+    public ${class.entityName} build() {
         return ${classVariableName};
     }
 
-    public ${className} withId${classVariableName?cap_first}(Long id${class.classNameBasic}) {
-        ${classVariableName}.setId${class.classNameBasic}(id${class.classNameBasic});
+    public ${className} withId${classVariableName?cap_first}(Long id${class.entityName}) {
+        ${classVariableName}.setId${class.entityName}(id${class.entityName});
         return this;
     }
 

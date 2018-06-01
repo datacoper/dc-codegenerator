@@ -1,5 +1,5 @@
 <#assign className = class.className>
-<#assign company = class.company.packag>
+<#assign company = class.company.packageName>
 <#assign module = class.moduleBasic?lower_case>
 package ${class.package};
 
@@ -11,8 +11,8 @@ import java.util.List;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanConsultaGroup;
 import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
 import com.datacoper.cooperate.arquitetura.common.interfaces.IRemote;
-import com.${company}.cooperate.${module}.common.entities.${class.classNameBasic};
-import com.${company}.cooperate.${module}.common.consultas.${class.classNameBasic}VO;
+import com.${company}.cooperate.${module}.common.entities.${class.entityName};
+import com.${company}.cooperate.${module}.common.consultas.${class.entityName}VO;
 <#list class.imports as import>
 import ${import};
 </#list>
@@ -20,15 +20,15 @@ import ${import};
 @Remote
 public interface ${className} extends IRemote {
     
-    public Optional<${class.classNameBasic}> find(Long id);
+    public Optional<${class.entityName}> find(Long id);
 
-    public Optional<${class.classNameBasic}> findFetch(Long id);
+    public Optional<${class.entityName}> findFetch(Long id);
 
-    public PageResult<${class.classNameBasic}VO> find(BeanConsultaGroup consultaGroup);
+    public PageResult<${class.entityName}VO> find(BeanConsultaGroup consultaGroup);
 
-    public List<${class.classNameBasic}> find(List<Long> ids);
+    public List<${class.entityName}> find(List<Long> ids);
 
-    public Long confirm(${class.classNameBasic} ${class.classNameBasic?uncap_first});
+    public Long confirm(${class.entityName} ${class.entityName?uncap_first});
 
     public void excluir(Long id);
 }

@@ -13,7 +13,7 @@ import com.datacoper.cooperate.arquitetura.common.dto.formgeneric.SelectableObje
 public class ${className} extends SelectableObject<Long> {
     private static final long serialVersionUID = 1L;
     
-    private Long id${class.classNameBasic};
+    private Long id${class.entityName};
 
     <#include "attributes.ftl">
 
@@ -24,7 +24,7 @@ public class ${className} extends SelectableObject<Long> {
     <#include "getterAndSetter.ftl">
     @Override
     public Long getId() {
-        return getId${class.classNameBasic}();
+        return getId${class.entityName}();
     }
 
     @Override

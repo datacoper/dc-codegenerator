@@ -1,64 +1,66 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.datacoper.maven.generators;
 
-import com.datacoper.maven.configuration.PackageProperties;
-import com.datacoper.maven.enums.properties.ToFromModule;
-import com.datacoper.maven.metadata.TAbstract;
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
-import com.datacoper.maven.util.DCProjectUtil;
-import com.datacoper.maven.util.StringUtil;
-import java.util.Arrays;
-import java.util.List;
-import org.apache.maven.project.MavenProject;
+import java.io.File;
 
-/**
- *
- * @author alessandro
- * @param <T>
- */
-public abstract class AbstractGenerator<T extends TAbstract> implements IGenerator {
-    
-    protected MavenProject project;
-    
-    protected T data;
-    
-    protected String layout;
-    
-    public AbstractGenerator(MavenProject project, String layout, T data, AbstractGenerator... generators) {
-        this(project, layout, data, Arrays.asList(generators));
-    }
-    
-    public AbstractGenerator(MavenProject project, String layout, T data, List<AbstractGenerator> generators) {
-        this.project = project;
-        this.data = prepareForGenerate(project, data);
-        this.layout = layout;
-    }
-    
-    @Override
-    public void generate() {
-        GenericGenerator.generate(project, layout, prepareForGenerate(data));
-    }
-    
-    protected T prepareForGenerate(T clazz) {
-        return clazz;
+import com.datacoper.freemaker.conf.ConfigurationFreeMarker;
+import com.datacoper.freemaker.conf.TemplateFreeMarker;
+import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.util.FileUtil;
+import com.datacoper.maven.util.LogUtil;
+
+public abstract class AbstractGenerator {
+
+    public void process(TemplateModel templateModel) {
+        
+    	templateModel.setPackag(getPackage(templateModel));
+    	
+    	ConfigurationFreeMarker config = new ConfigurationFreeMarker();
+        
+    	TemplateFreeMarker templateFreeMarker = new TemplateFreeMarker(getTemplateName() + ".ftl", config);
+    	
+    	File finalJavaFile = getJavaFile(templateModel); 
+        
+    	FileUtil.createFolderIfNecessary(finalJavaFile.getParent());
+    	
+        System.out.println("\n*****************\n");
+        
+        LogUtil.info("generating class {0}", finalJavaFile);
+        
+        templateFreeMarker.add("class", templateModel);
+        templateFreeMarker.generateTemplate(finalJavaFile);
+        
+        LogUtil.info("\ngenerated class");
     }
 
-    private T prepareForGenerate(MavenProject project, T data) {
-        return (T) new TClassBuilder((TClass) data)
-                .withModuleBasic(DCProjectUtil.getName(project))
-                .build();
-    }
+	public File getJavaFile(TemplateModel templateModel) {
+		File sourceFolder = new File(new File(templateModel.getProjectParentFile(), templateModel.getModuleBasic()+getProject().getSuffix()), "src/main/java");
+
+        if(!sourceFolder.exists()) {
+        	throw new RuntimeException("Source folder not exists: "+sourceFolder);
+        }
+        
+        String packageName = getPackage(templateModel);
+        
+        packageName = packageName.replace('.', File.separatorChar);
+        
+        File packageFolder = new File(sourceFolder, packageName);
+        
+        File finalJavaFile = new File(packageFolder, templateModel.getClassName().concat(".java"));
+		return finalJavaFile;
+	}
+
+	private String getPackage(TemplateModel templateModel) {
+		return getPackage(templateModel.getEntityName(), templateModel.getCompany(), templateModel.getModuleBasic());
+	}
+
+    public abstract String getTemplateName();
     
-    protected String getPackage() {
-        return PackageProperties.get().getValue(layout) StringUtil.format("com.{0}.cooperate.{1}.common.consultas", data.getCompany().getPackag(), getModuleToPackage());
-    }
+    public abstract EnumProject getProject();
     
-    protected String getModuleToPackage() {
-        return ToFromModule.from(data.getModuleBasic());
-    }
+    public abstract String getPackage(String entityName, CompanyOptions companyOptions, String moduleName);
+    
+    public abstract String getClassName(String entityName);
+    
 }

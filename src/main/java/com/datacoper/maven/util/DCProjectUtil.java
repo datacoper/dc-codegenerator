@@ -1,40 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.datacoper.maven.util;
 
-import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.enums.properties.EnumDCProjectType;
-import com.datacoper.maven.enums.properties.EnumPackaging;
-import com.datacoper.maven.exception.DcRuntimeException;
 import org.apache.maven.project.MavenProject;
 
-/**
- *
- * @author alessandro
- */
+import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.enums.properties.EnumPackaging;
+import com.datacoper.maven.exception.DcRuntimeException;
+
 public abstract class DCProjectUtil {
     private DCProjectUtil() { }
     
-    public static Class<?> loadEntityByName(MavenProject project, String entityName) {
-        String moduleName = getName(project);
-        
-        for (CompanyOptions company : CompanyOptions.values()) {
-            String className = StringUtil.format("com.{0}.cooperate.{1}.common.entities.{2}", company.getPackag(), moduleName.toLowerCase(), entityName);
-            
-            try {
-                return ClassLoaderUtil.loadClass(className);
-            } catch (Throwable e) {
-                LogUtil.warn("class not found for {0}", className);
-            }
-        }
-        
-        throw new DcRuntimeException("Entity not initialized.");
-    }
-    
-    public static boolean isType(MavenProject project, EnumDCProjectType enumDCProjectType) {
+    public static boolean isType(MavenProject project, EnumProject enumDCProjectType) {
         try {
             validateTypeAndPackaging(project, enumDCProjectType);
         } catch (DcRuntimeException e) {
@@ -44,14 +19,14 @@ public abstract class DCProjectUtil {
         return true;
     }
     
-    public static void validateTypeAndPackaging(MavenProject project, EnumDCProjectType enumDCProjectType) {
+    public static void validateTypeAndPackaging(MavenProject project, EnumProject enumDCProjectType) {
         validatePackaging(enumDCProjectType.getPackaging(), project);
         
         validateQualifierForProject(enumDCProjectType, project);
     }
 
-    public static void validateQualifierForProject(EnumDCProjectType enumDCProjectType, MavenProject project) throws DcRuntimeException {
-        final String qualifierRequired = enumDCProjectType.getQualifier();
+    public static void validateQualifierForProject(EnumProject enumDCProjectType, MavenProject project) throws DcRuntimeException {
+        final String qualifierRequired = enumDCProjectType.getSuffix();
         final String qualifierProject = DCProjectUtil.getQualifier(project);
         
         if (!qualifierRequired.equals(qualifierProject)) {
@@ -73,13 +48,13 @@ public abstract class DCProjectUtil {
         return project.getArtifactId().replaceAll(name, "");
     }
     
-    public static boolean isProjectType(EnumDCProjectType projectType, MavenProject project) {
-        return projectType.getPackaging().getPackaging().equals(project.getPackaging()) && isTerminateWith(project, projectType.getQualifier());
+    public static boolean isProjectType(EnumProject projectType, MavenProject project) {
+        return projectType.getPackaging().getPackaging().equals(project.getPackaging()) && isTerminateWith(project, projectType.getSuffix());
     }
 
     public static String getModuleNameThroughParent(MavenProject parentProjetct) {
         final String name = parentProjetct.getArtifactId();
-        if (!isProjectType(EnumDCProjectType.PARENT, parentProjetct)) {
+        if (!isProjectType(EnumProject.PARENT, parentProjetct)) {
             throw new DcRuntimeException("The project {0} not is a project Parent", name);
         }
 
@@ -99,8 +74,8 @@ public abstract class DCProjectUtil {
                 .replaceAll("Web", "");
     }
     
-    public static MavenProject getMavenProjectFromParent(EnumDCProjectType projectType, MavenProject parentProject) {
-        return startModule(parentProject, projectType.getQualifier()); 
+    public static MavenProject getMavenProjectFromParent(EnumProject projectType, MavenProject parentProject) {
+        return startModule(parentProject, projectType.getSuffix()); 
     }
 
     private static boolean isTerminateWith(MavenProject project, String terminate) {

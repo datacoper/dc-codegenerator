@@ -1,9 +1,10 @@
 package com.datacoper.maven.enums.options;
 
-import com.datacoper.maven.util.StringUtil;
 import java.lang.reflect.Modifier;
 
-public enum ModifierOptions implements IOptions {
+import com.datacoper.maven.util.StringUtil;
+
+public enum ModifierOptions {
     PRIVATE(1, "Private") {
         @Override
         public boolean isModifierPresent(int modifier) {
@@ -58,17 +59,6 @@ public enum ModifierOptions implements IOptions {
         return description;
     }
 
-    @Override
-    public ModifierOptions of(String encapsulation) {
-        for (ModifierOptions item : ModifierOptions.values()) {
-            if (item.getDescription().equals(encapsulation)) {
-                return item;
-            }
-        }
-
-        throw new RuntimeException(StringUtil.format("Inválid Modifier {0}", encapsulation));
-    }
-
     public static ModifierOptions of(int encapsulation) {
         for (ModifierOptions item : ModifierOptions.values()) {
             if (item.getId() == encapsulation) {
@@ -79,19 +69,5 @@ public enum ModifierOptions implements IOptions {
         throw new RuntimeException(StringUtil.format("Inválid Modifier {0}", encapsulation));
     }
 
-    @Override
-    public String print() {
-        StringBuilder toString = new StringBuilder();
-        
-        for (ModifierOptions encapsulation : ModifierOptions.values()) {
-            toString.append(encapsulation.getId())
-                    .append(" - ")
-                    .append(encapsulation.getDescription())
-                    .append("\n");
-        }
-        
-        return toString.append("\n").toString();
-    }
-    
     public abstract boolean isModifierPresent(int modifier);
 }

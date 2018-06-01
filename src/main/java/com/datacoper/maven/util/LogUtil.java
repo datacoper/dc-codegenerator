@@ -25,11 +25,20 @@ public abstract class LogUtil {
     }
     
     public static void info(String message) {
-        log.info(message);
+        if(log != null) {
+        	log.info(message);
+        }else {
+    		System.out.println(message);
+        }
+    	
     }
     
     public static void info(Throwable throwable) {
-        log.info(throwable);
+    	if(log != null) {
+    		log.info(throwable);
+    	}else {
+    		System.out.println(throwable.getMessage());
+    	}
     }
     
     public static void error(String message, Object... params) {
@@ -37,11 +46,17 @@ public abstract class LogUtil {
     }
     
     public static void error(String message) {
-        log.error(message);
+    	if(log != null) {
+    		log.error(message);
+    	}
     }
     
     public static void error(Throwable throwable) {
-        log.error(throwable);
+    	if(log != null) {
+    		log.error(throwable);
+    	}else {
+    		System.out.println(throwable.getMessage());
+    	}
     }
     
     public static void warn(String message, Object... params) {
@@ -49,10 +64,18 @@ public abstract class LogUtil {
     }
     
     public static void warn(String message) {
-        log.warn(message);
+    	if(log != null) {
+    		log.warn(message);
+    	}else {
+    		System.out.println(message);
+    	}
     }
     
     public static void warn(Throwable throwable) {
-        log.warn(throwable);
+    	if(log != null) {
+    		log.warn(throwable);
+    	}else {
+    		System.out.println(throwable.getMessage());
+    	}
     }
 }

@@ -5,35 +5,30 @@
  */
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.builder.TClassBuilder;
+import com.datacoper.maven.enums.options.CompanyOptions;
+import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
-import com.datacoper.maven.util.DCProjectUtil;
 import com.datacoper.maven.util.StringUtil;
-import org.apache.maven.project.MavenProject;
 
-/**
- *
- * @author alessandro
- */
-public class ValidatorGenerator extends AbstractGenerator<TClass> {
-    
-    public ValidatorGenerator(MavenProject project, TClass data) {
-        super(project, "validator", data);
-    }
-
-    public String getPackage() {
-        String name = data.getClassName().toLowerCase();
-        String module = DCProjectUtil.getName(project);
-        
-        return StringUtil.format("com.{0}.cooperate.{1}.server.{2}", data.getCompany().getPackag(), getModuleToPackage(), name);
-    }
+public class ValidatorGenerator extends AbstractGenerator {
     
     @Override
-    protected TClass prepareForGenerate(TClass clazz) {
-        return new TClassBuilder(clazz)
-                .withPackag(getPackage())
-                .withClassName("Validador".concat(data.getClassName()))
-                .build();
+    public String getTemplateName() {
+    	return "validator";
     }
+
+    @Override
+    public String getPackage(String entityName, CompanyOptions companyOptions, String moduleName) {
+        return StringUtil.format("com.{0}.cooperate.{1}.server.{2}", companyOptions.getPackageName(), moduleName.toLowerCase(), entityName.toLowerCase());
+    }
+
+	@Override
+	public EnumProject getProject() {
+		return EnumProject.SERVER;
+	}
+
+	@Override
+	public String getClassName(String entityName) {
+		return "Validador"+entityName;
+	}
 }

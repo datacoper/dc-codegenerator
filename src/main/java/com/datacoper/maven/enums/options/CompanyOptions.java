@@ -1,100 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.datacoper.maven.enums.options;
 
-import java.util.Optional;
-
-/**
- *
- * @author alessandro
- */
-public enum CompanyOptions implements IOptions {
-    DATACOPER(0, 1, "Datacoper", "datacoper", Optional.empty()),
-    ALFA(1, 2, "Agricola Cooperalfa" , "cooperalfa", Optional.of("Cooperalfa"));
-    
-    private final int id;
-    
-    private final int code;
+public enum CompanyOptions {
+    DATACOPER("Datacoper", "datacoper"),
+    ALFA("Agricola Cooperalfa" , "cooperalfa");
     
     private final String name;
     
-    private final String packag;
+    private final String packageName;
     
-    private final Optional<String> projectIdentifier;
-
-    private CompanyOptions(int id, int codigo, String descricao, String packag, Optional<String> projectIdentifier) {
-        this.id = id;
-        this.code = codigo;
-        this.name = descricao;
-        this.packag = packag;
-        this.projectIdentifier = projectIdentifier;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getCode() {
-        return code;
-    }
+    
+    private CompanyOptions(String name, String packageName) {
+		this.name = name;
+		this.packageName = packageName;
+	}
 
     public String getName() {
         return name;
     }
-
-    public String getPackag() {
-        return packag;
-    }
-
-    public Optional<String> getProjectIdentifier() {
-        return projectIdentifier;
-    }
-
-    @Override
-    public String print() {
-        StringBuilder toString = new StringBuilder();
-        
-        for (CompanyOptions value : CompanyOptions.values()) {
-            toString.append(value.getCode())
-                    .append(" - ")
-                    .append(value.getName())
-                    .append("\n");
-        }
-        
-        return toString.append("\n").toString();
-    }
-
-    @Override
-    public CompanyOptions of(String boo) {
-        for (CompanyOptions value : CompanyOptions.values()) {
-            if (value.getName().equalsIgnoreCase(boo)) {
-                return value;
-            }
-        }
-        
-        return DATACOPER;
-    }
     
-    public static CompanyOptions of(int boo) {
-        for (CompanyOptions value : CompanyOptions.values()) {
-            if (value.getCode() == boo) {
-                return value;
-            }
-        }
-        
-        return DATACOPER;
-    }
-    
-    public static CompanyOptions ofProjectName(String projectName) {
-        for (CompanyOptions value : CompanyOptions.values()) {
-            if (value.getProjectIdentifier().isPresent() && projectName.contains(value.getProjectIdentifier().get())) {
-                return value;
-            }
-        }
-        
-        return DATACOPER;
-    }
+    public String getPackageName() {
+		return packageName;
+	}
+
 }
