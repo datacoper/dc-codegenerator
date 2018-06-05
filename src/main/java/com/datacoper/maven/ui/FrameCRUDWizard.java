@@ -1,21 +1,23 @@
 package com.datacoper.maven.ui;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import com.datacoper.maven.enums.properties.EnumProject;
-import com.datacoper.maven.metadata.TemplateModel;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 import se.gustavkarlsson.gwiz.WizardController;
 import se.gustavkarlsson.gwiz.wizards.JFrameWizard;
 
-public class FrameWizard extends JFrameWizard {
+public class FrameCRUDWizard extends JFrameWizard {
 	private static final long serialVersionUID = 1L;
 
-	public FrameWizard(String projectParentPath) {
+	public FrameCRUDWizard(String projectParentPath) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -25,13 +27,35 @@ public class FrameWizard extends JFrameWizard {
 		String moduleName = getModuleName(projectParentFile);
 		setTitle(moduleName);
 		
-		TemplateModel templateModel = new TemplateModel(projectParentFile, moduleName);
-		
 		WizardController controller = new WizardController(this);
 		
-		AbstractWizardPage startPage = new PanelEntity(templateModel);
+		AbstractWizardPage startPage = new PanelCRUDEntity(projectParentFile, moduleName);
 		controller.startWizard(startPage);
 		
+		
+		getNextButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AbstractWizardPage currentPage = controller.getCurrentPage();
+				if(currentPage instanceof AbstractCRUDPanelWizard) {
+					((AbstractCRUDPanelWizard)currentPage).onNext();
+				}
+			}
+		});
+		
+		JButton finishButton = getFinishButton();
+		finishButton.removeActionListener(finishButton.getActionListeners()[0]);
+		
+		finishButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AbstractWizardPage currentPage = controller.getCurrentPage();
+				if(currentPage instanceof AbstractCRUDPanelWizard) {
+					((AbstractCRUDPanelWizard)currentPage).onFinish();
+					dispose();
+				}
+			}
+		});
 		
 	}
 	
@@ -59,7 +83,7 @@ public class FrameWizard extends JFrameWizard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameWizard frame = new FrameWizard("/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/Faturamento-Parent");
+					FrameCRUDWizard frame = new FrameCRUDWizard("/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/Financeiro-Parent");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

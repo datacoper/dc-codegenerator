@@ -5,12 +5,14 @@ import static com.datacoper.maven.enums.properties.EnumProject.REST;
 import static com.datacoper.maven.enums.properties.EnumProject.REST_COMMON;
 import static com.datacoper.maven.enums.properties.EnumProject.SERVER;
 
+import java.io.File;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.datacoper.cooperate.arquitetura.common.beans.BeanUtil;
+import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.enums.properties.EnumProject;
-import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.generators.AbstractCRUDGenerator;
 
 public enum EnumScaffold {
     ENTITYGENERATOR(EntityGenerator.class, COMMON),
@@ -21,32 +23,48 @@ public enum EnumScaffold {
     EAOIMPLGENERATOR(EaoImplGenerator.class, SERVER),
     QUERYGENERATOR(QueryGenerator.class, SERVER),
     DTOGENERATOR(DtoGenerator.class, REST_COMMON),
+    SERVICEGENERATOR(ServiceGenerator.class, COMMON),
+    SERVICEIMPLGENERATOR(ServiceImplGenerator.class, SERVER),
     RESOURCEGENERATOR(ResourceGenerator.class, REST_COMMON),
     RESOURCEIMPLGENERATOR(ResourceImplGenerator.class, REST);
     
-    private final Class<? extends  AbstractGenerator> generator;
+    private final Class<? extends  AbstractCRUDGenerator> generator;
     
     private final EnumProject projectType;
 
-    private EnumScaffold(Class<? extends AbstractGenerator> generator, EnumProject projectType) {
+    private EnumScaffold(Class<? extends AbstractCRUDGenerator> generator, EnumProject projectType) {
         this.generator = generator;
         this.projectType = projectType;
     }
 
-    public AbstractGenerator getGenerator() {
-        return BeanUtil.createInstance(generator);
+    public AbstractCRUDGenerator getGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
+        try {
+			Constructor<? extends AbstractCRUDGenerator> constructor = generator.getConstructor(File.class, String.class, Company.class, String.class);
+			return constructor.newInstance(projectParentFile, entityName, company, moduleName);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
     }
 
+    public static EnumProject of(Class<? extends AbstractCRUDGenerator> generatorClass) {
+    	for (EnumScaffold value : values()) {
+            if (value.generator.equals(generatorClass)) {
+            	return value.projectType;
+            }
+        }
+    	throw new IllegalArgumentException("Invalid generatorClass: "+generatorClass);
+    }
+    
     public EnumProject getProjectType() {
         return projectType;
     }
     
-    public static List<AbstractGenerator> getGenerators(EnumProject projectType) {
-        List<AbstractGenerator> generators = new ArrayList<>();
+    public static List<AbstractCRUDGenerator> getGenerators(EnumProject projectType, File projectParentFile, String entityName, Company company, String moduleName) {
+        List<AbstractCRUDGenerator> generators = new ArrayList<>();
         
         for (EnumScaffold value : values()) {
             if (value.getProjectType().equals(projectType)) {
-            	generators.add(value.getGenerator());
+            	generators.add(value.getGenerator(projectParentFile, entityName, company, moduleName));
             }
         }
         

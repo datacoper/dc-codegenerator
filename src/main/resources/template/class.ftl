@@ -1,9 +1,5 @@
 package ${class.package};
 
-<#list class.imports as import>
-import ${import};
-</#list>
-
 @Entity
 public class ${class.simpleName}<#if class.superClass??> extends ${class.superClass.simpleName}</#if> {
 

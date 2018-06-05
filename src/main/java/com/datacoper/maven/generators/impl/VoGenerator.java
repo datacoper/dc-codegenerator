@@ -1,29 +1,29 @@
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.enums.properties.EnumProject;
-import com.datacoper.maven.generators.AbstractGenerator;
+import java.io.File;
+
+import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.generators.AbstractCRUDGenerator;
 import com.datacoper.maven.util.StringUtil;
 
-public class VoGenerator extends AbstractGenerator {
+public class VoGenerator extends AbstractCRUDGenerator {
     
-    @Override
+    public VoGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
+		super(projectParentFile, entityName, company, moduleName);
+	}
+
+	@Override
     public String getTemplateName() {
     	return "vo";
     }
 
     @Override
-    public String getPackage(String entityName, CompanyOptions companyOptions, String moduleName) {
-        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", companyOptions.getPackageName(), moduleName.toLowerCase(), entityName.toLowerCase());
+    public String getPackage() {
+        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", getCompany().getPackageName(), getModuleName().toLowerCase(), getEntityName().toLowerCase());
     }
 
 	@Override
-	public EnumProject getProject() {
-		return EnumProject.COMMON;
-	}
-
-	@Override
-	public String getClassName(String entityName) {
-		return entityName+"VO";
+	public String getClassName() {
+		return getEntityName()+"VO";
 	}
 }

@@ -9,9 +9,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityImpl;
-<#list class.imports as import>
-import ${import};
-</#list>
 
 @Entity
 public class ${className} extends EntityImpl {

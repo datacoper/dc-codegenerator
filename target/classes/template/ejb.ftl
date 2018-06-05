@@ -1,6 +1,6 @@
 <#assign className = class.className>
 <#assign company = class.company.packageName>
-<#assign module = class.moduleBasic?lower_case>
+<#assign module = class.moduleName?lower_case>
 <#assign eao = module + "EAO.get" + class.entityName + "EAO()">
 <#assign gerenciador = "gerenciador" + class.entityName>
 package ${class.package};
@@ -19,9 +19,6 @@ import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
 import com.datacoper.cooperate.arquitetura.common.exception.DCLogicException;
 import com.datacoper.cooperate.arquitetura.common.exception.DCRuntimeException;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityState;
-<#list class.imports as import>
-import ${import};
-</#list>
 
 @Stateless
 public class ${className} implements ${class.entityName}Remote {

@@ -1,6 +1,6 @@
 <#assign className = class.className>
 <#assign company = class.company.packageName>
-<#assign module = class.moduleBasic?lower_case>
+<#assign module = class.moduleName?lower_case>
 package ${class.package};
 
 import java.util.Optional;
@@ -11,9 +11,6 @@ import com.${company}.cooperate.${module}.server.consultas.Query${class.entityNa
 import com.datacoper.arquitetura.server.persistence.impl.GenericEAOImpl;
 import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanConsultaGroup;
-<#list class.imports as import>
-import ${import};
-</#list>
 
 public class ${className} extends GenericEAOImpl<${class.entityName}> implements ${class.entityName}EAO {
     

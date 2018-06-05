@@ -1,6 +1,6 @@
 package com.datacoper.maven.enums.options;
 
-public enum CompanyOptions {
+public enum Company {
     DATACOPER("Datacoper", "datacoper"),
     ALFA("Agricola Cooperalfa" , "cooperalfa");
     
@@ -9,7 +9,7 @@ public enum CompanyOptions {
     private final String packageName;
     
     
-    private CompanyOptions(String name, String packageName) {
+    private Company(String name, String packageName) {
 		this.name = name;
 		this.packageName = packageName;
 	}

@@ -2,14 +2,11 @@
 <#assign classVariableName = class.entityName?uncap_first>
 <#assign attributes = class.attributes>
 <#assign company = class.company.packageName>
-<#assign module = class.moduleBasic?lower_case>
+<#assign module = class.moduleName?lower_case>
 package ${class.package};
 
 import com.${company}.cooperate.${module}.common.entities.${class.entityName};
 import com.datacoper.cooperate.arquitetura.common.entities.builder.EntityBuilder;
-<#list class.imports as import>
-import ${import};
-</#list>
 
 public class ${className} implements EntityBuilder<${class.entityName}> {
     

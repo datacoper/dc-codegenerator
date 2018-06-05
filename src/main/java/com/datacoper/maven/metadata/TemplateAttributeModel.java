@@ -1,8 +1,5 @@
 package com.datacoper.maven.metadata;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.datacoper.maven.enums.options.ModifierOptions;
 
 public class TemplateAttributeModel {
@@ -20,8 +17,6 @@ public class TemplateAttributeModel {
 	private boolean generateGet;
 
 	private boolean generateSet;
-
-	private Set<TemplateAnnotationModel> annotations = new HashSet<>();
 
 	public String getImportt() {
 		return importt;
@@ -78,13 +73,4 @@ public class TemplateAttributeModel {
 	public void setGenerateSet(boolean generateSet) {
 		this.generateSet = generateSet;
 	}
-
-	public Set<TemplateAnnotationModel> getAnnotations() {
-		return annotations;
-	}
-
-	public void setAnnotations(Set<TemplateAnnotationModel> annotations) {
-		this.annotations = annotations;
-	}
-
 }

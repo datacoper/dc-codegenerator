@@ -1,30 +1,30 @@
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.enums.options.CompanyOptions;
-import com.datacoper.maven.enums.properties.EnumProject;
-import com.datacoper.maven.generators.AbstractGenerator;
+import java.io.File;
+
+import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.generators.AbstractCRUDGenerator;
 import com.datacoper.maven.util.StringUtil;
 
-public class DtoGenerator extends AbstractGenerator {
+public class DtoGenerator extends AbstractCRUDGenerator {
     
-    @Override
+    public DtoGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
+		super(projectParentFile, entityName, company, moduleName);
+	}
+
+	@Override
     public String getTemplateName() {
     	return "dto";
     }
 
     @Override
-    public String getPackage(String entityName, CompanyOptions companyOptions, String moduleName) {
-        return StringUtil.format("com.{0}.cooperate.{1}.rest.common.dto", companyOptions.getPackageName(), moduleName.toLowerCase());
+    public String getPackage() {
+        return StringUtil.format("com.{0}.cooperate.{1}.rest.common.dto", getCompany().getPackageName(), getModuleName().toLowerCase());
     }
 
 	@Override
-	public EnumProject getProject() {
-		return EnumProject.REST_COMMON;
-	}
-
-	@Override
-	public String getClassName(String entityName) {
-		return entityName+"DTO";
+	public String getClassName() {
+		return getEntityName()+"DTO";
 	}
 
 }
