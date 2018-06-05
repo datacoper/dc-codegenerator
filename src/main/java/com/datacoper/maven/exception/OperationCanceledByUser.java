@@ -10,5 +10,10 @@ package com.datacoper.maven.exception;
  * @author alessandro
  */
 public class OperationCanceledByUser extends Exception {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7916724411220747597L;
     
 }

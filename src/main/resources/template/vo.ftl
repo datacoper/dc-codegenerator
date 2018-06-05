@@ -26,7 +26,16 @@ public class ${className} extends EqualsIdentifier {
     <#include "getterAndSetterForID.ftl">
 
     <#include "getterAndSetter.ftl">
+<<<<<<< HEAD
     
+=======
+    @Override
+    public String getDescricaoCustomizada() {
+        // TODO Auto-generated
+        return getId() + " - ";
+    }
+
+>>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
     @Override
     public Long getId() {
         return getId${class.entityName}();

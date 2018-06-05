@@ -15,13 +15,13 @@ public class Converters {
         return value;
     }
     
-    public static Class toClass(String value) {
+    public static Class<?> toClass(String value) {
         if (!value.contains(".")) {
             try {
                 return ClassUtil.forName("java.lang.".concat(value));
             } catch (Throwable t) { }
         }
         
-        return ClassUtil.forName(value);
+        return ClassLoaderUtil.loadClass(value);
     }
 }

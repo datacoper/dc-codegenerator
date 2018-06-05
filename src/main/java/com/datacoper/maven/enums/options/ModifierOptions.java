@@ -59,6 +59,20 @@ public enum ModifierOptions {
         return description;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public ModifierOptions of(String encapsulation) {
+        for (ModifierOptions item : ModifierOptions.values()) {
+            if (item.getDescription().equals(encapsulation)) {
+                return item;
+            }
+        }
+
+        throw new RuntimeException(StringUtil.format("Invalid Modifier {0}", encapsulation));
+    }
+
+>>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
     public static ModifierOptions of(int encapsulation) {
         for (ModifierOptions item : ModifierOptions.values()) {
             if (item.getId() == encapsulation) {
@@ -66,7 +80,7 @@ public enum ModifierOptions {
             }
         }
 
-        throw new RuntimeException(StringUtil.format("Inválid Modifier {0}", encapsulation));
+        throw new RuntimeException(StringUtil.format("Invalid Modifier {0}", encapsulation));
     }
 
     public abstract boolean isModifierPresent(int modifier);

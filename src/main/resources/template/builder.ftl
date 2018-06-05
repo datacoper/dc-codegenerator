@@ -19,14 +19,19 @@ public class ${className} implements EntityBuilder<${class.entityName}> {
         return ${classVariableName};
     }
 
+<<<<<<< HEAD
     public ${className} withId${classVariableName?cap_first}(Long id${class.entityName}) {
         ${classVariableName}.setId${class.entityName}(id${class.entityName});
+=======
+    public ${className} withId${classVariableName?cap_first}(Long id${class.classNameBasic}) {
+        this.${classVariableName}.setId${class.classNameBasic}(id${class.classNameBasic});
+>>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
         return this;
     }
 
     <#list attributes as attribute>
     public ${className} with${attribute.name?cap_first}(${attribute.type} ${attribute.name?uncap_first}) {
-        ${classVariableName}.set${attribute.name?cap_first}(${attribute.name?uncap_first});
+        this.${classVariableName}.set${attribute.name?cap_first}(${attribute.name?uncap_first});
         return this;
     }
 

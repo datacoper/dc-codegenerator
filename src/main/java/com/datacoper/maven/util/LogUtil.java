@@ -41,6 +41,7 @@ public abstract class LogUtil {
     	}
     }
     
+<<<<<<< HEAD
     public static void error(String message, Object... params) {
         error(StringUtil.format(message, params));
     }
@@ -57,6 +58,14 @@ public abstract class LogUtil {
     	}else {
     		System.out.println(throwable.getMessage());
     	}
+=======
+    public static void error(Throwable throwable) {
+        if(throwable.getMessage() != null){
+            log.error(throwable.getMessage());            
+        }else{
+            log.error(throwable);
+        }
+>>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
     }
     
     public static void warn(String message, Object... params) {

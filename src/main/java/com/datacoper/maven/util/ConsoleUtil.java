@@ -16,10 +16,10 @@ public abstract class ConsoleUtil {
 
     private ConsoleUtil() { }
     
-    private static final Scanner in = new Scanner(System.in);
+    private static final Scanner IN = new Scanner(System.in);
 
     public static String question() {
-        return in.next();
+        return IN.next();
     }
 
     public static void sysOutl(String message, Object... params) {
@@ -34,6 +34,6 @@ public abstract class ConsoleUtil {
     
     public static String question(String message, Object... params) {
         sysOut(message, params);
-        return in.nextLine();
+        return IN.nextLine();
     }
 }

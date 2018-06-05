@@ -5,7 +5,9 @@
  */
 package com.datacoper.maven.util;
 
+import com.datacoper.maven.enums.properties.EnumSourceType;
 import com.datacoper.maven.exception.DcRuntimeException;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,23 +24,19 @@ public abstract class MavenUtil {
 
     private MavenUtil() { }
     
-    public static String getPathForPackage(MavenProject project, String packag) {
-        String defaultPackage = project.getBuild().getSourceDirectory();
+    public static String getSourcePathForPackage(MavenProject project, String packag, EnumSourceType sourceType) {
+        String directory = sourceType.getDirectory(project);
         
-        defaultPackage = ".".concat(defaultPackage != null ? defaultPackage : "src.main.java").concat(".");
-        
-        //defaultPackage = project.getBasedir().getPath().concat(".").concat(project.getArtifactId()).concat(defaultPackage);
-        
-        String path = defaultPackage.concat(packag).replace('.', File.separatorChar);
-        
-        return path;
+        packag = packag.replaceAll("\\.", "/");
+
+        return directory.concat(SystemUtil.getFileSeparator()).concat(packag);
+    }
+
+    static MavenProject createNewMavenProject(String projectPath) {
+        return createNewMavenProject(new File(projectPath));
     }
     
-    public static MavenProject startNewProject(String pathProject) {
-        return startNewProject(new File(pathProject));
-    }
-    
-    public static MavenProject startNewProject(File folderProject) {
+    private static MavenProject createNewMavenProject(File folderProject) {
         try {
             File pomFile = getPomFile(folderProject);
             
@@ -55,7 +53,7 @@ public abstract class MavenUtil {
         }
     }
     
-    public static File getPomFile(File folderProject) {
+    private static File getPomFile(File folderProject) {
         FileUtil.validateExistsFolder(folderProject);
         
         final String pathFolder = folderProject.getPath();

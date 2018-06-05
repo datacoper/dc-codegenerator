@@ -1,0 +1,11 @@
+image: frekele/maven:3.3.9-jdk8 # java7 com maven
+stages:
+  - test
+
+variables:
+  MAVEN_OPTS: -Dmaven.repo.local=/cache/maven.repository # Cache maven repository
+  
+test:
+  stage: test
+  script:
+    - mvn test
