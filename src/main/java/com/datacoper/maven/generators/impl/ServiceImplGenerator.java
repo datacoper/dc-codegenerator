@@ -3,10 +3,10 @@ package com.datacoper.maven.generators.impl;
 import java.io.File;
 
 import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.generators.AbstractCRUDGenerator;
+import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.util.StringUtil;
 
-public class ServiceImplGenerator extends AbstractCRUDGenerator {
+public class ServiceImplGenerator extends AbstractGenerator {
     
     public ServiceImplGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
 		super(projectParentFile, entityName, company, moduleName);

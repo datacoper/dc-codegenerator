@@ -8,6 +8,7 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import com.datacoper.cooperate.arquitetura.client.dialog.DCOptionPane;
 import com.datacoper.maven.enums.properties.EnumProject;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
@@ -52,7 +53,9 @@ public class FrameCRUDWizard extends JFrameWizard {
 				AbstractWizardPage currentPage = controller.getCurrentPage();
 				if(currentPage instanceof AbstractCRUDPanelWizard) {
 					((AbstractCRUDPanelWizard)currentPage).onFinish();
-					dispose();
+					if(DCOptionPane.showConfirmDialog(getOwner(), "Fechar?")) {
+						dispose();
+					}
 				}
 			}
 		});

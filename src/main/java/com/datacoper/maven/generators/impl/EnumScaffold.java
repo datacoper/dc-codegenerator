@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.enums.properties.EnumProject;
-import com.datacoper.maven.generators.AbstractCRUDGenerator;
+import com.datacoper.maven.generators.AbstractGenerator;
 
 public enum EnumScaffold {
     ENTITYGENERATOR(EntityGenerator.class, COMMON),
@@ -28,25 +28,25 @@ public enum EnumScaffold {
     RESOURCEGENERATOR(ResourceGenerator.class, REST_COMMON),
     RESOURCEIMPLGENERATOR(ResourceImplGenerator.class, REST);
     
-    private final Class<? extends  AbstractCRUDGenerator> generator;
+    private final Class<? extends  AbstractGenerator> generator;
     
     private final EnumProject projectType;
 
-    private EnumScaffold(Class<? extends AbstractCRUDGenerator> generator, EnumProject projectType) {
+    private EnumScaffold(Class<? extends AbstractGenerator> generator, EnumProject projectType) {
         this.generator = generator;
         this.projectType = projectType;
     }
 
-    public AbstractCRUDGenerator getGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
+    public AbstractGenerator getGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
         try {
-			Constructor<? extends AbstractCRUDGenerator> constructor = generator.getConstructor(File.class, String.class, Company.class, String.class);
+			Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(File.class, String.class, Company.class, String.class);
 			return constructor.newInstance(projectParentFile, entityName, company, moduleName);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
     }
 
-    public static EnumProject of(Class<? extends AbstractCRUDGenerator> generatorClass) {
+    public static EnumProject of(Class<? extends AbstractGenerator> generatorClass) {
     	for (EnumScaffold value : values()) {
             if (value.generator.equals(generatorClass)) {
             	return value.projectType;
@@ -59,8 +59,8 @@ public enum EnumScaffold {
         return projectType;
     }
     
-    public static List<AbstractCRUDGenerator> getGenerators(EnumProject projectType, File projectParentFile, String entityName, Company company, String moduleName) {
-        List<AbstractCRUDGenerator> generators = new ArrayList<>();
+    public static List<AbstractGenerator> getGenerators(EnumProject projectType, File projectParentFile, String entityName, Company company, String moduleName) {
+        List<AbstractGenerator> generators = new ArrayList<>();
         
         for (EnumScaffold value : values()) {
             if (value.getProjectType().equals(projectType)) {

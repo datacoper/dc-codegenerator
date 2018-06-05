@@ -13,6 +13,9 @@ import com.datacoper.cooperate.arquitetura.common.persistence.entities.EqualsIde
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ${className} extends EqualsIdentifier {
     private static final long serialVersionUID = 1L;
+    
+    private Long id${class.entityName};
+    
 <#list attributes as attribute>
     
     @AttributeAnnot(alias = "${attribute.name}")
@@ -21,21 +24,10 @@ public class ${className} extends EqualsIdentifier {
 
     <#include "defaultConstructor.ftl">
 
-    private Long id${class.entityName};
-
     <#include "getterAndSetterForID.ftl">
 
     <#include "getterAndSetter.ftl">
-<<<<<<< HEAD
     
-=======
-    @Override
-    public String getDescricaoCustomizada() {
-        // TODO Auto-generated
-        return getId() + " - ";
-    }
-
->>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
     @Override
     public Long getId() {
         return getId${class.entityName}();

@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.datacoper.maven.util;
 
 import org.apache.maven.plugin.logging.Log;
 
-/**
- *
- * @author alessandro
- */
 public abstract class LogUtil {
     private static Log log;
     
@@ -28,7 +19,7 @@ public abstract class LogUtil {
         if(log != null) {
         	log.info(message);
         }else {
-    		System.out.println(message);
+    		System.out.println();
         }
     	
     }
@@ -41,7 +32,6 @@ public abstract class LogUtil {
     	}
     }
     
-<<<<<<< HEAD
     public static void error(String message, Object... params) {
         error(StringUtil.format(message, params));
     }
@@ -58,14 +48,6 @@ public abstract class LogUtil {
     	}else {
     		System.out.println(throwable.getMessage());
     	}
-=======
-    public static void error(Throwable throwable) {
-        if(throwable.getMessage() != null){
-            log.error(throwable.getMessage());            
-        }else{
-            log.error(throwable);
-        }
->>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
     }
     
     public static void warn(String message, Object... params) {

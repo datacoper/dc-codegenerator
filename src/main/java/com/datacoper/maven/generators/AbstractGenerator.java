@@ -1,75 +1,100 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.datacoper.maven.generators;
 
-import org.apache.maven.project.MavenProject;
+import java.io.File;
+import java.util.Set;
 
-import com.datacoper.maven.annotations.GeneratorConfig;
-import com.datacoper.maven.configuration.PackageProperties;
-import com.datacoper.maven.enums.properties.EnumDCProjectType;
-import com.datacoper.maven.enums.properties.ModuleMapper;
-import com.datacoper.maven.metadata.TClass;
-import com.datacoper.maven.metadata.TClassBuilder;
-import com.datacoper.maven.util.DCProjectUtil;
+import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
+import com.datacoper.freemarker.conf.TemplateFreeMarker;
+import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.generators.impl.EnumScaffold;
+import com.datacoper.maven.metadata.TemplateAttributeModel;
+import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.util.FileUtil;
+import com.datacoper.maven.util.LogUtil;
 
-/**
- *
- * @author alessandro
- */
-public abstract class AbstractGenerator implements IGenerator {
-    
-    protected MavenProject project;
-    
-    protected TClass data;
+public abstract class AbstractGenerator {
 
-    private String layoutFileName;
+	private File projectParentFile;
+	
+	private String entityName;
+	
+	private Company company;
+	
+	private String moduleName;
+	
+    public AbstractGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
+		this.projectParentFile = projectParentFile;
+    	this.entityName = entityName;
+		this.company = company;
+		this.moduleName = moduleName;		
+	}
     
-    public AbstractGenerator(MavenProject project, String layoutFileName, TClass data) {
-        this.project = project;
-        this.data = prepareForGeneration(project, data);
-        this.layoutFileName = layoutFileName;
-    }
+    public Company getCompany() {
+		return company;
+	}
     
-    @Override
-    public void generate() {
-        SourceFileGenerator.generate(project, layoutFileName, prepareForGenerate(data));
-    }
+    public String getModuleName() {
+		return moduleName;
+	}
     
-    protected TClass prepareForGenerate(TClass clazz) {
-    	return new TClassBuilder(clazz)
-		        .withPackag(getPackage())
-		        .withClassName(getClassName(data.getClassNameBasic()))
-		        .withSourceType(getProjectTypeForGenerate().getSourceType())
-		        .build();
-    }
-    
-    protected abstract String getClassName(String classNameBasic);
+    public String getEntityName() {
+		return entityName;
+	}
 
-    protected String getPackage() {
-    	PackageProperties properties = new PackageProperties(data.getCompany(), DCProjectUtil.getModuleName(project), data.getClassNameBasic());
+	public void process(Set<TemplateAttributeModel> attributes) {
+		
+		TemplateModel templateModel = createTemplateModel(attributes);
+		
+    	ConfigurationFreeMarker config = new ConfigurationFreeMarker();
+        
+    	TemplateFreeMarker templateFreeMarker = new TemplateFreeMarker(getTemplateName() + ".ftl", config);
     	
-    	String moduleName = DCProjectUtil.getModuleName(project).toLowerCase();
-		String agrupador = getProjectTypeForGenerate().getAgrupador();
-		
-		String classGenerator = this.getClass().isAnnotationPresent(GeneratorConfig.class) 
-				? this.getClass().getAnnotation(GeneratorConfig.class).packag() 
-			    : this.getClass().getSimpleName().replaceAll("Generator", "");
-		
-		return properties.getValue(moduleName, agrupador, classGenerator);
+    	File finalJavaFile = getJavaFile(); 
+        
+    	FileUtil.createFolderIfNecessary(finalJavaFile.getParent());
+    	
+        LogUtil.info("generating class {0}", finalJavaFile);
+        
+        templateFreeMarker.add("class", templateModel);
+        templateFreeMarker.generateTemplate(finalJavaFile, "ISO-8859-1");
+        
     }
 
-	private TClass prepareForGeneration(MavenProject project, TClass data) {
-        return new TClassBuilder(data)
-                .withModuleBasic(DCProjectUtil.getModuleName(project))
-                .build();
+	private TemplateModel createTemplateModel(Set<TemplateAttributeModel> attributes) {
+		
+		TemplateModel templateModel = new TemplateModel(entityName, company, moduleName, getClassName(), getPackage());
+		
+		templateModel.setAttributes(attributes);
+		
+		return templateModel;
+	}
+
+	public File getJavaFile() {
+		File sourceFolder = new File(new File(projectParentFile, getModuleName()+getProject().getSuffix()), "src/main/java");
+
+        if(!sourceFolder.exists()) {
+        	throw new RuntimeException("Source folder not exists: "+sourceFolder);
+        }
+        
+        String packageName = getPackage();
+        
+        packageName = packageName.replace('.', File.separatorChar);
+        
+        File packageFolder = new File(sourceFolder, packageName);
+        
+        File finalJavaFile = new File(packageFolder, getClassName().concat(".java"));
+		return finalJavaFile;
+	}
+
+    public abstract String getTemplateName();
+    
+    public final EnumProject getProject() {
+    	return EnumScaffold.of(getClass());
     }
     
-    protected String getModuleToPackage() {
-        return ModuleMapper.from(data.getModuleBasic()).toLowerCase();
-    }
+    public abstract String getPackage();
     
-    public abstract EnumDCProjectType getProjectTypeForGenerate();
+    public abstract String getClassName();
+    
 }

@@ -26,14 +26,4 @@ public class ${className} extends SelectableObject<Long> {
     public Long getId() {
         return getId${class.entityName}();
     }
-
-    @Override
-    public Long getCodigo() {
-        return 0L;
-    }
-
-    @Override
-    public String getDescricao() {
-        return "";
-    }
 }

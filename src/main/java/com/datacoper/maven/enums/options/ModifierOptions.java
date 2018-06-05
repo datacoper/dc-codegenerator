@@ -2,8 +2,6 @@ package com.datacoper.maven.enums.options;
 
 import java.lang.reflect.Modifier;
 
-import com.datacoper.maven.util.StringUtil;
-
 public enum ModifierOptions {
     PRIVATE(1, "Private") {
         @Override
@@ -57,30 +55,6 @@ public enum ModifierOptions {
 
     public String getDescription() {
         return description;
-    }
-
-<<<<<<< HEAD
-=======
-    @Override
-    public ModifierOptions of(String encapsulation) {
-        for (ModifierOptions item : ModifierOptions.values()) {
-            if (item.getDescription().equals(encapsulation)) {
-                return item;
-            }
-        }
-
-        throw new RuntimeException(StringUtil.format("Invalid Modifier {0}", encapsulation));
-    }
-
->>>>>>> 6b0e04174f4e85c09815bab8bfc2ea4bcaa95089
-    public static ModifierOptions of(int encapsulation) {
-        for (ModifierOptions item : ModifierOptions.values()) {
-            if (item.getId() == encapsulation) {
-                return item;
-            }
-        }
-
-        throw new RuntimeException(StringUtil.format("Invalid Modifier {0}", encapsulation));
     }
 
     public abstract boolean isModifierPresent(int modifier);

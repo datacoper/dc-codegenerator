@@ -7,14 +7,24 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import com.datacoper.cooperate.arquitetura.client.exception.DCErrorDialog;
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.metadata.EnumAttributeType;
+import com.datacoper.maven.metadata.TemplateAttributeModel;
+import com.datacoper.maven.util.ColumnNameResolver;
 import com.datacoper.testes.persistence.PersistenceProperties;
 import com.datacoper.testes.persistence.PersistenceProperties.DBType;
 
@@ -23,9 +33,13 @@ import se.gustavkarlsson.gwiz.AbstractWizardPage;
 public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	private static final long serialVersionUID = 1L;
 	
+	private JComboBox<String> comboAttributeType = new JComboBox<>(EnumAttributeType.types());
+	
 	private PanelCRUDClasses panelCRUDClasses;
 	
-	private JTable tableAttributes = new JTable();
+	private JTable tableAttributes;
+	
+	private DefaultTableModel defaultTableModel;
 	
 	private String entityName;
 	
@@ -38,16 +52,33 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		verticalLayout.setVgap(5);
 		setLayout(verticalLayout);
 		
-		add(new JScrollPane(tableAttributes));
+		defaultTableModel = new DefaultTableModel(new String[] {"Coluna", "Atributo", "Tipo"}, 0);
+		
+		tableAttributes = new JTable(defaultTableModel) {
+			public boolean isCellEditable(int row, int column){
+				return column != 0;
+			}
+		};
 		
 		panelCRUDClasses = new PanelCRUDClasses(projectParentFile, moduleName);
+		
+	    DefaultTableCellRenderer renderer =
+	            new DefaultTableCellRenderer();
+		
+		TableColumn columnAttributes = tableAttributes.getColumnModel().getColumn(2);
+		
+		columnAttributes.setCellEditor(new DefaultCellEditor(comboAttributeType));
+		columnAttributes.setCellRenderer(renderer);
+		
+		add(new JScrollPane(tableAttributes));
+		
 	}
 
 	public void init(String entityName, Company company) {
 		this.entityName = entityName;
 		this.company = company;
 		
-		DefaultTableModel defaultTableModel = new DefaultTableModel(new String[] {"Atributo", "Tipo"}, 0);
+		defaultTableModel.setRowCount(0);
 		
 		if(entityName != null) {
 			
@@ -63,11 +94,17 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 					
 					int columnCount = metaData.getColumnCount();
 					
+					ColumnNameResolver columnNameResolver = new ColumnNameResolver();
+					
 					for (int i = 1; i <= columnCount; i++) {
 						String columnName = metaData.getColumnName(i);
-						String columnClassName = metaData.getColumnClassName(i);
 						
-						defaultTableModel.addRow(new String[] {columnName, columnClassName});
+						if(!isPrimaryKey(entityName, columnName)) {
+							String attributeName = columnNameResolver.revolverAsField(columnName); 
+							String columnClassName = metaData.getColumnClassName(i);
+							
+							defaultTableModel.addRow(new String[] {columnName, attributeName, columnClassName});
+						}
 						
 					}
 					
@@ -79,8 +116,10 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 		}
 		
-		tableAttributes.setModel(defaultTableModel);
-		
+	}
+	
+	private boolean isPrimaryKey(String entityName, String columnName) {
+		return ("id"+entityName.toLowerCase()).equals(columnName.toLowerCase());
 	}
 
 	@Override
@@ -110,7 +149,20 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 
 	@Override
 	void onNext() {
-		panelCRUDClasses.init(entityName, company);
+		
+		Vector<?> dataVector = defaultTableModel.getDataVector();
+		
+		Set<TemplateAttributeModel> attributes = new HashSet<TemplateAttributeModel>(dataVector.size());
+		
+		for (Object object : dataVector) {
+			
+			Vector<?> rowValues = (Vector<?>) object;
+			
+			attributes.add(new TemplateAttributeModel((String)rowValues.get(1), (String)rowValues.get(2)));
+		}
+		
+		
+		panelCRUDClasses.init(entityName, company, attributes);
 	}
 
 	@Override
