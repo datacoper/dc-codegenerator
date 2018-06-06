@@ -29,6 +29,16 @@ public abstract class StringUtil {
 
         return charUpper + value.substring(1, value.length());
     }
+    
+    public static String lowerFirstCharacter(String value) {
+        if (isNullOrEmpty(value)) {
+            return value;
+        }
+
+        char charUpper = Character.toLowerCase(value.charAt(0));
+
+        return charUpper + value.substring(1, value.length());
+    }
 
     public static String getLastString(String value, String separator) {
         if (value != null && value.contains(".")) {

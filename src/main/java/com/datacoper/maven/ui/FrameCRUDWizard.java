@@ -1,5 +1,6 @@
 package com.datacoper.maven.ui;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 	public FrameCRUDWizard(String projectParentPath) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setMinimumSize(new Dimension(500,300));
 		
 		File projectParentFile = getAndValidateProjectFile(projectParentPath);
 		

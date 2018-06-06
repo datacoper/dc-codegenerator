@@ -6,26 +6,24 @@ public class TemplateAttributeModel {
 
 	private String name;
 	
-	public TemplateAttributeModel(String name, String type) {
+	private String label;
+	
+	public TemplateAttributeModel(String name, String type, String label) {
 		this.type = type;
 		this.name = name;
+		this.label = label;
 	}
 
 	public String getType() {
 		return type;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getLabel() {
+		return label;
 	}
-
 	
 }

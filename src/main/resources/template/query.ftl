@@ -15,7 +15,7 @@ public class ${className} extends AbstractConsulta<${class.entityName}VO> {
 
         sb.append("SELECT ")
         	<#list class.attributes as attribute>		
-    		.append("${attribute.name?upper_case},")
+    		.append("${attribute.name?upper_case}<#if attribute?has_next>,</#if>")
 			</#list>
         	.append("  FROM ${class.entityName?upper_case}");
 

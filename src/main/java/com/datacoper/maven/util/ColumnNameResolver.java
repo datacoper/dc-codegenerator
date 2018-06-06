@@ -1,81 +1,89 @@
 package com.datacoper.maven.util;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 
-import org.apache.commons.lang3.StringUtils;
+import com.datacoper.cooperate.arquitetura.common.util.Entry;
 
 public class ColumnNameResolver {
 
-	private Set<String> dictionary = new HashSet<>();
+	private Properties dictionary = new Properties();
 	
 	public ColumnNameResolver() {
-		add("id");
-		add("usuario");
-		add("filial");
-		add("data");
-		add("inicio");
-		add("fim");
-		add("vigencia");
-		add("codigo");
-		add("documento");
-		add("inscricao");
-		add("rural");
-		add("produtor");
-		add("numero");
-		add("fiscal");
-		add("email");
-		add("nfe");
-		add("geografico");
-		add("simplificado");
-		add("ultima");
-		add("atualizacao");
-		add("descricao");
-		add("nome");
-		add("movimento");
-		add("movimentacao");
+		try {
+			dictionary.load(getClass().getClassLoader().getResourceAsStream("dicionario.properties"));
+		} catch (IOException e) {
+			throw new RuntimeException("Erro ao ler o dicionário de dados",e);
+		}
 		
 	}
 	
-	public String revolverAsField(String columnName) {
+	public Entry<String, String> revolverFieldAndLabel(String columnName) {
+		
+		Set<Entry<String, Integer>> labels = new TreeSet<>(getPositionComparator());
 		
 		columnName = columnName.toLowerCase();
 		
 		char[] charArray = columnName.toCharArray();
 		
-		for (String word: dictionary) {
+		for (Object wordObj: dictionary.keySet()) {
 			
-			int indexOf = columnName.indexOf(word);
+			String word = (String) wordObj;
 			
-			if(indexOf != -1) {
+			int indexOfWord = columnName.indexOf(word);
+			
+			if(indexOfWord != -1) {
 				
-				int position = indexOf + word.length();
-				
-				if(columnName.length() > position) {
-					charArray[position] = Character.toUpperCase(charArray[position]); 
+				String label = dictionary.getProperty(word);
+				if(StringUtil.isNotNullOrEmpty(label)) {
+					labels.add(Entry.of(label, indexOfWord));
 				}
+				
+				if(indexOfWord != 0) {
+					charArray[indexOfWord] = Character.toUpperCase(charArray[indexOfWord]);
+				}
+				
+				int nextWordCaracter = indexOfWord + word.length();
+				
+				if(columnName.length() > nextWordCaracter) {
+					charArray[nextWordCaracter] = Character.toUpperCase(charArray[nextWordCaracter]); 
+				}
+				
 			}
 			
 		}
 		
-		return new String(charArray);
-	}
-
-	public String capitalize(String word) {
-		return StringUtils.capitalize(word);
+		return Entry.of(new String(charArray), composeLabels(labels));
 	}
 	
-
-	public boolean add(String word) {
-		return dictionary.add(word.toLowerCase());
+	private String composeLabels(Set<Entry<String, Integer>> labels) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		Iterator<Entry<String, Integer>> iterator = labels.iterator();
+		
+		while (iterator.hasNext()) {
+			Entry<java.lang.String, java.lang.Integer> entry = iterator.next();
+			
+			sb.append(entry.getKey());
+			if(iterator.hasNext()) {
+				sb.append(" ");
+			}
+		}
+		
+		return sb.toString();
 	}
 
-
-	public boolean addAll(Collection<? extends String> words) {
-		return dictionary.addAll(words);
+	private Comparator<Entry<String, Integer>> getPositionComparator(){
+		return new Comparator<Entry<String,Integer>>() {
+			@Override
+			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+				return o1.getValue().compareTo(o2.getValue());
+			}
+		};
 	}
-	
-	
-	
 }

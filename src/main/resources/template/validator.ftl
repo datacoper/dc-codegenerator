@@ -13,7 +13,7 @@ public class ${className}  implements ValidatorGenericCRUD<${class.entityName}> 
 	public ValidateMandatoryFields validateRequiredFields(${class.entityName} ${class.entityName?uncap_first}) {
         return new ValidateMandatoryFields()
         <#list class.attributes as attribute>
-                .add(${class.entityName?uncap_first}.get${attribute.name?cap_first}(), "${attribute.name}")                        
+                .add(${class.entityName?uncap_first}.get${attribute.name?cap_first}(), "${attribute.label}")                        
         </#list>
         ;
     }

@@ -71,7 +71,7 @@ public abstract class AbstractGenerator {
 	}
 
 	public File getJavaFile() {
-		File sourceFolder = new File(new File(projectParentFile, getModuleName()+getProject().getSuffix()), "src/main/java");
+		File sourceFolder = new File(new File(projectParentFile, getModuleName()+getProject().getSuffix()), getProject().getSourceFolder().getSourceFolder());
 
         if(!sourceFolder.exists()) {
         	throw new RuntimeException("Source folder not exists: "+sourceFolder);

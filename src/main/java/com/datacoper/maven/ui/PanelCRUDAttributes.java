@@ -15,16 +15,17 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import com.datacoper.cooperate.arquitetura.client.exception.DCErrorDialog;
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
+import com.datacoper.cooperate.arquitetura.common.util.Entry;
 import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.util.ColumnNameResolver;
+import com.datacoper.maven.util.StringUtil;
 import com.datacoper.testes.persistence.PersistenceProperties;
 import com.datacoper.testes.persistence.PersistenceProperties.DBType;
 
@@ -52,9 +53,11 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		verticalLayout.setVgap(5);
 		setLayout(verticalLayout);
 		
-		defaultTableModel = new DefaultTableModel(new String[] {"Coluna", "Atributo", "Tipo"}, 0);
+		defaultTableModel = new DefaultTableModel(new String[] {"Coluna", "Atributo", "Label", "Tipo"}, 0);
 		
 		tableAttributes = new JTable(defaultTableModel) {
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column){
 				return column != 0;
 			}
@@ -62,13 +65,9 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 		panelCRUDClasses = new PanelCRUDClasses(projectParentFile, moduleName);
 		
-	    DefaultTableCellRenderer renderer =
-	            new DefaultTableCellRenderer();
-		
-		TableColumn columnAttributes = tableAttributes.getColumnModel().getColumn(2);
+		TableColumn columnAttributes = tableAttributes.getColumnModel().getColumn(3);
 		
 		columnAttributes.setCellEditor(new DefaultCellEditor(comboAttributeType));
-		columnAttributes.setCellRenderer(renderer);
 		
 		add(new JScrollPane(tableAttributes));
 		
@@ -100,10 +99,13 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 						String columnName = metaData.getColumnName(i);
 						
 						if(!isPrimaryKey(entityName, columnName)) {
-							String attributeName = columnNameResolver.revolverAsField(columnName); 
+							Entry<String, String> revolverFieldAndLabel = columnNameResolver.revolverFieldAndLabel(columnName);
+							String attributeName = revolverFieldAndLabel.getKey();
+							String attributeLabel = StringUtil.isNotNullOrEmpty(revolverFieldAndLabel.getValue()) ? revolverFieldAndLabel.getValue() : attributeName;
+							
 							String columnClassName = metaData.getColumnClassName(i);
 							
-							defaultTableModel.addRow(new String[] {columnName, attributeName, columnClassName});
+							defaultTableModel.addRow(new String[] {columnName, attributeName, attributeLabel, columnClassName});
 						}
 						
 					}
@@ -158,7 +160,11 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 			
 			Vector<?> rowValues = (Vector<?>) object;
 			
-			attributes.add(new TemplateAttributeModel((String)rowValues.get(1), (String)rowValues.get(2)));
+			String name = (String)rowValues.get(1);
+			String label = (String)rowValues.get(2);
+			String type = (String)rowValues.get(3);
+			
+			attributes.add(new TemplateAttributeModel(name, type, label));
 		}
 		
 		

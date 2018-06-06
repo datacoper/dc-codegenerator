@@ -18,7 +18,7 @@ public class ${className} extends EqualsIdentifier {
     
 <#list attributes as attribute>
     
-    @AttributeAnnot(alias = "${attribute.name}")
+    @AttributeAnnot(alias = "${attribute.label}")
     private ${attribute.type} ${attribute.name};
 </#list>
 

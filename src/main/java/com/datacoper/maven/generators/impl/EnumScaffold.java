@@ -1,10 +1,5 @@
 package com.datacoper.maven.generators.impl;
 
-import static com.datacoper.maven.enums.properties.EnumProject.COMMON;
-import static com.datacoper.maven.enums.properties.EnumProject.REST;
-import static com.datacoper.maven.enums.properties.EnumProject.REST_COMMON;
-import static com.datacoper.maven.enums.properties.EnumProject.SERVER;
-
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -15,19 +10,27 @@ import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
 
 public enum EnumScaffold {
-    ENTITYGENERATOR(EntityGenerator.class, COMMON),
-    BUILDERGENERATOR(BuilderGenerator.class, COMMON),
-    VOGENERATOR(VoGenerator.class, COMMON),
-    VALIDATORGENERATOR(ValidatorGenerator.class, SERVER),
-    EAOGENERATOR(EaoGenerator.class, SERVER),
-    EAOIMPLGENERATOR(EaoImplGenerator.class, SERVER),
-    QUERYGENERATOR(QueryGenerator.class, SERVER),
-    DTOGENERATOR(DtoGenerator.class, REST_COMMON),
-    SERVICEGENERATOR(ServiceGenerator.class, COMMON),
-    SERVICEIMPLGENERATOR(ServiceImplGenerator.class, SERVER),
-    RESOURCEGENERATOR(ResourceGenerator.class, REST_COMMON),
-    RESOURCEIMPLGENERATOR(ResourceImplGenerator.class, REST);
+    ENTITYGENERATOR(EntityGenerator.class, EnumProject.COMMON),
+    BUILDERGENERATOR(BuilderGenerator.class, EnumProject.COMMON),
+    VOGENERATOR(VoGenerator.class, EnumProject.COMMON),
+    VALIDATORGENERATOR(ValidatorGenerator.class, EnumProject.SERVER),
+    EAOGENERATOR(EaoGenerator.class, EnumProject.SERVER),
+    EAOIMPLGENERATOR(EaoImplGenerator.class, EnumProject.SERVER),
+    QUERYGENERATOR(QueryGenerator.class, EnumProject.SERVER),
+    DTOGENERATOR(DtoGenerator.class, EnumProject.REST_COMMON),
+    SERVICEGENERATOR(ServiceGenerator.class, EnumProject.COMMON),
+    SERVICEIMPLGENERATOR(ServiceImplGenerator.class, EnumProject.SERVER),
+    RESOURCEGENERATOR(ResourceGenerator.class, EnumProject.REST_COMMON),
+    RESOURCEIMPLGENERATOR(ResourceImplGenerator.class, EnumProject.REST),
+	ANGULARCONTROLLERGENERATOR(AngularControllerGenerator.class, EnumProject.ANGULAR), 
+	ANGULARHTMLGENERATOR(AngularHtmlGenerator.class, EnumProject.ANGULAR),
+	ANGULARMAINSERVICEGENERATOR(AngularMainServiceGenerator.class, EnumProject.ANGULAR),
+	ANGULARMODULEGENERATOR(AngularModuleGenerator.class, EnumProject.ANGULAR),
+	ANGULARRESOURCEGENERATOR(AngularResourceGenerator.class, EnumProject.ANGULAR),
+	ANGULARROUTEGENERATOR(AngularRouteGenerator.class, EnumProject.ANGULAR),
+	ANGULARROUTEFACTORYGENERATOR(AngularRouteFactoryGenerator.class, EnumProject.ANGULAR),
     
+	;
     private final Class<? extends  AbstractGenerator> generator;
     
     private final EnumProject projectType;
