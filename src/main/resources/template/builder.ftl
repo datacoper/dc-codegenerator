@@ -24,7 +24,7 @@ public class ${className} implements EntityBuilder<${class.entityName}> {
         return this;
     }
 
-    <#list attributes as attribute>
+    <#list class.attributes as attribute>
     public ${className} with${attribute.name?cap_first}(${attribute.type} ${attribute.name?uncap_first}) {
         ${classVariableName}.set${attribute.name?cap_first}(${attribute.name?uncap_first});
         return this;

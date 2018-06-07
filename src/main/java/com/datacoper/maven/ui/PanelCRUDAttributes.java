@@ -1,28 +1,24 @@
 package com.datacoper.maven.ui;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import com.datacoper.cooperate.arquitetura.client.exception.DCErrorDialog;
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
+import com.datacoper.cooperate.arquitetura.common.beans.BeanUtil;
+import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
 import com.datacoper.cooperate.arquitetura.common.util.Entry;
 import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.util.ColumnNameResolver;
 import com.datacoper.maven.util.StringUtil;
@@ -34,13 +30,9 @@ import se.gustavkarlsson.gwiz.AbstractWizardPage;
 public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	private static final long serialVersionUID = 1L;
 	
-	private JComboBox<String> comboAttributeType = new JComboBox<>(EnumAttributeType.types());
-	
 	private PanelCRUDClasses panelCRUDClasses;
 	
-	private JTable tableAttributes;
-	
-	private DefaultTableModel defaultTableModel;
+	private TableAttributes tableAttributes;
 	
 	private String entityName;
 	
@@ -53,21 +45,9 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		verticalLayout.setVgap(5);
 		setLayout(verticalLayout);
 		
-		defaultTableModel = new DefaultTableModel(new String[] {"Coluna", "Atributo", "Label", "Tipo"}, 0);
-		
-		tableAttributes = new JTable(defaultTableModel) {
-			private static final long serialVersionUID = 1L;
-
-			public boolean isCellEditable(int row, int column){
-				return column != 0;
-			}
-		};
-		
 		panelCRUDClasses = new PanelCRUDClasses(projectParentFile, moduleName);
 		
-		TableColumn columnAttributes = tableAttributes.getColumnModel().getColumn(3);
-		
-		columnAttributes.setCellEditor(new DefaultCellEditor(comboAttributeType));
+		tableAttributes = new TableAttributes();
 		
 		add(new JScrollPane(tableAttributes));
 		
@@ -77,7 +57,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		this.entityName = entityName;
 		this.company = company;
 		
-		defaultTableModel.setRowCount(0);
+		tableAttributes.setRowCount(0);
 		
 		if(entityName != null) {
 			
@@ -102,10 +82,18 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 							Entry<String, String> revolverFieldAndLabel = columnNameResolver.revolverFieldAndLabel(columnName);
 							String attributeName = revolverFieldAndLabel.getKey();
 							String attributeLabel = StringUtil.isNotNullOrEmpty(revolverFieldAndLabel.getValue()) ? revolverFieldAndLabel.getValue() : attributeName;
-							
 							String columnClassName = metaData.getColumnClassName(i);
 							
-							defaultTableModel.addRow(new String[] {columnName, attributeName, attributeLabel, columnClassName});
+							Boolean nullable = metaData.isNullable(i) == 1;
+							
+							int precision = metaData.getPrecision(i);
+							int scale = metaData.getScale(i);
+							
+							columnClassName = replaceColumnClassName(columnClassName, scale);
+							
+							String mask = getMascaraDefault(columnClassName);
+							
+							tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, nullable, mask, precision, scale);
 						}
 						
 					}
@@ -120,6 +108,33 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 	}
 	
+	private String replaceColumnClassName(String columnClassName, int scale) {
+		if(BigDecimal.class.getName().equals(columnClassName) && !(scale > 0)) {
+			return Long.class.getName();
+		}
+		return columnClassName;
+	}
+
+	private Class<?> tryCreateClass(String className){
+		try {
+			return BeanUtil.createClass(className);
+		}catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private String getMascaraDefault(String columnClassName) {
+		
+		Class<?> typeClass = tryCreateClass(columnClassName);
+		
+		if(typeClass != null) {
+			if(Date.class.isAssignableFrom(typeClass)) {
+				return DateUtil.DDMMYYYYHHMMSS.toPattern();
+			}
+		}
+		return null;
+	}
+
 	private boolean isPrimaryKey(String entityName, String columnName) {
 		return ("id"+entityName.toLowerCase()).equals(columnName.toLowerCase());
 	}
@@ -152,21 +167,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	@Override
 	void onNext() {
 		
-		Vector<?> dataVector = defaultTableModel.getDataVector();
-		
-		Set<TemplateAttributeModel> attributes = new HashSet<TemplateAttributeModel>(dataVector.size());
-		
-		for (Object object : dataVector) {
-			
-			Vector<?> rowValues = (Vector<?>) object;
-			
-			String name = (String)rowValues.get(1);
-			String label = (String)rowValues.get(2);
-			String type = (String)rowValues.get(3);
-			
-			attributes.add(new TemplateAttributeModel(name, type, label));
-		}
-		
+		Set<TemplateAttributeModel> attributes = tableAttributes.getAsTemplateAttributeModel();
 		
 		panelCRUDClasses.init(entityName, company, attributes);
 	}

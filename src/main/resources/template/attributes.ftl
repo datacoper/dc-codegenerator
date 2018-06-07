@@ -1,4 +1,4 @@
-<#list attributes as attribute>		
+<#list class.attributes as attribute>		
     private ${attribute.type} ${attribute.name?uncap_first};
     
 </#list>

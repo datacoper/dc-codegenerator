@@ -55,7 +55,6 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 					for (AbstractGenerator abstractGenerator : generators) {
 		
 						AbstractGeneratorCheckBox abstractGeneratorCheckBox = new AbstractGeneratorCheckBox(abstractGenerator);
-						
 						abstractGeneratorCheckBoxs.add(abstractGeneratorCheckBox);
 						
 						add(abstractGeneratorCheckBox);

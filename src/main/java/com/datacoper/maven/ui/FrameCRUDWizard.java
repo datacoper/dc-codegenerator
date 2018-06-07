@@ -8,6 +8,8 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.datacoper.cooperate.arquitetura.client.dialog.DCOptionPane;
 import com.datacoper.maven.enums.properties.EnumProject;
@@ -54,6 +56,8 @@ public class FrameCRUDWizard extends JFrameWizard {
 				AbstractWizardPage currentPage = controller.getCurrentPage();
 				if(currentPage instanceof AbstractCRUDPanelWizard) {
 					((AbstractCRUDPanelWizard)currentPage).onFinish();
+					revalidate();
+					repaint();
 					if(DCOptionPane.showConfirmDialog(getOwner(), "Fechar?")) {
 						dispose();
 					}
@@ -61,6 +65,21 @@ public class FrameCRUDWizard extends JFrameWizard {
 			}
 		});
 		
+		
+		setLookAndFeel();
+		
+	}
+
+	private void setLookAndFeel() {
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		}
 	}
 	
 	private File getAndValidateProjectFile(String projectParent) {
@@ -87,7 +106,9 @@ public class FrameCRUDWizard extends JFrameWizard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameCRUDWizard frame = new FrameCRUDWizard("/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/Financeiro-Parent");
+					String projectParentPath = System.getProperty("projectParentPath", "/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/Financeiro-Parent");
+					
+					FrameCRUDWizard frame = new FrameCRUDWizard(projectParentPath);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

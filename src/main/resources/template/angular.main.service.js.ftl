@@ -27,12 +27,12 @@
             return [
                 <#list class.attributes as attribute>		
                 new DcGenericCrudField('${attribute.type}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
-                    //.disable(false)
-                    //.maxlength(6)
-                    //.max(6)
+                    .require(<@if attribute.requerid "true" "false"/>)
+                    .max(${attribute.precision})
                     //.min(6)
-                    //.onlyWhenNew(false)
-                    //.require(true)
+                    //.disable(false)
+                    //.maxlength(${attribute.precision})                    
+                    //.onlyWhenNew(false)                    
                     //.dateFormat('dd/MM/yyyy HH:mm:ss')
                     .toJSON()<#if attribute?has_next>,</#if>
 				</#list>               
@@ -43,7 +43,7 @@
          * Funcoes Genericas
          ***************************************/
         var vm = this;
-        var model = { main: { ativo: true } };
+        var model = {};
 
         vm.getFormConfig = getFormConfig;
         vm.getModel = getModel;
