@@ -89,11 +89,11 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 							int precision = metaData.getPrecision(i);
 							int scale = metaData.getScale(i);
 							
-							columnClassName = replaceColumnClassName(columnClassName, scale);
+							columnClassName = replaceColumnClassName(columnClassName, precision ,scale);
 							
 							String mask = getMascaraDefault(columnClassName);
 							
-							tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, nullable, mask, precision, scale);
+							tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, !nullable, mask, precision, scale);
 						}
 						
 					}
@@ -108,8 +108,12 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 	}
 	
-	private String replaceColumnClassName(String columnClassName, int scale) {
+	private String replaceColumnClassName(String columnClassName, int precision, int scale) {
 		if(BigDecimal.class.getName().equals(columnClassName) && !(scale > 0)) {
+			
+			if(precision == 1) {
+				return Byte.class.getName();
+			}
 			return Long.class.getName();
 		}
 		return columnClassName;
