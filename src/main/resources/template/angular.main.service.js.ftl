@@ -26,14 +26,15 @@
         function getFormFields() {
             return [
                 <#list class.attributes as attribute>		
-                new DcGenericCrudField('${attribute.type}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
-                    .require(<@if attribute.requerid "true" "false"/>)
-                    .max(${attribute.precision})
-                    //.min(6)
+                new DcGenericCrudField('${attribute.frontType}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
+                    .require(<#if attribute.required>true<#else>false</#if>))                    
+                    <#if attribute.number>//.min()(${attribute.scale})</#if>
+                    <#if attribute.number>//.max()(${attribute.scale})</#if>
                     //.disable(false)
-                    //.maxlength(${attribute.precision})                    
+                    <#if attribute.text>.maxlength(${attribute.precision})</#if>
+                    <#if attribute.scale gt 0 >.decimalPlaces(${attribute.scale})</#if>
                     //.onlyWhenNew(false)                    
-                    //.dateFormat('dd/MM/yyyy HH:mm:ss')
+                    <#if attribute.mask??>.dateFormat('${attribute.mask}')</#if>
                     .toJSON()<#if attribute?has_next>,</#if>
 				</#list>               
             ];

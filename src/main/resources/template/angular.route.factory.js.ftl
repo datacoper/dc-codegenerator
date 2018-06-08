@@ -18,7 +18,7 @@
     ) {
         return {
             '${entityNameVariable}': {
-                state: '${module[0..3]?upper_case}.${entityNameVariable}',
+                state: '${module[0..2]?upper_case}.${entityNameVariable}',
                 config: {
                 	//alterar o camelcase por - ex: pacoteVenda por pacote-vendas 
                     url: '/${entityNameVariable}',
@@ -31,7 +31,7 @@
                 }
             },
             'createEdit': {
-                state: '${module[0..3]?upper_case}.${entityNameVariable}.createEdit',
+                state: '${module[0..2]?upper_case}.${entityNameVariable}.createEdit',
                 config: apiService.getRouteConfig('genericCrudCreateEdit')
             }
         };

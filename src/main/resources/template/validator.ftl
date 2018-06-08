@@ -7,7 +7,7 @@ import com.datacoper.cooperate.arquitetura.common.util.ValidateMandatoryFields;
 import com.${company}.cooperate.${module}.common.entities.${class.entityName};
 import com.datacoper.cooperate.nucleo.server.crud.ValidatorGenericCRUD;
 
-public class ${className}  implements ValidatorGenericCRUD<${class.entityName}> {
+public class ${className} implements ValidatorGenericCRUD<${class.entityName}> {
     
     @Override
 	public ValidateMandatoryFields validateRequiredFields(${class.entityName} ${class.entityName?uncap_first}) {

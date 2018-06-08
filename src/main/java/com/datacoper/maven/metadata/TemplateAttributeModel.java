@@ -20,6 +20,8 @@ public class TemplateAttributeModel {
 	private int scale;
 
 	private boolean nullable;
+	
+	private boolean required;
 
 	public TemplateAttributeModel(String name, String type, String label, String mask, int precision, int scale,
 			boolean nullable) {
@@ -35,6 +37,7 @@ public class TemplateAttributeModel {
 		this.precision = precision;
 		this.scale = scale;
 		this.nullable = nullable;
+		this.required = !nullable;
 	}
 
 	public String getType() {
@@ -66,7 +69,7 @@ public class TemplateAttributeModel {
 	}
 	
 	public boolean isRequired() {
-		return !nullable;
+		return required;
 	}
 	
 	public boolean isNumber() {
@@ -98,6 +101,25 @@ public class TemplateAttributeModel {
 				type.equals(Boolean.class.getName()) ||
 				type.equals(Byte.class.getName()) ||
 				type.equals(byte.class.getName());
+	}
+	
+	public String getFrontType() {
+		if(isText()) {
+			return "text";
+		}
+		if(isNumber() || isDecimal()) {
+			return "number";
+		}
+		
+		if(isDate()) {
+			return "date";
+		}
+		
+		if(isBoolean()) {
+			return "boolean";
+		}
+		
+		return "seletor";
 	}
 	
 }
