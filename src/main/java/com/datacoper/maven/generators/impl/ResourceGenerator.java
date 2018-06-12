@@ -1,15 +1,13 @@
 package com.datacoper.maven.generators.impl;
 
-import java.io.File;
-
-import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
 public class ResourceGenerator extends AbstractGenerator {
     
-    public ResourceGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
-		super(projectParentFile, entityName, company, moduleName);
+    public ResourceGenerator(TemplateModel templateModel) {
+		super(templateModel);
 	}
 
 	@Override

@@ -4,24 +4,24 @@ import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class VoGenerator extends AbstractGenerator {
+public class ServiceImplDetailGenerator extends AbstractGenerator {
     
-    public VoGenerator(TemplateModel templateModel) {
+    public ServiceImplDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
     public String getTemplateName() {
-    	return "vo";
+    	return "serviceImplDetail";
     }
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", getCompany().getPackageName(), getModuleName().toLowerCase(), getEntityName().toLowerCase());
+        return StringUtil.format("com.{0}.cooperate.{1}.server.{2}", getCompany().getPackageName(), getModuleName().toLowerCase(), getEntityName().toLowerCase());
     }
 
 	@Override
 	public String getClassName() {
-		return getEntityName()+"VO";
+		return getEntityName()+"ServiceImpl";
 	}
 }

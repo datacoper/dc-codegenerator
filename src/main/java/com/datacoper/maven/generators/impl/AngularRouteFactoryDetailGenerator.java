@@ -4,15 +4,15 @@ import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularRouteFactoryGenerator extends AbstractGenerator {
+public class AngularRouteFactoryDetailGenerator extends AbstractGenerator {
 
-	public AngularRouteFactoryGenerator(TemplateModel templateModel) {
+	public AngularRouteFactoryDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
 	public String getTemplateName() {
-		return "angular.route.factory.js";
+		return "angular.route.factory.detail.js";
 	}
 
 	@Override

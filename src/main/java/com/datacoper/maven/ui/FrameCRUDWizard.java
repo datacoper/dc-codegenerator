@@ -13,6 +13,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.datacoper.cooperate.arquitetura.client.dialog.DCOptionPane;
 import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.metadata.TemplateModel;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 import se.gustavkarlsson.gwiz.WizardController;
@@ -31,9 +32,11 @@ public class FrameCRUDWizard extends JFrameWizard {
 		String moduleName = getModuleName(projectParentFile);
 		setTitle(moduleName);
 		
+		TemplateModel templateModel = new TemplateModel(moduleName, projectParentFile);
+		
 		WizardController controller = new WizardController(this);
 		
-		AbstractWizardPage startPage = new PanelCRUDEntity(projectParentFile, moduleName);
+		AbstractWizardPage startPage = new PanelCRUDEntity(templateModel);
 		controller.startWizard(startPage);
 		
 		

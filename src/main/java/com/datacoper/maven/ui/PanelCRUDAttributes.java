@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JScrollPane;
@@ -20,6 +22,8 @@ import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
 import com.datacoper.cooperate.arquitetura.common.util.Entry;
 import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
+import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.metadata.TemplateModelDetail;
 import com.datacoper.maven.util.ColumnNameResolver;
 import com.datacoper.maven.util.StringUtil;
 import com.datacoper.testes.persistence.PersistenceProperties;
@@ -32,71 +36,41 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	
 	private PanelCRUDClasses panelCRUDClasses;
 	
-	private TableAttributes tableAttributes;
+	private Map<String, TableAttributes> tablesAttributes;
 	
-	private String entityName;
 	
-	private Company company;
-
-	public PanelCRUDAttributes(File projectParentFile, String moduleName) {
-		super(projectParentFile, moduleName);
+	public PanelCRUDAttributes(TemplateModel templateModel) {
+		super(templateModel);
 		
 		VerticalFlowLayout verticalLayout = new VerticalFlowLayout();
 		verticalLayout.setVgap(5);
 		setLayout(verticalLayout);
 		
-		panelCRUDClasses = new PanelCRUDClasses(projectParentFile, moduleName);
-		
-		tableAttributes = new TableAttributes();
-		
-		add(new JScrollPane(tableAttributes));
+		panelCRUDClasses = new PanelCRUDClasses(templateModel);
 		
 	}
 
-	public void init(String entityName, Company company) {
-		this.entityName = entityName;
-		this.company = company;
+	public void init() {
+		TemplateModel templateModel = getTemplateModel();
+		String entityName = templateModel.getEntityName();
 		
-		tableAttributes.setRowCount(0);
+		removeAll();
 		
 		if(entityName != null) {
+			
+			TableAttributes tableAttributes = createAndAddTableAttribute(entityName);
 			
 			PersistenceProperties persistenceProperties = new PersistenceProperties(DBType.PHYSICAL, getProjectParentFile().getAbsolutePath()+File.separator);
 			
 			try (Connection connection = DriverManager.getConnection(persistenceProperties.url, persistenceProperties.user, persistenceProperties.password)){
 				
-				try(Statement statement = connection.createStatement()){
+				populateAttributes(entityName, connection, tableAttributes);
 				
-					ResultSet resultSet = statement.executeQuery("select * from "+entityName+" where 0 = 1");
+				for (TemplateModelDetail entityDetail: templateModel.getDetails()) {
 					
-					ResultSetMetaData metaData = resultSet.getMetaData();
+					TableAttributes tableAttributesDetail = createAndAddTableAttribute(entityName);
 					
-					int columnCount = metaData.getColumnCount();
-					
-					ColumnNameResolver columnNameResolver = new ColumnNameResolver();
-					
-					for (int i = 1; i <= columnCount; i++) {
-						String columnName = metaData.getColumnName(i);
-						
-						if(!isPrimaryKey(entityName, columnName)) {
-							Entry<String, String> revolverFieldAndLabel = columnNameResolver.revolverFieldAndLabel(columnName);
-							String attributeName = revolverFieldAndLabel.getKey();
-							String attributeLabel = StringUtil.isNotNullOrEmpty(revolverFieldAndLabel.getValue()) ? revolverFieldAndLabel.getValue() : attributeName;
-							String columnClassName = metaData.getColumnClassName(i);
-							
-							Boolean nullable = metaData.isNullable(i) == 1;
-							
-							int precision = metaData.getPrecision(i);
-							int scale = metaData.getScale(i);
-							
-							columnClassName = replaceColumnClassName(columnClassName, precision ,scale);
-							
-							String mask = getMascaraDefault(columnClassName);
-							
-							tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, !nullable, mask, precision, scale);
-						}
-						
-					}
+					populateAttributes(entityDetail.getEntityName(), connection, tableAttributesDetail);
 					
 				}
 				
@@ -106,6 +80,54 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 		}
 		
+	}
+
+	private TableAttributes createAndAddTableAttribute(String entityName) {
+		TableAttributes tableAttributes = new TableAttributes();
+		
+		add(new JScrollPane(tableAttributes));
+		
+		tablesAttributes.put(entityName, tableAttributes);
+		
+		return tableAttributes;
+		
+	}
+
+	private void populateAttributes(String entityName, Connection connection, TableAttributes tableAttributes) throws SQLException {
+		try(Statement statement = connection.createStatement()){
+		
+			ResultSet resultSet = statement.executeQuery("select * from "+entityName+" where 0 = 1");
+			
+			ResultSetMetaData metaData = resultSet.getMetaData();
+			
+			int columnCount = metaData.getColumnCount();
+			
+			ColumnNameResolver columnNameResolver = new ColumnNameResolver();
+			
+			for (int i = 1; i <= columnCount; i++) {
+				String columnName = metaData.getColumnName(i);
+				
+				if(!isPrimaryKey(entityName, columnName)) {
+					Entry<String, String> revolverFieldAndLabel = columnNameResolver.revolverFieldAndLabel(columnName);
+					String attributeName = revolverFieldAndLabel.getKey();
+					String attributeLabel = StringUtil.isNotNullOrEmpty(revolverFieldAndLabel.getValue()) ? revolverFieldAndLabel.getValue() : attributeName;
+					String columnClassName = metaData.getColumnClassName(i);
+					
+					Boolean nullable = metaData.isNullable(i) == 1;
+					
+					int precision = metaData.getPrecision(i);
+					int scale = metaData.getScale(i);
+					
+					columnClassName = replaceColumnClassName(columnClassName, precision ,scale);
+					
+					String mask = getMascaraDefault(columnClassName);
+					
+					tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, !nullable, mask, precision, scale);
+				}
+				
+			}
+			
+		}
 	}
 	
 	private String replaceColumnClassName(String columnClassName, int precision, int scale) {
@@ -171,9 +193,21 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	@Override
 	void onNext() {
 		
-		Set<TemplateAttributeModel> attributes = tableAttributes.getAsTemplateAttributeModel();
+		TemplateModel templateModel = getTemplateModel();
 		
-		panelCRUDClasses.init(entityName, company, attributes);
+		Set<TemplateAttributeModel> attributes = tablesAttributes.get(templateModel.getEntityName()).getAsTemplateAttributeModel();		
+		templateModel.setAttributes(attributes);
+		
+		Set<TemplateModelDetail> details = templateModel.getDetails();
+		
+		for (TemplateModelDetail templateModelDetail : details) {
+			TableAttributes tableAttributesDetail = tablesAttributes.get(templateModelDetail.getEntityName());
+			
+			templateModelDetail.setAttributes(tableAttributesDetail.getAsTemplateAttributeModel());
+			
+		}
+		
+		panelCRUDClasses.init();
 	}
 
 	@Override

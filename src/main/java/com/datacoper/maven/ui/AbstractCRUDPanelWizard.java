@@ -1,26 +1,20 @@
 package com.datacoper.maven.ui;
 
-import java.io.File;
+import com.datacoper.maven.metadata.TemplateModel;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 
 public abstract class AbstractCRUDPanelWizard extends AbstractWizardPage {
 	private static final long serialVersionUID = 1L;
 	
-	private File projectParentFile;
-	private String moduleName;
+	private TemplateModel templateModel;
 	
-	public AbstractCRUDPanelWizard(File projectParentFile, String moduleName) {
-		this.projectParentFile = projectParentFile;
-		this.moduleName = moduleName;
+	public AbstractCRUDPanelWizard(TemplateModel templateModel) {
+		this.templateModel = templateModel;
 	}
-	
-	public File getProjectParentFile() {
-		return projectParentFile;
-	}
-	
-	public String getModuleName() {
-		return moduleName;
+
+	public TemplateModel getTemplateModel() {
+		return templateModel;
 	}
 	
 	abstract void onNext();
