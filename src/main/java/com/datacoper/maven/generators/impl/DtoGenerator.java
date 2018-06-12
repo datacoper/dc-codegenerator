@@ -1,9 +1,10 @@
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.generators.AbstractJavaGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class DtoGenerator extends AbctractJavaGenerator {
+public class DtoGenerator extends AbstractJavaGenerator {
     
     public DtoGenerator(TemplateModel templateModel) {
 		super(templateModel);

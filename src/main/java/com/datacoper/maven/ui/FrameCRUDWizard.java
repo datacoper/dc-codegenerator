@@ -1,13 +1,11 @@
 package com.datacoper.maven.ui;
 
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -18,15 +16,11 @@ import com.datacoper.maven.metadata.TemplateModel;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 import se.gustavkarlsson.gwiz.WizardController;
-import se.gustavkarlsson.gwiz.wizards.JFrameWizard;
 
 public class FrameCRUDWizard extends JFrameWizard {
 	private static final long serialVersionUID = 1L;
 
 	public FrameCRUDWizard(String projectParentPath) {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(500,300));
 		
 		File projectParentFile = getAndValidateProjectFile(projectParentPath);
 		
@@ -51,7 +45,6 @@ public class FrameCRUDWizard extends JFrameWizard {
 		});
 		
 		JButton finishButton = getFinishButton();
-		finishButton.removeActionListener(finishButton.getActionListeners()[0]);
 		
 		finishButton.addActionListener(new ActionListener() {
 			@Override

@@ -1,32 +1,36 @@
-<#assign className = class.className>
-<#assign variableName = class.className?uncap_first>
-<#assign company = class.company.packageName>
-<#assign module = class.moduleName?lower_case>
-package ${class.package};
+<#assign className = model.className>
+<#assign variableName = model.className?uncap_first>
+<#assign company = model.company.packageName>
+<#assign module = model.moduleName?lower_case>
+<#assign entityName = model.entityName>
 
-import java.util.Collections;
-import java.util.Set;
+package ${model.package};
 
-import com.${company}.cooperate.arquitetura.common.services.DetailCrudService;
-import com.${company}.cooperate.${module}.common.services.${class.entityName}Service;
-import com.${company}.cooperate.${module}.common.entities.${class.entityName};
-import com.datacoper.cooperate.nucleo.server.service.MasterCrudServiceImpl;
+import java.util.Collection;
+import java.util.List;
 
-public class ${class.entityName}ServiceImpl extends MasterCrudServiceImpl<${class.entityName}> implements ${class.entityName}Service{
+import com.${company}.cooperate.${module}.common.entities.${model.entityNameMaster};
+import com.${company}.cooperate.${module}.common.entities.${entityName};
+import com.${company}.cooperate.${module}.common.services.${entityName}Service;
+import com.datacoper.cooperate.nucleo.server.service.DetailCrudServiceImpl;
 
-	public ${class.entityName}ServiceImpl() {
-		super(${class.entityName}.class, new Validador${class.entityName}(), new String[] {
-				<#list class.attributes as attribute>
+public class ${className} extends DetailCrudServiceImpl<${entityName}, ${model.entityNameMaster}> implements ${entityName}Service {
+
+    public ${className}() {
+        super(${entityName}.class, new Validador${entityName}(), new String[] {
+				<#list model.attributes as attribute>
                 	"${attribute.name?uncap_first}",
         		</#list>
 		});
-		
-	}
+    }
+    
+    @Override
+    public void setParent(${model.entityNameMaster} master, ${entityName} detail) {
+        detail.set${model.entityNameMaster}(master);
+    }
 
-	@Override
-	public Set<Class<? extends DetailCrudService<?, ${class.entityName}>>> getDetailsServices() {
-		//TODO add aqui os services details
-		return Collections.emptySet();
-	}
-	
+    @Override
+    public Collection<${entityName}> getDetails(${model.entityNameMaster} master) {
+        return master.get${entityName}s();
+    }
 }

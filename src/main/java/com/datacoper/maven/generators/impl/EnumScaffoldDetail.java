@@ -19,13 +19,13 @@ public enum EnumScaffoldDetail {
     SERVICEIMPLGENERATOR(ServiceImplDetailGenerator.class, EnumProject.SERVER),
     RESOURCEGENERATOR(ResourceDetailGenerator.class, EnumProject.REST_COMMON),
     RESOURCEIMPLGENERATOR(ResourceImplDetailGenerator.class, EnumProject.REST),
-	ANGULARCONTROLLERGENERATOR(AngularControllerDetailGenerator.class, EnumProject.ANGULAR), 
-	ANGULARHTMLGENERATOR(AngularHtmlDetailGenerator.class, EnumProject.ANGULAR),
-	ANGULARMAINSERVICEGENERATOR(AngularMainServiceDetailGenerator.class, EnumProject.ANGULAR),
-	ANGULARMODULEGENERATOR(AngularModuleDetailGenerator.class, EnumProject.ANGULAR),
-	ANGULARRESOURCEGENERATOR(AngularResourceDetailGenerator.class, EnumProject.ANGULAR),
-	ANGULARROUTEGENERATOR(AngularRouteDetailGenerator.class, EnumProject.ANGULAR),
-	ANGULARROUTEFACTORYGENERATOR(AngularRouteFactoryDetailGenerator.class, EnumProject.ANGULAR),
+//	ANGULARCONTROLLERGENERATOR(AngularControllerDetailGenerator.class, EnumProject.ANGULAR), 
+//	ANGULARHTMLGENERATOR(AngularHtmlDetailGenerator.class, EnumProject.ANGULAR),
+//	ANGULARMAINSERVICEGENERATOR(AngularMainServiceDetailGenerator.class, EnumProject.ANGULAR),
+//	ANGULARMODULEGENERATOR(AngularModuleDetailGenerator.class, EnumProject.ANGULAR),
+//	ANGULARRESOURCEGENERATOR(AngularResourceDetailGenerator.class, EnumProject.ANGULAR),
+//	ANGULARROUTEGENERATOR(AngularRouteDetailGenerator.class, EnumProject.ANGULAR),
+//	ANGULARROUTEFACTORYGENERATOR(AngularRouteFactoryDetailGenerator.class, EnumProject.ANGULAR),
     
 	;
     private final Class<? extends  AbstractGenerator> generator;
@@ -39,9 +39,9 @@ public enum EnumScaffoldDetail {
 
     public AbstractGenerator getGenerator(TemplateModel templateModel) {
         try {
-			Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(TemplateModel.class);
+        	Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(TemplateModel.class);
 			return constructor.newInstance(templateModel);
-		} catch (Exception e) {
+        } catch (Exception e) {
 			throw new RuntimeException(e);
 		}
     }

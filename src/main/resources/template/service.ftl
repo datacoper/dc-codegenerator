@@ -1,12 +1,12 @@
-<#assign className = class.className>
-<#assign company = class.company.packageName>
-<#assign module = class.moduleName?lower_case>
-package ${class.package};
+<#assign className = model.className>
+<#assign company = model.company.packageName>
+<#assign module = model.moduleName?lower_case>
+package ${model.package};
 
 import com.datacoper.cooperate.arquitetura.common.services.MasterCrudService;
-import com.${company}.cooperate.${module}.common.entities.${class.entityName};
+import com.${company}.cooperate.${module}.common.entities.${model.entityName};
 
-public interface ${class.entityName}Service extends MasterCrudService<${class.entityName}>{
+public interface ${className} extends MasterCrudService<${model.entityName}>{
 
 
 }

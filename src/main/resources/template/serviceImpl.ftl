@@ -1,32 +1,39 @@
-<#assign className = class.className>
-<#assign variableName = class.className?uncap_first>
-<#assign company = class.company.packageName>
-<#assign module = class.moduleName?lower_case>
-package ${class.package};
+<#assign className = model.className>
+<#assign variableName = model.className?uncap_first>
+<#assign company = model.company.packageName>
+<#assign module = model.moduleName?lower_case>
 
-import java.util.Collections;
+package ${model.package};
+
+import java.util.HashSet;
 import java.util.Set;
 
 import com.${company}.cooperate.arquitetura.common.services.DetailCrudService;
-import com.${company}.cooperate.${module}.common.services.${class.entityName}Service;
-import com.${company}.cooperate.${module}.common.entities.${class.entityName};
+import com.${company}.cooperate.${module}.common.services.${model.entityName}Service;
+<#list model.details as detail>
+import com.${company}.cooperate.${module}.common.services.${detail.entityName}Service;
+</#list>
+import com.${company}.cooperate.${module}.common.entities.${model.entityName};
 import com.datacoper.cooperate.nucleo.server.service.MasterCrudServiceImpl;
 
-public class ${class.entityName}ServiceImpl extends MasterCrudServiceImpl<${class.entityName}> implements ${class.entityName}Service{
+public class ${className} extends MasterCrudServiceImpl<${model.entityName}> implements ${model.entityName}Service{
 
-	public ${class.entityName}ServiceImpl() {
-		super(${class.entityName}.class, new Validador${class.entityName}(), new String[] {
-				<#list class.attributes as attribute>
-                	<#if attribute.updatable>"${attribute.name?uncap_first}",</#if >
+	public ${className}() {
+		super(${model.entityName}.class, new Validador${model.entityName}(), new String[] {
+				<#list model.attributes as attribute>
+                	"${attribute.name?uncap_first}",
         		</#list>
 		});
 		
 	}
 
 	@Override
-	public Set<Class<? extends DetailCrudService<?, ${class.entityName}>>> getDetailsServices() {
-		//TODO add aqui os services details
-		return Collections.emptySet();
+	public Set<Class<? extends DetailCrudService<?, ${model.entityName}>>> getDetailsServices() {
+		Set<Class<? extends DetailCrudService<?, ${model.entityName}>>> detailServices = new HashSet<>();		
+		<#list model.details as detail>
+       	detailServices.add(${detail.entityName}Service.class);
+		</#list>
+		return detailServices;
 	}
 	
 }

@@ -1,9 +1,10 @@
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.generators.AbstractJavaDetailGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class ResourceImplDetailGenerator extends AbctractAngularGenerator {
+public class ResourceImplDetailGenerator extends AbstractJavaDetailGenerator {
     
     public ResourceImplDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);

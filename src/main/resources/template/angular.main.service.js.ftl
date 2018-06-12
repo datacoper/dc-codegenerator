@@ -1,6 +1,6 @@
-<#assign entityName = class.entityName>
-<#assign entityNameVariable = class.entityName?uncap_first>
-<#assign module = class.moduleName?lower_case>
+<#assign entityName = model.entityName>
+<#assign entityNameVariable = model.entityName?uncap_first>
+<#assign module = model.moduleName?lower_case>
 
 (function () {
     'use strict';
@@ -25,7 +25,7 @@
          */
         function getFormFields() {
             return [
-                <#list class.attributes as attribute>		
+                <#list model.attributes as attribute>		
                 new DcGenericCrudField('${attribute.frontType}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
                     .require(<#if attribute.required>true<#else>false</#if>))                    
                     <#if attribute.number>//.min(${attribute.scale})</#if>

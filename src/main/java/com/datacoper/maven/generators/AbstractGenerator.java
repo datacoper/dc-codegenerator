@@ -46,11 +46,11 @@ public abstract class AbstractGenerator {
     	
         LogUtil.info("generating class {0}", finalJavaFile);
         
-        templateFreeMarker.add("class", templateModel);
+        templateFreeMarker.add("model", templateModel);
+        
         templateFreeMarker.generateTemplate(finalJavaFile, getCharsetName());
         
     }
-
 
 	public File getJavaFile() {
 		File sourceFolder = new File(new File(templateModel.getProjectParentFile(), templateModel.getModuleName()+getProject().getSuffix()), getProject().getSourceFolder().getSourceFolder());

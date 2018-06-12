@@ -1,20 +1,20 @@
-<#assign className = class.className>
-<#assign module = class.moduleName?lower_case>
-<#assign company = class.company.packageName>
-package ${class.package};
+<#assign className = model.className>
+<#assign module = model.moduleName?lower_case>
+<#assign company = model.company.packageName>
+package ${model.package};
 
 import com.datacoper.cooperate.arquitetura.common.util.ValidateMandatoryFields;
-import com.${company}.cooperate.${module}.common.entities.${class.entityName};
+import com.${company}.cooperate.${module}.common.entities.${model.entityName};
 import com.datacoper.cooperate.nucleo.server.crud.ValidatorGenericCRUD;
 
-public class ${className} implements ValidatorGenericCRUD<${class.entityName}> {
+public class ${className} implements ValidatorGenericCRUD<${model.entityName}> {
     
     @Override
-	public ValidateMandatoryFields validateRequiredFields(${class.entityName} ${class.entityName?uncap_first}) {
+	public ValidateMandatoryFields validateRequiredFields(${model.entityName} ${model.entityName?uncap_first}) {
         return new ValidateMandatoryFields()
-        <#list class.attributes as attribute>
+        <#list model.attributes as attribute>
                 <#if attribute.required>
-                	.add(${class.entityName?uncap_first}.get${attribute.name?cap_first}(), "${attribute.label}")
+                	.add(${model.entityName?uncap_first}.get${attribute.name?cap_first}(), "${attribute.label}")
                 </#if>
         </#list>
         ;

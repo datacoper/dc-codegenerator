@@ -1,6 +1,6 @@
-<#assign className = class.className>
-<#assign attributes = class.attributes/>
-package ${class.package};
+<#assign className = model.className>
+<#assign attributes = model.attributes/>
+package ${model.package};
 
 <#include "attributeImports.ftl">
 
@@ -16,7 +16,7 @@ import com.datacoper.cooperate.arquitetura.common.persistence.entities.EqualsIde
 public class ${className} extends EqualsIdentifier {
     private static final long serialVersionUID = 1L;
     
-    private Long id${class.entityName};
+    private Long id${model.entityName};
     
 <#list attributes as attribute>
     
@@ -32,7 +32,7 @@ public class ${className} extends EqualsIdentifier {
     
     @Override
     public Long getId() {
-        return getId${class.entityName}();
+        return getId${model.entityName}();
     }
     
 }

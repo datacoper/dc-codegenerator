@@ -5,7 +5,6 @@ import javax.swing.JTextField;
 
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.client.panel.DCPanelTitled;
-import com.datacoper.cooperate.arquitetura.client.textfield.DCTextField;
 import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;
@@ -18,13 +17,13 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 	
 	private JComboBox<Company> comboCompany = new JComboBox<>(Company.values());
 	
-	private JTextField fieldEntity = new JTextField();
+	private JTextField fieldEntity = new JTextField(System.getProperty("entityName"));
 	
-	private DCTextField fieldEntityDetail1 = new DCTextField();
+	private JTextField fieldEntityDetail1 = new JTextField(System.getProperty("entityNameDetail1"));
 	
-	private DCTextField fieldEntityDetail2 = new DCTextField();
+	private JTextField fieldEntityDetail2 = new JTextField(System.getProperty("entityNameDetail2"));
 	
-	private DCTextField fieldEntityDetail3 = new DCTextField();
+	private JTextField fieldEntityDetail3 = new JTextField(System.getProperty("entityNameDetail3"));
 	
 	private PanelCRUDAttributes panelCRUDAttributes;
 	
@@ -45,21 +44,24 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 		
 		DCPanelTitled panelEntityDetail1 = new DCPanelTitled();
 		panelEntityDetail1.setTitle("Entidade Detail 1");
-		panelEntityDetail1.setMandatory(true);
+		panelEntityDetail1.setMandatory(false);
 		panelEntityDetail1.add(fieldEntityDetail1);
 		
 		DCPanelTitled panelEntityDetail2 = new DCPanelTitled();
 		panelEntityDetail2.setTitle("Entidade Detail 2");
-		panelEntityDetail2.setMandatory(true);
+		panelEntityDetail2.setMandatory(false);
 		panelEntityDetail2.add(fieldEntityDetail2);
 		
 		DCPanelTitled panelEntityDetail3 = new DCPanelTitled();
 		panelEntityDetail3.setTitle("Entidade Detail 1");
-		panelEntityDetail3.setMandatory(true);
+		panelEntityDetail3.setMandatory(false);
 		panelEntityDetail3.add(fieldEntityDetail3);
 		
 		add(panelCompany);
 		add(panelEntity);
+		add(panelEntityDetail1);
+		add(panelEntityDetail2);
+		add(panelEntityDetail3);
 		
 		panelCRUDAttributes = new PanelCRUDAttributes(templateModel);
 		
@@ -101,19 +103,19 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 		String entityDetail1 = fieldEntityDetail1.getText();
 		
 		if(StringUtil.isNotNullOrEmpty(entityDetail1)) {
-			templateModel.addDetail(new TemplateModelDetail(entityDetail1));
+			templateModel.addDetail(new TemplateModelDetail(entityDetail1, templateModel));
 		}
 		
 		String entityDetail2 = fieldEntityDetail2.getText();
 		
 		if(StringUtil.isNotNullOrEmpty(entityDetail2)) {
-			templateModel.addDetail(new TemplateModelDetail(entityDetail2));
+			templateModel.addDetail(new TemplateModelDetail(entityDetail2, templateModel));
 		}
 		
 		String entityDetail3 = fieldEntityDetail3.getText();
 		
 		if(StringUtil.isNotNullOrEmpty(entityDetail3)) {
-			templateModel.addDetail(new TemplateModelDetail(entityDetail3));
+			templateModel.addDetail(new TemplateModelDetail(entityDetail3, templateModel));
 		}
 		
 		panelCRUDAttributes.init();

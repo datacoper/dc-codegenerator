@@ -1,8 +1,8 @@
 
-<#assign className = class.className>
-<#assign company = class.company.packag>
-<#assign module = class.moduleBasic>
-package ${class.package};
+<#assign className = model.className>
+<#assign company = model.company.packag>
+<#assign module = model.moduleBasic>
+package ${model.package};
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -13,19 +13,19 @@ import com.datacoper.cooperate.arquitetura.web.generic.form.RestConfigurationBas
 import com.datacoper.cooperate.arquitetura.web.generic.list.ListagemGenericaManager;
 
 import com.${company}.cooperate.${module?lower_case}.web.Enum${module}ResourceConfiguration;
-import com.${company}.cooperate.${module?lower_case}.common.consultas.${class.classNameBasic}VO;
-import com.${company}.cooperate.${module?lower_case}.rest.common.dto.${class.classNameBasic}DTO;
-import com.${company}.cooperate.${module?lower_case}.rest.common.resources.${class.classNameBasic}Resource;
+import com.${company}.cooperate.${module?lower_case}.common.consultas.${model.classNameBasic}VO;
+import com.${company}.cooperate.${module?lower_case}.rest.common.dto.${model.classNameBasic}DTO;
+import com.${company}.cooperate.${module?lower_case}.rest.common.resources.${model.classNameBasic}Resource;
 
 @ManagedBean
 @ViewScoped
-public class Listagem${class.classNameBasic}Manager extends ListagemGenericaManager<${class.classNameBasic}VO, ${class.classNameBasic}DTO, ${class.classNameBasic}Resource> {
+public class Listagem${model.classNameBasic}Manager extends ListagemGenericaManager<${model.classNameBasic}VO, ${model.classNameBasic}DTO, ${model.classNameBasic}Resource> {
 
     private static final long serialVersionUID = 1L;
 
     @Override
     protected PaginaItemMenuBean getFormPageItem() {
-        return PaginaItemMenu.${module?upper_case}_${class.classNameBasic?upper_case}_EDITAR;
+        return PaginaItemMenu.${module?upper_case}_${model.classNameBasic?upper_case}_EDITAR;
     }
 
     @Override

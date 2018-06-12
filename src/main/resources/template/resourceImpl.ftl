@@ -1,8 +1,8 @@
-<#assign className = class.className>
-<#assign variableName = class.className?uncap_first>
-<#assign company = class.company.packageName>
-<#assign module = class.moduleName?lower_case>
-package ${class.package};
+<#assign className = model.className>
+<#assign variableName = model.className?uncap_first>
+<#assign company = model.company.packageName>
+<#assign module = model.moduleName?lower_case>
+package ${model.package};
 
 import javax.annotation.ManagedBean;
 import javax.transaction.Transactional;
@@ -10,19 +10,19 @@ import javax.transaction.Transactional;
 import com.datacoper.arquiteturarest.resource.MasterCRUDResource;
 import com.datacoper.arquiteturarest.resource.SeletorParams;
 import com.datacoper.cooperate.arquitetura.common.beans.PageResult;
-import com.${company}.cooperate.${module}.common.consultas.${class.entityName}VO;
-import com.${company}.cooperate.${module}.common.entities.${class.entityName};
-import com.${company}.cooperate.${module}.common.services.${class.entityName}Service;
-import com.${company}.cooperate.${module}.rest.common.dto.${class.entityName}DTO;
-import com.${company}.cooperate.${module}.rest.common.resources.${class.entityName}Resource;
-import com.${company}.cooperate.${module}.server.eao.${class.entityName}EAO;
+import com.${company}.cooperate.${module}.common.consultas.${model.entityName}VO;
+import com.${company}.cooperate.${module}.common.entities.${model.entityName};
+import com.${company}.cooperate.${module}.common.services.${model.entityName}Service;
+import com.${company}.cooperate.${module}.rest.common.dto.${model.entityName}DTO;
+import com.${company}.cooperate.${module}.rest.common.resources.${model.entityName}Resource;
+import com.${company}.cooperate.${module}.server.eao.${model.entityName}EAO;
 
 @Transactional
 @ManagedBean
-public class ${class.entityName}ResourceImpl extends MasterCRUDResource<${class.entityName}, ${class.entityName}DTO, ${class.entityName}VO, ${class.entityName}EAO, ${class.entityName}Service> implements ${class.entityName}Resource {
+public class ${className} extends MasterCRUDResource<${model.entityName}, ${model.entityName}DTO, ${model.entityName}VO, ${model.entityName}EAO, ${model.entityName}Service> implements ${model.entityName}Resource {
 
 	@Override
-	protected PageResult<${class.entityName}VO> consultar(SeletorParams seletorParams) {
+	protected PageResult<${model.entityName}VO> consultar(SeletorParams seletorParams) {
 		return getEAO().find(seletorParams.getBeanConsultaGroup());
 	}
 

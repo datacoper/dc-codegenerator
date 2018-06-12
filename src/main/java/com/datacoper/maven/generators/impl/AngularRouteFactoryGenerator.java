@@ -1,9 +1,10 @@
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.generators.AbstractAngularGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularRouteFactoryGenerator extends AbctractAngularGenerator {
+public class AngularRouteFactoryGenerator extends AbstractAngularGenerator {
 
 	public AngularRouteFactoryGenerator(TemplateModel templateModel) {
 		super(templateModel);

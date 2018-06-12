@@ -1,23 +1,23 @@
-<#assign className = class.className>
-<#assign company = class.company.packageName>
-<#assign module = class.moduleName?lower_case>
-package ${class.package};
+<#assign className = model.className>
+<#assign company = model.company.packageName>
+<#assign module = model.moduleName?lower_case>
+package ${model.package};
 
 import com.datacoper.arquitetura.server.consultas.AbstractConsulta;
-import com.${company}.cooperate.${module}.common.consultas.${class.entityName}VO;
-import com.${company}.cooperate.${module}.server.consultas.Query${class.entityName};
+import com.${company}.cooperate.${module}.common.consultas.${model.entityName}VO;
+import com.${company}.cooperate.${module}.server.consultas.Query${model.entityName};
 
-public class ${className} extends AbstractConsulta<${class.entityName}VO> {
+public class ${className} extends AbstractConsulta<${model.entityName}VO> {
     @Override
     public String getQuery() {
         StringBuffer sb = new StringBuffer();
 
         sb.append("SELECT ")
-        	.append(" ID${class.entityName?upper_case},")
-        	<#list class.attributes as attribute>		
+        	.append(" ID${model.entityName?upper_case},")
+        	<#list model.attributes as attribute>		
     		.append(" ${attribute.name?upper_case}<#if attribute?has_next>,</#if>")
 			</#list>
-        	.append("  FROM ${class.entityName?upper_case}");
+        	.append("  FROM ${model.entityName?upper_case}");
 
         return sb.toString();
     }

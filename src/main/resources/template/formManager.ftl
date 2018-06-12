@@ -1,7 +1,7 @@
-<#assign className = class.className>
-<#assign company = class.company.packag>
-<#assign module = class.moduleBasic>
-package ${class.package};
+<#assign className = model.className>
+<#assign company = model.company.packag>
+<#assign module = model.moduleBasic>
+package ${model.package};
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,18 +16,18 @@ import com.datacoper.cooperate.arquitetura.web.generic.form.FormGenericManager;
 import com.datacoper.cooperate.arquitetura.web.generic.form.RestConfigurationBase;
 
 import com.${company}.cooperate.${module?lower_case}.web.Enum${module}ResourceConfiguration;
-import com.${company}.cooperate.${module?lower_case}.common.consultas.${class.classNameBasic}VO;
-import com.${company}.cooperate.${module?lower_case}.rest.common.dto.${class.classNameBasic}DTO;
-import com.${company}.cooperate.${module?lower_case}.rest.common.resources.${class.classNameBasic}Resource;
+import com.${company}.cooperate.${module?lower_case}.common.consultas.${model.classNameBasic}VO;
+import com.${company}.cooperate.${module?lower_case}.rest.common.dto.${model.classNameBasic}DTO;
+import com.${company}.cooperate.${module?lower_case}.rest.common.resources.${model.classNameBasic}Resource;
 
 @ManagedBean
 @ViewScoped
-public class Form${class.classNameBasic}Manager extends FormGenericManager<${class.classNameBasic}VO, ${class.classNameBasic}DTO, ${class.classNameBasic}Resource> {
+public class Form${model.classNameBasic}Manager extends FormGenericManager<${model.classNameBasic}VO, ${model.classNameBasic}DTO, ${model.classNameBasic}Resource> {
     private static final long serialVersionUID = 1L;
     
     @Override
     protected PaginaItemMenuBean getListPageItem() {
-        return PaginaItemMenu.${module?upper_case}_${class.classNameBasic?upper_case}_LISTAR;
+        return PaginaItemMenu.${module?upper_case}_${model.classNameBasic?upper_case}_LISTAR;
     }
 
     @Override

@@ -54,7 +54,8 @@ public enum EnumScaffold {
             	return value.projectType;
             }
         }
-    	throw new IllegalArgumentException("Invalid generatorClass: "+generatorClass);
+    	
+    	return EnumScaffoldDetail.of(generatorClass);
     }
     
     public EnumProject getProjectType() {

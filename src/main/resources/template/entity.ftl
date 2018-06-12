@@ -1,7 +1,7 @@
-<#assign attributes = class.attributes/>
-<#assign className = class.className?cap_first>
-<#assign classNameUpper = class.className?upper_case>
-package ${class.package};
+<#assign attributes = model.attributes/>
+<#assign className = model.className?cap_first>
+<#assign classNameUpper = model.className?upper_case>
+package ${model.package};
 
 <#include "attributeImports.ftl">
 
@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityImpl;
-<#if class.hasAttributeBoolean()>import com.datacoper.cooperate.arquitetura.common.util.ByteUtil;</#if>
+<#if model.hasAttributeBoolean()>import com.datacoper.cooperate.arquitetura.common.util.ByteUtil;</#if>
 
 @Entity
 public class ${className} extends EntityImpl {
@@ -22,7 +22,7 @@ public class ${className} extends EntityImpl {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_${classNameUpper}")
     private Long id${className};
 
-<#list class.attributes as attribute>		
+<#list model.attributes as attribute>		
     <#if attribute.boolean>
     private Byte ${attribute.name?uncap_first};
     <#else>

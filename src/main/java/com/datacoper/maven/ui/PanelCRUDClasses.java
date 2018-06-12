@@ -1,14 +1,18 @@
 package com.datacoper.maven.ui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -20,6 +24,7 @@ import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.generators.impl.EnumScaffold;
 import com.datacoper.maven.generators.impl.EnumScaffoldDetail;
 import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.metadata.TemplateModelDetail;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 
@@ -30,12 +35,16 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 	
 	private JCheckBox checkAll = new JCheckBox("Marcar/Desmarcar todas", true);
 	
+	private JPanel container = new JPanel();
+	
 	public PanelCRUDClasses(TemplateModel templateModel) {
 		super(templateModel);
 		
+		setLayout(new BorderLayout());
+		add(new JScrollPane(container), BorderLayout.CENTER);
+				
 		VerticalFlowLayout verticalLayout = new VerticalFlowLayout();
-		verticalLayout.setVgap(5);
-		setLayout(verticalLayout);
+		container.setLayout(verticalLayout);
 		
 		checkAll.addActionListener(new ActionListener() {
 			@Override
@@ -43,6 +52,8 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 				checkAll();
 			}
 		});
+		
+		add(checkAll, BorderLayout.NORTH);
 		
 	}
 	
@@ -54,7 +65,7 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 	}
 
 	public void init() {
-		removeAll();
+		container.removeAll();
 		
 		abstractGeneratorCheckBoxs = new ArrayList<PanelCRUDClasses.AbstractGeneratorCheckBox>();
 		
@@ -67,19 +78,21 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 	
 				List<AbstractGenerator> generators = EnumScaffold.getGenerators(enumProject, templateModel);
 				
-				if(!templateModel.getDetails().isEmpty()) {
-					generators.addAll(EnumScaffoldDetail.getGenerators(enumProject, templateModel));
+				Set<TemplateModelDetail> details = templateModel.getDetails();
+				
+				for (TemplateModelDetail templateModelDetail : details) {
+					generators.addAll(EnumScaffoldDetail.getGenerators(enumProject, templateModelDetail));
 				}
 				
 				if(!generators.isEmpty()) {
 					JLabel  dcLabel = new JLabel(enumProject.getSuffix());
-					add(dcLabel);
+					container.add(dcLabel);
 					for (AbstractGenerator abstractGenerator : generators) {
 		
 						AbstractGeneratorCheckBox abstractGeneratorCheckBox = new AbstractGeneratorCheckBox(abstractGenerator);
 						abstractGeneratorCheckBoxs.add(abstractGeneratorCheckBox);
 						
-						add(abstractGeneratorCheckBox);
+						container.add(abstractGeneratorCheckBox);
 					}
 				}
 				

@@ -1,6 +1,6 @@
-<#assign className = class.className>
-<#global attributes = class.attributes/>
-package ${class.package};
+<#assign className = model.className>
+<#global attributes = model.attributes/>
+package ${model.package};
 
 <#include "attributeImports.ftl">
 
@@ -15,7 +15,7 @@ import com.datacoper.cooperate.arquitetura.common.dto.AbstractDTO;
 public class ${className} extends AbstractDTO {
     private static final long serialVersionUID = 1L;
     
-    private Long id${class.entityName};
+    private Long id${model.entityName};
 
     <#include "attributes.ftl">
 
@@ -26,6 +26,6 @@ public class ${className} extends AbstractDTO {
     <#include "getterAndSetter.ftl">
     @Override
     public Long getId() {
-        return getId${class.entityName}();
+        return getId${model.entityName}();
     }
 }

@@ -5,10 +5,11 @@
  */
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.generators.AbstractJavaGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class ValidatorGenerator extends AbctractJavaGenerator {
+public class ValidatorGenerator extends AbstractJavaGenerator {
     
     public ValidatorGenerator(TemplateModel templateModel) {
 		super(templateModel);

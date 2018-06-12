@@ -1,3 +1,3 @@
-<#list class.attributeImports as import>		
+<#list model.attributeImports as import>		
 import ${import};
 </#list>

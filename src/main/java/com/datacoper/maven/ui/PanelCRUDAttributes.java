@@ -1,5 +1,6 @@
 package com.datacoper.maven.ui;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -9,12 +10,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.datacoper.cooperate.arquitetura.client.exception.DCErrorDialog;
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanUtil;
 import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
@@ -34,15 +37,19 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	
 	private PanelCRUDClasses panelCRUDClasses;
 	
-	private Map<String, TableAttributes> tablesAttributes;
+	private Map<String, TableAttributes> tablesAttributes = new HashMap<String, TableAttributes>();
 	
+	private JPanel container = new JPanel();
 	
 	public PanelCRUDAttributes(TemplateModel templateModel) {
 		super(templateModel);
 		
 		VerticalFlowLayout verticalLayout = new VerticalFlowLayout();
-		verticalLayout.setVgap(5);
-		setLayout(verticalLayout);
+		verticalLayout.setVgap(2);
+		container.setLayout(verticalLayout);
+		
+		setLayout(new BorderLayout());
+		add(new JScrollPane(container), BorderLayout.CENTER);
 		
 		panelCRUDClasses = new PanelCRUDClasses(templateModel);
 		
@@ -52,7 +59,8 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		TemplateModel templateModel = getTemplateModel();
 		String entityName = templateModel.getEntityName();
 		
-		removeAll();
+		container.removeAll();
+		tablesAttributes.clear();
 		
 		if(entityName != null) {
 			
@@ -66,24 +74,28 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 				
 				for (TemplateModelDetail entityDetail: templateModel.getDetails()) {
 					
-					TableAttributes tableAttributesDetail = createAndAddTableAttribute(entityName);
+					TableAttributes tableAttributesDetail = createAndAddTableAttribute(entityDetail.getEntityName());
 					
 					populateAttributes(entityDetail.getEntityName(), connection, tableAttributesDetail);
 					
 				}
 				
 			} catch (SQLException e) {
-				DCErrorDialog.reportException(e, this);
+				throw new RuntimeException(e);
 			}
 		
 		}
+		
+		revalidate();
+		repaint();
 		
 	}
 
 	private TableAttributes createAndAddTableAttribute(String entityName) {
 		TableAttributes tableAttributes = new TableAttributes();
 		
-		add(new JScrollPane(tableAttributes));
+		container.add(new JLabel(entityName));
+		container.add(new JScrollPane(tableAttributes));
 		
 		tablesAttributes.put(entityName, tableAttributes);
 		
