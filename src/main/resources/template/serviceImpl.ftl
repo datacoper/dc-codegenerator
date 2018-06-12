@@ -17,7 +17,7 @@ public class ${class.entityName}ServiceImpl extends MasterCrudServiceImpl<${clas
 	public ${class.entityName}ServiceImpl() {
 		super(${class.entityName}.class, new Validador${class.entityName}(), new String[] {
 				<#list class.attributes as attribute>
-                	"${attribute.name?uncap_first}",
+                	<#if attribute.updatable>"${attribute.name?uncap_first}",</#if >
         		</#list>
 		});
 		

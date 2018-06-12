@@ -3,6 +3,7 @@ package com.datacoper.maven.ui;
 import java.io.File;
 
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.client.panel.DCPanelTitled;
@@ -16,7 +17,7 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 	
 	private JComboBox<Company> comboCompany = new JComboBox<>(Company.values());
 	
-	private DCTextField fieldEntity = new DCTextField();
+	private JTextField fieldEntity = new JTextField();
 	
 	private PanelCRUDAttributes panelCRUDAttributes;
 	

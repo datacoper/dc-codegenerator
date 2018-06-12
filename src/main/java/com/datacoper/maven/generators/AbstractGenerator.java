@@ -83,7 +83,7 @@ public abstract class AbstractGenerator {
         
         File packageFolder = new File(sourceFolder, packageName);
         
-        File finalJavaFile = new File(packageFolder, getClassName().concat(".java"));
+        File finalJavaFile = new File(packageFolder, getClassName().concat(getFileExtension()));
 		return finalJavaFile;
 	}
 
@@ -96,5 +96,7 @@ public abstract class AbstractGenerator {
     public abstract String getPackage();
     
     public abstract String getClassName();
+    
+    public abstract String getFileExtension();
     
 }

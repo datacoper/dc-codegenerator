@@ -10,7 +10,11 @@ public class TemplateAttributeModel {
 	private String name;
 
 	private String type;
-
+	
+	private String typeSimpleName;
+	
+	private String typePackage;
+	
 	private String label;
 
 	private String mask;
@@ -19,29 +23,41 @@ public class TemplateAttributeModel {
 
 	private int scale;
 
-	private boolean nullable;
-	
 	private boolean required;
+	
+	private boolean updatable;
 
 	public TemplateAttributeModel(String name, String type, String label, String mask, int precision, int scale,
-			boolean nullable) {
+			boolean required, boolean updatable) {
 		
 		Objects.requireNonNull(name);
 		Objects.requireNonNull(type);
 		Objects.requireNonNull(label);
 		
 		this.name = name;
-		this.type = type;
 		this.label = label;
 		this.mask = mask;
 		this.precision = precision;
 		this.scale = scale;
-		this.nullable = nullable;
-		this.required = !nullable;
+		this.required = required;
+		this.updatable = updatable;
+		
+		this.type = type;
+		
+		int lastIndexOfPoint = type.lastIndexOf(".");
+		
+		this.typeSimpleName  = type.substring(lastIndexOfPoint+1, type.length());
+		
+		this.typePackage = type.substring(0, lastIndexOfPoint);
+		
 	}
 
 	public String getType() {
 		return type;
+	}
+	
+	public String getTypePackage() {
+		return typePackage;
 	}
 
 	public String getName() {
@@ -64,12 +80,12 @@ public class TemplateAttributeModel {
 		return scale;
 	}
 
-	public boolean isNullable() {
-		return nullable;
-	}
-	
 	public boolean isRequired() {
 		return required;
+	}
+	
+	public boolean isUpdatable() {
+		return updatable;
 	}
 	
 	public boolean isNumber() {
@@ -98,9 +114,11 @@ public class TemplateAttributeModel {
 	
 	public boolean isBoolean() {
 		return type.equals(boolean.class.getName()) ||
-				type.equals(Boolean.class.getName()) ||
-				type.equals(Byte.class.getName()) ||
-				type.equals(byte.class.getName());
+				type.equals(Boolean.class.getName());
+	}
+	
+	public String getTypeSimpleName() {
+		return typeSimpleName;
 	}
 	
 	public String getFrontType() {

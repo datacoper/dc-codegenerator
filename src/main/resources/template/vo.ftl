@@ -2,6 +2,8 @@
 <#assign attributes = class.attributes/>
 package ${class.package};
 
+<#include "attributeImports.ftl">
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +21,7 @@ public class ${className} extends EqualsIdentifier {
 <#list attributes as attribute>
     
     @AttributeAnnot(alias = "${attribute.label}")
-    private ${attribute.type} ${attribute.name};
+    private ${attribute.typeSimpleName} ${attribute.name};
 </#list>
 
     <#include "defaultConstructor.ftl">

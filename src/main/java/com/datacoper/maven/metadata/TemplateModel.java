@@ -3,6 +3,7 @@ package com.datacoper.maven.metadata;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.datacoper.maven.enums.options.Company;
 
@@ -17,6 +18,8 @@ public class TemplateModel {
     private String packag;
 
     private String className;
+    
+    private Set<String> attributeImports = new TreeSet<>();
     
     private Set<TemplateAttributeModel> attributes = new HashSet<>();
 
@@ -55,6 +58,21 @@ public class TemplateModel {
 
 	public void setAttributes(Set<TemplateAttributeModel> attributes) {
 		this.attributes = attributes;
+		for (TemplateAttributeModel templateAttributeModel : attributes) {
+			attributeImports.add(templateAttributeModel.getType());
+		}
+	}
+	
+	public boolean hasAttributeBoolean() {
+		return attributes.stream().filter(a -> a.isBoolean()).findFirst().isPresent();
+	}
+	
+	public boolean addImport(String importPackage) {
+		return attributeImports.add(importPackage);
+	}
+	
+	public Set<String> getAttributeImports() {
+		return attributeImports;
 	}
 
 	public String getEntityName() {

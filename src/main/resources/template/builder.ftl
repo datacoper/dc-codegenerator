@@ -5,6 +5,8 @@
 <#assign module = class.moduleName?lower_case>
 package ${class.package};
 
+<#include "attributeImports.ftl">
+
 import com.${company}.cooperate.${module}.common.entities.${class.entityName};
 import com.datacoper.cooperate.arquitetura.common.entities.builder.EntityBuilder;
 

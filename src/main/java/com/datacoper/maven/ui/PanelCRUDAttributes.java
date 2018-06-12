@@ -93,7 +93,9 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 							
 							String mask = getMascaraDefault(columnClassName);
 							
-							tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, !nullable, mask, precision, scale);
+							boolean updatable = isUpdatable(attributeName);
+							
+							tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, !nullable, mask, precision, scale, updatable);
 						}
 						
 					}
@@ -108,11 +110,23 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 	}
 	
+	private boolean isUpdatable(String attributeName) {
+		attributeName = attributeName.toUpperCase();
+		return  !attributeName.equals("CODIGO") &&
+				!attributeName.equals("IDGRUPOEMPRESARIAL") &&
+				!attributeName.equals("IDFILIAL") &&
+				!attributeName.equals("IDEMPRESA") &&
+				!attributeName.equals("IDUSUARIO") &&
+				!attributeName.contains("DATA") &&
+				!attributeName.contains("FLAG");
+		
+	}
+
 	private String replaceColumnClassName(String columnClassName, int precision, int scale) {
 		if(BigDecimal.class.getName().equals(columnClassName) && !(scale > 0)) {
 			
 			if(precision == 1) {
-				return Byte.class.getName();
+				return Boolean.class.getName();
 			}
 			return Long.class.getName();
 		}

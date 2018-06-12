@@ -33,10 +33,10 @@ public class TableAttributes extends JTable{
 	}
 
 	private String[] getColumnsNames() {
-		return new String[] {"Coluna", "Atributo", "Label", "Tipo", "Obrigatório", "Máscara", "Precisão", "Scala"};
+		return new String[] {"Coluna", "Atributo", "Label", "Tipo", "Obrigatório", "Máscara", "Precisão", "Scala", "Atualizável"};
 	}
 	
-	private Class<?>[] columnsClasses = new Class<?>[] {String.class, String.class, String.class, String.class, Boolean.class, String.class, Integer.class, Integer.class};
+	private Class<?>[] columnsClasses = new Class<?>[] {String.class, String.class, String.class, String.class, Boolean.class, String.class, Integer.class, Integer.class, Boolean.class};
 	
 	@Override
 	public Class<?> getColumnClass(int column) {
@@ -55,8 +55,8 @@ public class TableAttributes extends JTable{
 		return defaultTableModel.getDataVector();
 	}
 
-	public void addRow(String columnName, String attributeName, String attributeLabel, String columnClassName, Boolean nullable, String mask, int precision, int scale) {
-		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, nullable, mask, precision, scale});
+	public void addRow(String columnName, String attributeName, String attributeLabel, String columnClassName, Boolean nullable, String mask, int precision, int scale, boolean updatable) {
+		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, nullable, mask, precision, scale, updatable});
 	}
 
 	public Set<TemplateAttributeModel> getAsTemplateAttributeModel() {
@@ -71,13 +71,15 @@ public class TableAttributes extends JTable{
 			String name = (String)rowValues.get(1);
 			String label = (String)rowValues.get(2);
 			String type = (String)rowValues.get(3);
-			boolean nullable = (boolean)rowValues.get(4);
+			boolean required = (boolean)rowValues.get(4);
 			String mask= (String)rowValues.get(5);
 			
 			int precision = (int)rowValues.get(6);
 			int scale = (int)rowValues.get(7);
 			
-			attributes.add(new TemplateAttributeModel(name, type, label, mask, precision, scale, nullable));
+			boolean updatable = (boolean)rowValues.get(8);
+			
+			attributes.add(new TemplateAttributeModel(name, type, label, mask, precision, scale, required, updatable));
 		}
 		
 		return attributes;

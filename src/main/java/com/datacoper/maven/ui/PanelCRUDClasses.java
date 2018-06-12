@@ -1,10 +1,13 @@
 package com.datacoper.maven.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
@@ -12,6 +15,7 @@ import javax.swing.event.ChangeListener;
 
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.client.panel.DCCheckBox;
+import com.datacoper.cooperate.arquitetura.common.util.ListUtil;
 import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
@@ -27,14 +31,31 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 	
 	private Set<TemplateAttributeModel> attributes;
 	
+	private JCheckBox checkAll = new JCheckBox("Marcar/Desmarcar todas", true);
+	
 	public PanelCRUDClasses(File projectParentFile, String moduleName) {
 		super(projectParentFile, moduleName);
 		
 		VerticalFlowLayout verticalLayout = new VerticalFlowLayout();
 		verticalLayout.setVgap(5);
 		setLayout(verticalLayout);
+		
+		checkAll.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkAll();
+			}
+		});
+		
 	}
 	
+	private void checkAll() {
+		for (AbstractGeneratorCheckBox abstractGeneratorCheckBox : ListUtil.notNull(abstractGeneratorCheckBoxs)) {
+			abstractGeneratorCheckBox.setSelected(checkAll.isSelected());
+		}
+		updateWizardButtons();
+	}
+
 	public void init(String entityName, Company company, Set<TemplateAttributeModel> attributes) {
 		removeAll();
 		
@@ -43,6 +64,9 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 		this.attributes = attributes;
 		
 		if(entityName != null) {
+			
+			add(checkAll);
+			
 			EnumProject[] enumProjects = EnumProject.values();
 	
 			for (EnumProject enumProject : enumProjects) {

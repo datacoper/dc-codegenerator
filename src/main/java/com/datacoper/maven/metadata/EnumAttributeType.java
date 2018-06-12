@@ -9,7 +9,7 @@ public enum EnumAttributeType {
 	STRING(String.class),
 	INTEGER(Integer.class),
 	LONG(Long.class),
-	BYTE(Byte.class),
+	BOOLEAN(Boolean.class),
 	DATE(Date.class),
 	TIMESTAMP(Timestamp.class),
 	BIGDECIMAL(BigDecimal.class);

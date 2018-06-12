@@ -16,6 +16,11 @@ public class AngularHtmlGenerator extends AbstractGenerator {
 	public String getTemplateName() {
 		return "angular.html";
 	}
+	
+	@Override
+	public String getFileExtension() {
+		return ".html";
+	}
 
 	@Override
 	public String getPackage() {

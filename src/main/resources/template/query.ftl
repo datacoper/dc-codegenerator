@@ -10,12 +10,12 @@ import com.${company}.cooperate.${module}.server.consultas.Query${class.entityNa
 public class ${className} extends AbstractConsulta<${class.entityName}VO> {
     @Override
     public String getQuery() {
-        //TODO auto generated
         StringBuffer sb = new StringBuffer();
 
         sb.append("SELECT ")
+        	.append(" ID${class.entityName?upper_case},")
         	<#list class.attributes as attribute>		
-    		.append("${attribute.name?upper_case}<#if attribute?has_next>,</#if>")
+    		.append(" ${attribute.name?upper_case}<#if attribute?has_next>,</#if>")
 			</#list>
         	.append("  FROM ${class.entityName?upper_case}");
 

@@ -17,6 +17,6 @@ import com.datacoper.arquiteturarest.interfaces.ICRUDResource;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface ${className} extends ICRUDResource<${class.entityName}VO, ${class.entityName}DTO> {
     
-    public static final String PATH = "${class.entityName?lower_case}"; 
+    public static final String PATH = "/${class.entityName?lower_case}"; 
     
 }

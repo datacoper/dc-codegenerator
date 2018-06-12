@@ -3,10 +3,9 @@ package com.datacoper.maven.generators.impl;
 import java.io.File;
 
 import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularControllerGenerator extends AbstractGenerator {
+public class AngularControllerGenerator extends AbctractAngularGenerator {
 
 	public AngularControllerGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
 		super(projectParentFile, entityName, company, moduleName);

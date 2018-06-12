@@ -8,6 +8,7 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -36,7 +37,6 @@ public class FrameCRUDWizard extends JFrameWizard {
 		AbstractWizardPage startPage = new PanelCRUDEntity(projectParentFile, moduleName);
 		controller.startWizard(startPage);
 		
-		
 		getNextButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -56,8 +56,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 				AbstractWizardPage currentPage = controller.getCurrentPage();
 				if(currentPage instanceof AbstractCRUDPanelWizard) {
 					((AbstractCRUDPanelWizard)currentPage).onFinish();
-					revalidate();
-					repaint();
+					SwingUtilities.updateComponentTreeUI(FrameCRUDWizard.this);
 					if(DCOptionPane.showConfirmDialog(getOwner(), "Fechar?")) {
 						dispose();
 					}
@@ -65,12 +64,9 @@ public class FrameCRUDWizard extends JFrameWizard {
 			}
 		});
 		
-		
-		setLookAndFeel();
-		
 	}
 
-	private void setLookAndFeel() {
+	private static void setLookAndFeel() {
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
@@ -103,6 +99,9 @@ public class FrameCRUDWizard extends JFrameWizard {
 	}
 
 	public static void main(String[] args) {
+		
+		setLookAndFeel();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
