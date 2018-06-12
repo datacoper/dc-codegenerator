@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -16,11 +15,11 @@ import javax.swing.event.ChangeListener;
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.client.panel.DCCheckBox;
 import com.datacoper.cooperate.arquitetura.common.util.ListUtil;
-import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.generators.impl.EnumScaffold;
-import com.datacoper.maven.metadata.TemplateAttributeModel;
+import com.datacoper.maven.generators.impl.EnumScaffoldDetail;
+import com.datacoper.maven.metadata.TemplateModel;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 
@@ -29,12 +28,10 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 
 	private List<AbstractGeneratorCheckBox> abstractGeneratorCheckBoxs;
 	
-	private Set<TemplateAttributeModel> attributes;
-	
 	private JCheckBox checkAll = new JCheckBox("Marcar/Desmarcar todas", true);
 	
-	public PanelCRUDClasses(File projectParentFile, String moduleName) {
-		super(projectParentFile, moduleName);
+	public PanelCRUDClasses(TemplateModel templateModel) {
+		super(templateModel);
 		
 		VerticalFlowLayout verticalLayout = new VerticalFlowLayout();
 		verticalLayout.setVgap(5);
@@ -56,23 +53,24 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 		updateWizardButtons();
 	}
 
-	public void init(String entityName, Company company, Set<TemplateAttributeModel> attributes) {
+	public void init() {
 		removeAll();
 		
 		abstractGeneratorCheckBoxs = new ArrayList<PanelCRUDClasses.AbstractGeneratorCheckBox>();
 		
-		this.attributes = attributes;
+		TemplateModel templateModel = getTemplateModel();
 		
-		if(entityName != null) {
-			
-			add(checkAll);
-			
+		if(templateModel.getEntityName() != null) {
 			EnumProject[] enumProjects = EnumProject.values();
 	
 			for (EnumProject enumProject : enumProjects) {
 	
-				List<AbstractGenerator> generators = EnumScaffold.getGenerators(enumProject, getProjectParentFile(), entityName, company, getModuleName());
-	
+				List<AbstractGenerator> generators = EnumScaffold.getGenerators(enumProject, templateModel);
+				
+				if(!templateModel.getDetails().isEmpty()) {
+					generators.addAll(EnumScaffoldDetail.getGenerators(enumProject, templateModel));
+				}
+				
 				if(!generators.isEmpty()) {
 					JLabel  dcLabel = new JLabel(enumProject.getSuffix());
 					add(dcLabel);
@@ -95,13 +93,15 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 		
 		StringBuilder sb = new StringBuilder();
 		
+		TemplateModel templateModel = getTemplateModel();
+		
 		for (AbstractGeneratorCheckBox abstractGeneratorCheckBox : abstractGeneratorCheckBoxs) {
 			if(abstractGeneratorCheckBox.isSelected()) {
-				abstractGeneratorCheckBox.abstractGenerator.process(attributes);
+				abstractGeneratorCheckBox.abstractGenerator.process();
 				
 				String javaFile = abstractGeneratorCheckBox.abstractGenerator.getJavaFile().getPath();
 				
-				String projectParentFile = getProjectParentFile().getPath();
+				String projectParentFile = templateModel.getProjectParentFile().getPath();
 				
 				sb.append(javaFile.replace(projectParentFile, ""));
 				sb.append("\n");

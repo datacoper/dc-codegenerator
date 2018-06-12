@@ -3,15 +3,15 @@ package com.datacoper.maven.generators.impl;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class ResourceGenerator extends AbctractJavaGenerator {
+public class ResourceDetailGenerator extends AbctractAngularGenerator {
     
-    public ResourceGenerator(TemplateModel templateModel) {
+    public ResourceDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
     public String getTemplateName() {
-    	return "resource";
+    	return "resourceDetail";
     }
 
     @Override

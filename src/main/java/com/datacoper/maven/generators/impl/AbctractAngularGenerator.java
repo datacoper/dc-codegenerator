@@ -1,19 +1,22 @@
 package com.datacoper.maven.generators.impl;
 
-import java.io.File;
-
-import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.metadata.TemplateModel;
 
 public abstract class AbctractAngularGenerator extends AbstractGenerator {
 
-	public AbctractAngularGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
-		super(projectParentFile, entityName, company, moduleName);
+	public AbctractAngularGenerator(TemplateModel templateModel) {
+		super(templateModel);
 	}
 
 	@Override
 	public String getFileExtension() {
 		return ".js";
 	}
+	
+	@Override
+	public String getCharsetName() {
+    	return "UTF-8";
+    }
 	
 }

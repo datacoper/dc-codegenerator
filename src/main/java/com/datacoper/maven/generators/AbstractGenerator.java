@@ -1,50 +1,40 @@
 package com.datacoper.maven.generators;
 
 import java.io.File;
-import java.util.Set;
 
 import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
 import com.datacoper.freemarker.conf.TemplateFreeMarker;
 import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.generators.impl.EnumScaffold;
-import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.FileUtil;
 import com.datacoper.maven.util.LogUtil;
 
 public abstract class AbstractGenerator {
 
-	private File projectParentFile;
+	private TemplateModel templateModel;
 	
-	private String entityName;
-	
-	private Company company;
-	
-	private String moduleName;
-	
-    public AbstractGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
-		this.projectParentFile = projectParentFile;
-    	this.entityName = entityName;
-		this.company = company;
-		this.moduleName = moduleName;		
-	}
-    
-    public Company getCompany() {
-		return company;
-	}
+    public AbstractGenerator(TemplateModel templateModel) {
+    	this.templateModel = templateModel;
+    }
     
     public String getModuleName() {
-		return moduleName;
-	}
+    	return templateModel.getModuleName();
+    }
     
     public String getEntityName() {
-		return entityName;
-	}
-
-	public void process(Set<TemplateAttributeModel> attributes) {
+    	return templateModel.getEntityName();
+    }
+    
+    public Company getCompany() {
+    	return templateModel.getCompany();
+    }
+    
+	public void process() {
 		
-		TemplateModel templateModel = createTemplateModel(attributes);
+		templateModel.setPackag(getPackage());
+		templateModel.setClassName(getClassName());
 		
     	ConfigurationFreeMarker config = new ConfigurationFreeMarker();
         
@@ -57,21 +47,13 @@ public abstract class AbstractGenerator {
         LogUtil.info("generating class {0}", finalJavaFile);
         
         templateFreeMarker.add("class", templateModel);
-        templateFreeMarker.generateTemplate(finalJavaFile, "ISO-8859-1");
+        templateFreeMarker.generateTemplate(finalJavaFile, getCharsetName());
         
     }
 
-	private TemplateModel createTemplateModel(Set<TemplateAttributeModel> attributes) {
-		
-		TemplateModel templateModel = new TemplateModel(entityName, company, moduleName, getClassName(), getPackage());
-		
-		templateModel.setAttributes(attributes);
-		
-		return templateModel;
-	}
 
 	public File getJavaFile() {
-		File sourceFolder = new File(new File(projectParentFile, getModuleName()+getProject().getSuffix()), getProject().getSourceFolder().getSourceFolder());
+		File sourceFolder = new File(new File(templateModel.getProjectParentFile(), templateModel.getModuleName()+getProject().getSuffix()), getProject().getSourceFolder().getSourceFolder());
 
         if(!sourceFolder.exists()) {
         	throw new RuntimeException("Source folder not exists: "+sourceFolder);
@@ -99,4 +81,5 @@ public abstract class AbstractGenerator {
     
     public abstract String getFileExtension();
     
+    public abstract String getCharsetName();
 }

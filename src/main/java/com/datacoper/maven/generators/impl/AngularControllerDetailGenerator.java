@@ -3,15 +3,15 @@ package com.datacoper.maven.generators.impl;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularModuleGenerator extends AbctractAngularGenerator {
+public class AngularControllerDetailGenerator extends AbctractAngularGenerator {
 
-	public AngularModuleGenerator(TemplateModel templateModel) {
+	public AngularControllerDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
 	public String getTemplateName() {
-		return "angular.module.js";
+		return "angular.controller.detail.js";
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class AngularModuleGenerator extends AbctractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".module.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".controller.js";
 	}
 
 }

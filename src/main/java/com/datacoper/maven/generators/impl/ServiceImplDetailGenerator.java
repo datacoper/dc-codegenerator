@@ -1,22 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.datacoper.maven.generators.impl;
 
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class ValidatorGenerator extends AbctractJavaGenerator {
+public class ServiceImplDetailGenerator extends AbctractJavaGenerator {
     
-    public ValidatorGenerator(TemplateModel templateModel) {
+    public ServiceImplDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
     public String getTemplateName() {
-    	return "validator";
+    	return "serviceImplDetail";
     }
 
     @Override
@@ -26,6 +21,6 @@ public class ValidatorGenerator extends AbctractJavaGenerator {
 
 	@Override
 	public String getClassName() {
-		return "Validador"+getEntityName();
+		return getEntityName()+"ServiceImpl";
 	}
 }

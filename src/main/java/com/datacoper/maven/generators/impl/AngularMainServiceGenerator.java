@@ -1,14 +1,12 @@
 package com.datacoper.maven.generators.impl;
 
-import java.io.File;
-
-import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
 public class AngularMainServiceGenerator extends AbctractAngularGenerator {
 
-	public AngularMainServiceGenerator(File projectParentFile, String entityName, Company company, String moduleName) {
-		super(projectParentFile, entityName, company, moduleName);
+	public AngularMainServiceGenerator(TemplateModel templateModel) {
+		super(templateModel);
 	}
 
 	@Override

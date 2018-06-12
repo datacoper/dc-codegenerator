@@ -1,17 +1,18 @@
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularModuleGenerator extends AbctractAngularGenerator {
+public class AngularHtmlDetailGenerator extends AbstractGenerator {
 
-	public AngularModuleGenerator(TemplateModel templateModel) {
+	public AngularHtmlDetailGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
 	public String getTemplateName() {
-		return "angular.module.js";
+		return "angular.detail.html";
 	}
 
 	@Override
@@ -21,7 +22,17 @@ public class AngularModuleGenerator extends AbctractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".module.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".html";
+	}
+
+	@Override
+	public String getFileExtension() {
+		return ".html";
+	}
+
+	@Override
+	public String getCharsetName() {
+		return "UTF-8";
 	}
 
 }

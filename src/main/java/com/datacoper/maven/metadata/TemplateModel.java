@@ -1,5 +1,6 @@
 package com.datacoper.maven.metadata;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,9 +9,9 @@ import java.util.TreeSet;
 import com.datacoper.maven.enums.options.Company;
 
 public class TemplateModel {
-	
+
 	private Company company = Company.DATACOPER;
-	
+
 	private String entityName;
 	
     private String moduleName;
@@ -21,36 +22,36 @@ public class TemplateModel {
     
     private Set<String> attributeImports = new TreeSet<>();
     
-    private Set<TemplateAttributeModel> attributes = new HashSet<>();
+	private File projectParentFile;
 
-    public TemplateModel(String entityName, Company company, String moduleName, String className, String packag) {
-    	this.entityName = entityName;
-    	this.company = company;
-    	this.moduleName = moduleName;
-    	this.className = className;
-    	this.packag = packag;
-    	
-    }
-    
+	private Set<TemplateAttributeModel> attributes = new HashSet<>();
+
+	private Set<TemplateModelDetail> details = new HashSet<>();
+
+	public TemplateModel(String moduleName, File projectParentFile) {
+		this.moduleName = moduleName;
+		this.projectParentFile = projectParentFile;
+	}
+
 	public Company getCompany() {
 		return company;
 	}
-    
-    public String getModuleName() {
-        return moduleName;
-    }
 
-    public String getPackage() {
-        return packag;
-    }
+	public String getModuleName() {
+		return moduleName;
+	}
 
-    public String getClassName() {
-        return className;
-    }
+	public String getPackage() {
+		return packag;
+	}
 
-    public Set<TemplateAttributeModel> getAttributes() {
-        return Collections.unmodifiableSet(attributes);
-    }
+	public String getClassName() {
+		return className;
+	}
+
+	public Set<TemplateAttributeModel> getAttributes() {
+		return Collections.unmodifiableSet(attributes);
+	}
 
 	public String getPackag() {
 		return packag;
@@ -78,5 +79,66 @@ public class TemplateModel {
 	public String getEntityName() {
 		return entityName;
 	}
+
+	public void addDetail(TemplateModelDetail templateModelDetail) {
+		details.add(templateModelDetail);
+	}
+
+	public Set<TemplateModelDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Set<TemplateModelDetail> details) {
+		this.details = details;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
+
+	public void setPackag(String packag) {
+		this.packag = packag;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 	
+	public File getProjectParentFile() {
+		return projectParentFile;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entityName == null) ? 0 : entityName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TemplateModel other = (TemplateModel) obj;
+		if (entityName == null) {
+			if (other.entityName != null)
+				return false;
+		} else if (!entityName.equals(other.entityName))
+			return false;
+		return true;
+	}
+
 }
