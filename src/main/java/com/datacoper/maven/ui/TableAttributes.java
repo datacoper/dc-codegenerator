@@ -10,18 +10,24 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.enums.properties.EnumModules;
 import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 
 public class TableAttributes extends JTable{
 	private static final long serialVersionUID = 1L;
 
-	private JComboBox<String> comboAttributeType = new JComboBox<>(EnumAttributeType.types()); 
+	private JComboBox<String> comboAttributeType = new JComboBox<>(EnumAttributeType.toStringArray());
+	private JComboBox<String> comboModule = new JComboBox<>(EnumModules.toStringArray()); 
 	
 	private DefaultTableModel defaultTableModel;
 	
-	public TableAttributes() {
+	private Company company;
 	
+	public TableAttributes(Company company) {
+		this.company = company;
+		
 		defaultTableModel = new DefaultTableModel(getColumnsNames(), 0);
 		
 		setModel(defaultTableModel);
@@ -29,14 +35,17 @@ public class TableAttributes extends JTable{
 		TableColumn columnAttributes = getColumnModel().getColumn(3);
 		
 		columnAttributes.setCellEditor(new DefaultCellEditor(comboAttributeType));
+		
+		TableColumn columnModules = getColumnModel().getColumn(3);
+		columnModules.setCellEditor(new DefaultCellEditor(comboModule));
 	
 	}
 
 	private String[] getColumnsNames() {
-		return new String[] {"Coluna", "Atributo", "Label", "Tipo", "Obrigatório", "Máscara", "Precisão", "Scala", "Atualizável"};
+		return new String[] {"Coluna", "Atributo", "Label", "Tipo", "Módulo","Obrigatório", "Máscara", "Precisão", "Scala", "Atualizável"};
 	}
 	
-	private Class<?>[] columnsClasses = new Class<?>[] {String.class, String.class, String.class, String.class, Boolean.class, String.class, Integer.class, Integer.class, Boolean.class};
+	private Class<?>[] columnsClasses = new Class<?>[] {String.class, String.class, String.class, String.class, String.class, Boolean.class, String.class, Integer.class, Integer.class, Boolean.class};
 	
 	@Override
 	public Class<?> getColumnClass(int column) {
@@ -56,7 +65,7 @@ public class TableAttributes extends JTable{
 	}
 
 	public void addRow(String columnName, String attributeName, String attributeLabel, String columnClassName, Boolean nullable, String mask, int precision, int scale, boolean updatable) {
-		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, nullable, mask, precision, scale, updatable});
+		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, null, nullable, mask, precision, scale, updatable});
 	}
 
 	public Set<TemplateAttributeModel> getAsTemplateAttributeModel() {
@@ -68,18 +77,28 @@ public class TableAttributes extends JTable{
 			
 			Vector<?> rowValues = (Vector<?>) object;
 			
-			String name = (String)rowValues.get(1);
+			String columnName = (String)rowValues.get(0);
+			String attributeName = (String)rowValues.get(1);
 			String label = (String)rowValues.get(2);
-			String type = (String)rowValues.get(3);
-			boolean required = (boolean)rowValues.get(4);
-			String mask= (String)rowValues.get(5);
+			EnumAttributeType attributeType = EnumAttributeType.valueOf((String)rowValues.get(3));
 			
-			int precision = (int)rowValues.get(6);
-			int scale = (int)rowValues.get(7);
+			EnumModules entityModule = EnumModules.valueOf((String)rowValues.get(4));
 			
-			boolean updatable = (boolean)rowValues.get(8);
+			boolean required = (boolean)rowValues.get(5);
+			String mask = (String)rowValues.get(6);
 			
-			attributes.add(new TemplateAttributeModel(name, type, label, mask, precision, scale, required, updatable));
+			int precision = (int)rowValues.get(7);
+			int scale = (int)rowValues.get(8);
+			
+			boolean updatable = (boolean)rowValues.get(9);
+			
+			String type = attributeType.getType().getName();
+			
+			if(attributeType == EnumAttributeType.ENTITY) {
+				type = entityModule.resolveEntityType(company, attributeName);
+			}
+			
+			attributes.add(new TemplateAttributeModel(columnName, attributeName, type, label, mask, precision, scale, required, updatable));
 		}
 		
 		return attributes;

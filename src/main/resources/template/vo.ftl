@@ -19,9 +19,10 @@ public class ${className} extends EqualsIdentifier {
     private Long id${model.entityName};
     
 <#list attributes as attribute>
-    
+    <#if !attribute.entity>
     @AttributeAnnot(alias = "${attribute.label}")
     private ${attribute.typeSimpleName} ${attribute.name};
+    <#if>
 </#list>
 
     <#include "defaultConstructor.ftl">

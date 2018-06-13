@@ -22,6 +22,7 @@ import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanUtil;
 import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
 import com.datacoper.cooperate.arquitetura.common.util.Entry;
+import com.datacoper.maven.enums.options.Company;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;
@@ -64,7 +65,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 		if(entityName != null) {
 			
-			TableAttributes tableAttributes = createAndAddTableAttribute(entityName);
+			TableAttributes tableAttributes = createAndAddTableAttribute(entityName, templateModel.getCompany());
 			
 			PersistenceProperties persistenceProperties = new PersistenceProperties(DBType.PHYSICAL, templateModel.getProjectParentFile().getAbsolutePath()+File.separator);
 			
@@ -74,7 +75,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 				
 				for (TemplateModelDetail entityDetail: templateModel.getDetails()) {
 					
-					TableAttributes tableAttributesDetail = createAndAddTableAttribute(entityDetail.getEntityName());
+					TableAttributes tableAttributesDetail = createAndAddTableAttribute(entityDetail.getEntityName(), templateModel.getCompany());
 					
 					populateAttributes(entityDetail.getEntityName(), connection, tableAttributesDetail);
 					
@@ -86,13 +87,10 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 		}
 		
-		revalidate();
-		repaint();
-		
 	}
 
-	private TableAttributes createAndAddTableAttribute(String entityName) {
-		TableAttributes tableAttributes = new TableAttributes();
+	private TableAttributes createAndAddTableAttribute(String entityName, Company company) {
+		TableAttributes tableAttributes = new TableAttributes(company);
 		
 		container.add(new JLabel(entityName));
 		container.add(new JScrollPane(tableAttributes));
@@ -128,9 +126,11 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 					int precision = metaData.getPrecision(i);
 					int scale = metaData.getScale(i);
 					
-					columnClassName = replaceColumnClassName(columnClassName, precision ,scale);
+					columnClassName = resolveColumnClassName(columnClassName, precision ,scale);
 					
 					String mask = getMascaraDefault(columnClassName);
+					
+					attributeName = resolveAttributeName(attributeName);
 					
 					boolean updatable = isUpdatable(attributeName);
 					
@@ -143,6 +143,15 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		}
 	}
 	
+	private String resolveAttributeName(String attributeName) {
+		
+		if(attributeName.startsWith("id")) {
+			attributeName = attributeName.substring(2);
+		}
+		
+		return attributeName;
+	}
+
 	private boolean isUpdatable(String attributeName) {
 		attributeName = attributeName.toUpperCase();
 		return  !attributeName.equals("CODIGO") &&
@@ -155,7 +164,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 	}
 
-	private String replaceColumnClassName(String columnClassName, int precision, int scale) {
+	private String resolveColumnClassName(String columnClassName, int precision, int scale) {
 		if(BigDecimal.class.getName().equals(columnClassName) && !(scale > 0)) {
 			
 			if(precision == 1) {

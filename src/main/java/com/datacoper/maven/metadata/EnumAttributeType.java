@@ -12,7 +12,11 @@ public enum EnumAttributeType {
 	BOOLEAN(Boolean.class),
 	DATE(Date.class),
 	TIMESTAMP(Timestamp.class),
-	BIGDECIMAL(BigDecimal.class);
+	BIGDECIMAL(BigDecimal.class),
+	//TODO corrigir depois para Entity
+	ENTITY(Void.class)
+	
+	;
 	
 	private Class<?> type;
 
@@ -24,7 +28,18 @@ public enum EnumAttributeType {
 		return type;
 	}
 	
-	public static String[] types(){
+	public static EnumAttributeType from(String type) {
+		EnumAttributeType[] values = values();
+		for (EnumAttributeType enumAttributeType : values) {
+			if(enumAttributeType.type.getName().equals(type)) {
+				return enumAttributeType;
+			}
+		}
+		
+		throw new IllegalArgumentException("Invalid type of: "+EnumAttributeType.class.getName()+": "+type);
+	}
+	
+	public static String[] toStringArray(){
 		
 		EnumAttributeType[] values = values();
 		String[] types = new String[values.length];

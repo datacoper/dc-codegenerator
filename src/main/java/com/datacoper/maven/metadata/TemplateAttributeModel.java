@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class TemplateAttributeModel {
 
+	private String columnName;
+	
 	private String name;
 
 	private String type;
@@ -27,13 +29,15 @@ public class TemplateAttributeModel {
 	
 	private boolean updatable;
 
-	public TemplateAttributeModel(String name, String type, String label, String mask, int precision, int scale,
+	public TemplateAttributeModel(String columnName, String name, String type, String label, String mask, int precision, int scale,
 			boolean required, boolean updatable) {
 		
+		Objects.requireNonNull(columnName);
 		Objects.requireNonNull(name);
 		Objects.requireNonNull(type);
 		Objects.requireNonNull(label);
 		
+		this.columnName = columnName;
 		this.name = name;
 		this.label = label;
 		this.mask = mask;
@@ -52,6 +56,10 @@ public class TemplateAttributeModel {
 		
 	}
 
+	public String getColumnName() {
+		return columnName;
+	}
+	
 	public String getType() {
 		return type;
 	}
@@ -115,6 +123,10 @@ public class TemplateAttributeModel {
 	public boolean isBoolean() {
 		return type.equals(boolean.class.getName()) ||
 				type.equals(Boolean.class.getName());
+	}
+	
+	public boolean isEntity(){
+		return typePackage.contains("entities");
 	}
 	
 	public String getTypeSimpleName() {
