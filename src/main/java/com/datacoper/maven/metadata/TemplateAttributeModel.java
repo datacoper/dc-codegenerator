@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
+import com.datacoper.maven.enums.properties.EnumDCModule;
+
 public class TemplateAttributeModel {
 
 	private String columnName;
@@ -16,6 +18,8 @@ public class TemplateAttributeModel {
 	private String typeSimpleName;
 	
 	private String typePackage;
+	
+	private String modulePackageName;
 	
 	private String label;
 
@@ -29,7 +33,7 @@ public class TemplateAttributeModel {
 	
 	private boolean updatable;
 
-	public TemplateAttributeModel(String columnName, String name, String type, String label, String mask, int precision, int scale,
+	public TemplateAttributeModel(String columnName, String name, String type, EnumDCModule moduleName, String label, String mask, int precision, int scale,
 			boolean required, boolean updatable) {
 		
 		Objects.requireNonNull(columnName);
@@ -38,6 +42,7 @@ public class TemplateAttributeModel {
 		Objects.requireNonNull(label);
 		
 		this.columnName = columnName;
+		this.modulePackageName = moduleName != null ? moduleName.getModulePackageName() : ""; 
 		this.name = name;
 		this.label = label;
 		this.mask = mask;
@@ -62,6 +67,10 @@ public class TemplateAttributeModel {
 	
 	public String getType() {
 		return type;
+	}
+	
+	public String getModulePackageName() {
+		return modulePackageName;
 	}
 	
 	public String getTypePackage() {

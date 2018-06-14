@@ -53,7 +53,7 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 		panelEntityDetail2.add(fieldEntityDetail2);
 		
 		DCPanelTitled panelEntityDetail3 = new DCPanelTitled();
-		panelEntityDetail3.setTitle("Entidade Detail 1");
+		panelEntityDetail3.setTitle("Entidade Detail 3");
 		panelEntityDetail3.setMandatory(false);
 		panelEntityDetail3.add(fieldEntityDetail3);
 		

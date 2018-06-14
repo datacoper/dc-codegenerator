@@ -1,6 +1,7 @@
 package com.datacoper.maven.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -121,7 +122,13 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 			}
 		}
 		
-		JOptionPane.showMessageDialog(this, sb);
+		sb.append("\nFechar?");
+		
+		int option = JOptionPane.showConfirmDialog(this, sb, "Concluído", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		
+		if(option == JOptionPane.YES_OPTION) {
+			((Window)getRootPane().getParent()).dispose();
+		}
 	}
 
 

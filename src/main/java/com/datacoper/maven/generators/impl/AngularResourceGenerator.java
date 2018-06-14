@@ -17,7 +17,7 @@ public class AngularResourceGenerator extends AbstractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".resource.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".resource";
 	}
 
 }

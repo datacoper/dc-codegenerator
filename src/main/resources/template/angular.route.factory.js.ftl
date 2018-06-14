@@ -39,7 +39,9 @@
         function getDependencies() {
             return [
                 '${module}/${entityNameVariable}/${entityNameVariable}.min.js',
-                //'${module}/${entityNameVariable}/${entityNameVariable}Detail/${entityNameVariable}Detail.min.js',                
+                <#list model.details as detail>                
+                '${module}/${entityNameVariable}/${detail.entityName?uncap_first}/${detail.entityName?uncap_first}.min.js',
+                </#list>
                 '${module}/${module}Resource/${module}Resource.min.js'
             ];
         }

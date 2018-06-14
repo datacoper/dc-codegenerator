@@ -8,31 +8,31 @@
     'use strict';
 
     angular
-        .module('cw.${module}.${entiyNameMasterVariable}')
-        .service('${entiyNameVariable}Service', ${entiyNameVariable}Service);
+        .module('cw.${module}.${entityNameMasterVariable}')
+        .service('${entityNameMaster}Service', ${entityNameMaster}Service);
 
-    ${entiyNameVariable}Service.$inject = [
+    ${entityNameMaster}Service.$inject = [
         '$state',
         'genericUtilService',
         'produtoResource',
-        '${entiyNameVariable}Resource',
-        '${entiyNameMasterVariable}MainService',
+        '${entityNameMaster}Resource',
+        '${entityNameMasterVariable}MainService',
         'searchConfigOptionsService',
         'dateUtilService'
     ];
 
-    function ${entiyNameVariable}Service(
+    function ${entityNameMaster}Service(
         $state,
         genericUtilService,
         produtoResource,
-        ${entiyNameVariable}Resource,
-        ${entiyNameMasterVariable}MainService,
+        ${entityNameMaster}Resource,
+        ${entityNameMasterVariable}MainService,
         searchConfigOptionsService,
         dateUtilService
     ) {
         var self = this;
         var listingConfig;
-        var getModel = ${entiyNameMasterVariable}MainService.getModel;
+        var getModel = ${entityNameMasterVariable}MainService.getModel;
 
         self.getTabConfig = getTabConfig;
         self.getListingData = getListingData;
@@ -43,7 +43,7 @@
             var tab = new DcGenericCrudTabForm();
             tab.label('${model.entityName}');
             tab.fields(getFormFields());
-            tab.modelProperty('${entiyNameVariable}');
+            tab.modelProperty('${entityNameMaster}');
             tab.listingConfig(listingConfig);
             tab.deleteCallbackSuccess(function () {
                 $state.reload();
@@ -91,17 +91,17 @@
         function find${entityName}(params) {
             params = params || {};
             params.parentId = genericUtilService.getUrlId();
-            return ${entiyNameVariable}Resource.getPaged(params, function (data) {
+            return ${entityNameMaster}Resource.getPaged(params, function (data) {
                 listingConfig.data = data.items;
             });
         }
 
         function isNewRegister() {
-            return !getModel().${entiyNameVariable}.contaDeEstoque && !getModel().${entiyNameVariable}.unidadeMedidaProduto;
+            return !getModel().${entityNameMaster}.contaDeEstoque && !getModel().${entityNameMaster}.unidadeMedidaProduto;
         }
 
         function isRecordLoaded() {
-            return getModel().${entiyNameVariable}.id;
+            return getModel().${entityNameMaster}.id;
         }
 
         function getListingColumnsConfig() {

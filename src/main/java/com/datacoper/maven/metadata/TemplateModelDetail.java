@@ -1,8 +1,5 @@
 package com.datacoper.maven.metadata;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.datacoper.maven.enums.options.Company;
 
 public class TemplateModelDetail extends TemplateModel{
@@ -10,8 +7,6 @@ public class TemplateModelDetail extends TemplateModel{
 	private String entityName;
 	
 	private TemplateModel templateModelMaster;
-
-	private Set<TemplateAttributeModel> attributes = new HashSet<>();
 
 	public TemplateModelDetail(String entityName, TemplateModel templateModelMaster) {
 		super(templateModelMaster.getModuleName(), templateModelMaster.getProjectParentFile());
@@ -23,18 +18,10 @@ public class TemplateModelDetail extends TemplateModel{
 		return entityName;
 	}
 
-	public Set<TemplateAttributeModel> getAttributes() {
-		return attributes;
-	}
-
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
 	}
 
-	public void setAttributes(Set<TemplateAttributeModel> attributes) {
-		this.attributes = attributes;
-	}
-	
 	public String getEntityNameMaster() {
 		return templateModelMaster.getEntityName();
 	}

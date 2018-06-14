@@ -6,10 +6,10 @@ package ${model.package};
 <#if model.master>
 import com.${company}.cooperate.arquitetura.common.beans.BeanConsultaGroup;
 import com.${company}.cooperate.arquitetura.common.beans.PageResult;
-import com.${company}.cooperate.${module}.common.entities.${model.entityName};
 import com.${company}.cooperate.${module}.common.consultas.${model.entityName}VO;
 </#if>
 import com.datacoper.arquitetura.server.persistence.GenericEAO;
+import com.${company}.cooperate.${module}.common.entities.${model.entityName};
 
 public interface ${className} extends GenericEAO<${model.entityName}> {
 	

@@ -1,8 +1,16 @@
 <#assign className = model.className>
+<#assign company = model.company.packageName>
+<#assign module = model.moduleName?lower_case>
 <#global attributes = model.attributes/>
 package ${model.package};
 
-<#include "attributeImports.ftl">
+<#list attributes as attribute>		
+<#if attribute.entity>		
+import com.${company}.cooperate.${attribute.modulePackageName}.rest.common.dto.${attribute.typeSimpleName}DTO;    
+<#else>
+import ${attribute.type};
+</#if>
+</#list>
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -17,13 +25,31 @@ public class ${className} extends AbstractDTO {
     
     private Long id${model.entityName};
 
-    <#include "attributes.ftl">
+<#list model.attributes as attribute>		
+    <#if attribute.entity>
+    private ${attribute.typeSimpleName}DTO ${attribute.name?uncap_first};
+    <#else>
+    private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
+    </#if>
+</#list>
 
     <#include "defaultConstructor.ftl">
 
     <#include "getterAndSetterForID.ftl">
 
-    <#include "getterAndSetter.ftl">
+<#list attributes as attribute>
+    <#assign attributeType = attribute.typeSimpleName>
+    <#assign attributeName = attribute.name?uncap_first>
+	
+    public void set${attributeName?cap_first}(${attributeType}<#if attribute.entity>DTO</#if> ${attributeName}) {
+        this.${attributeName} = ${attributeName};
+    }
+	
+    public ${attributeType}<#if attribute.entity>DTO</#if> get${attributeName?cap_first}() {
+        return ${attributeName};
+    }
+	
+</#list>
     @Override
     public Long getId() {
         return getId${model.entityName}();

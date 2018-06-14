@@ -22,7 +22,7 @@ public class ${className} extends EqualsIdentifier {
     <#if !attribute.entity>
     @AttributeAnnot(alias = "${attribute.label}")
     private ${attribute.typeSimpleName} ${attribute.name};
-    <#if>
+    </#if>
 </#list>
 
     <#include "defaultConstructor.ftl">

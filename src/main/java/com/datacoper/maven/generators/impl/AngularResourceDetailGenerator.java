@@ -1,7 +1,6 @@
 package com.datacoper.maven.generators.impl;
 
 import com.datacoper.maven.generators.AbstractAngularDetailGenerator;
-import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;
 import com.datacoper.maven.util.StringUtil;
 
@@ -18,7 +17,7 @@ public class AngularResourceDetailGenerator extends AbstractAngularDetailGenerat
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".service.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".service";
 	}
 
 }

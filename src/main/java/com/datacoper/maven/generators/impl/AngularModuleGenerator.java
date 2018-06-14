@@ -17,7 +17,7 @@ public class AngularModuleGenerator extends AbstractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".module.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".module";
 	}
 
 }

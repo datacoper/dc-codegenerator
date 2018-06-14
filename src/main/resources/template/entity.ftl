@@ -5,11 +5,7 @@ package ${model.package};
 
 <#include "attributeImports.ftl">
 
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityImpl;
 <#if model.hasAttributeBoolean()>import com.datacoper.cooperate.arquitetura.common.util.ByteUtil;</#if>
 
@@ -25,10 +21,19 @@ public class ${className} extends EntityImpl {
 <#list model.attributes as attribute>		
     <#if attribute.boolean>
     private Byte ${attribute.name?uncap_first};
+    <#elseif attribute.entity>
+    @JoinColumn(name="${attribute.columnName}")
+    @ManyToOne(fetch=FetchType.LAZY)
+    private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
     <#else>
     private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
     </#if>
     
+</#list>
+	
+<#list model.details as detail>
+	@OneToMany(mappedBy="${className?uncap_first}")
+	private java.util.Set<${detail.entityName}> ${detail.entityName?uncap_first}s = new java.util.HashSet<>();
 </#list>
 	
 	<#include "defaultConstructor.ftl">
@@ -49,14 +54,26 @@ public class ${className} extends EntityImpl {
     }
     
     <#else>
-    public void set${attributeName?cap_first}(${attributeType} ${attributeName}) {
+    public void set${attributeName?cap_first}(${attribute.typeSimpleName} ${attributeName}) {
         this.${attributeName} = ${attributeName};
     }
 	
-    public ${attributeType} get${attributeName?cap_first}() {
+    public ${attribute.typeSimpleName} get${attributeName?cap_first}() {
         return ${attributeName};
     }
     </#if>
+	
+</#list>
+    
+<#list model.details as detail>
+	<#assign detailVarName = detail.entityName?uncap_first>
+	public void set${detail.entityName}s(java.util.Set<${detail.entityName}> ${detailVarName}s) {
+        this.${detailVarName}s = ${detailVarName}s;
+    }
+	
+    public java.util.Set<${detail.entityName}> get${detail.entityName}s() {
+        return ${detailVarName}s;
+    }	
 	
 </#list>
     

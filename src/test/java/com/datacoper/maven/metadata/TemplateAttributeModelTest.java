@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.datacoper.maven.enums.properties.EnumDCModule;
+
 public class TemplateAttributeModelTest {
 
 	@Test
 	public void deveResolverOTypeEPackage() {
 		
-		TemplateAttributeModel templateAttributeModel = new TemplateAttributeModel("", String.class.getName(), "", "", 0, 0, false, false);
+		TemplateAttributeModel templateAttributeModel = new TemplateAttributeModel("", "", String.class.getName(), EnumDCModule.BUSINESSCORE, "", "", 0, 0, false, false);
 		
 		assertEquals("java.lang", templateAttributeModel.getTypePackage());
 		assertEquals("String", templateAttributeModel.getTypeSimpleName());

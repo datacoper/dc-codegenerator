@@ -35,11 +35,19 @@ public enum EnumScaffoldDetail {
 
     public AbstractGenerator getGenerator(TemplateModelDetail templateModelDetail) {
         try {
-        	Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(TemplateModel.class);
+        	Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(TemplateModelDetail.class);
 			return constructor.newInstance(templateModelDetail);
-        } catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+        }catch (NoSuchMethodException e) {
+	        try {
+	        	Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(TemplateModel.class);
+				return constructor.newInstance(templateModelDetail);
+	        } catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+        
+    	}catch (Exception e) {
+    		throw new RuntimeException(e);
+    	}
     }
 
     public static EnumProject of(Class<? extends AbstractGenerator> generatorClass) {

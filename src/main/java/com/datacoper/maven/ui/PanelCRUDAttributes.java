@@ -23,6 +23,8 @@ import com.datacoper.cooperate.arquitetura.common.beans.BeanUtil;
 import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
 import com.datacoper.cooperate.arquitetura.common.util.Entry;
 import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;
@@ -119,22 +121,30 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 					Entry<String, String> revolverFieldAndLabel = columnNameResolver.revolverFieldAndLabel(columnName);
 					String attributeName = revolverFieldAndLabel.getKey();
 					String attributeLabel = StringUtil.isNotNullOrEmpty(revolverFieldAndLabel.getValue()) ? revolverFieldAndLabel.getValue() : attributeName;
-					String columnClassName = metaData.getColumnClassName(i);
+					String columnType = metaData.getColumnClassName(i);
 					
 					Boolean nullable = metaData.isNullable(i) == 1;
 					
 					int precision = metaData.getPrecision(i);
 					int scale = metaData.getScale(i);
 					
-					columnClassName = resolveColumnClassName(columnClassName, precision ,scale);
+					columnType = resolveColumnClassName(columnType, precision ,scale);
 					
-					String mask = getMascaraDefault(columnClassName);
+					String mask = getMascaraDefault(columnType);
 					
-					attributeName = resolveAttributeName(attributeName);
+					boolean isEntityType = attributeName.startsWith("id");
+					
+					EnumDCModule enumDCModule = null;
+					
+					if(isEntityType) {
+						attributeName = attributeName.substring(2); //remover o prefixo "id"
+						columnType = EnumAttributeType.ENTITY.getType().getName();
+						enumDCModule = EnumDCModule.from(getTemplateModel().getModuleName());
+					}
 					
 					boolean updatable = isUpdatable(attributeName);
 					
-					tableAttributes.addRow(columnName, attributeName, attributeLabel, columnClassName, !nullable, mask, precision, scale, updatable);
+					tableAttributes.addRow(columnName, attributeName, attributeLabel, columnType, enumDCModule, !nullable, mask, precision, scale, updatable);
 					
 				}
 				
@@ -143,15 +153,6 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		}
 	}
 	
-	private String resolveAttributeName(String attributeName) {
-		
-		if(attributeName.startsWith("id")) {
-			attributeName = attributeName.substring(2);
-		}
-		
-		return attributeName;
-	}
-
 	private boolean isUpdatable(String attributeName) {
 		attributeName = attributeName.toUpperCase();
 		return  !attributeName.equals("CODIGO") &&

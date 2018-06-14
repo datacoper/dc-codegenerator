@@ -17,7 +17,7 @@ public class AngularRouteGenerator extends AbstractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".route.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".route";
 	}
 
 }

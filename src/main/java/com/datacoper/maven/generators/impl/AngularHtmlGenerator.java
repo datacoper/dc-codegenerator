@@ -1,10 +1,10 @@
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.generators.AbstractGenerator;
+import com.datacoper.maven.generators.AbstractAngularGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularHtmlGenerator extends AbstractGenerator {
+public class AngularHtmlGenerator extends AbstractAngularGenerator {
 
 	public AngularHtmlGenerator(TemplateModel templateModel) {
 		super(templateModel);
@@ -23,11 +23,6 @@ public class AngularHtmlGenerator extends AbstractGenerator {
 	@Override
 	public String getClassName() {
 		return StringUtil.lowerFirstCharacter(getEntityName())+".html";
-	}
-
-	@Override
-	public String getCharsetName() {
-		return "UTF-8";
 	}
 
 }

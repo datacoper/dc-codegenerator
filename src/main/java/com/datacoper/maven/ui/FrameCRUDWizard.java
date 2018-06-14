@@ -6,11 +6,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import com.datacoper.cooperate.arquitetura.client.dialog.DCOptionPane;
 import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.metadata.TemplateModel;
 
@@ -51,11 +49,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 			public void actionPerformed(ActionEvent e) {
 				AbstractWizardPage currentPage = controller.getCurrentPage();
 				if(currentPage instanceof AbstractCRUDPanelWizard) {
-					((AbstractCRUDPanelWizard)currentPage).onFinish();
-					SwingUtilities.updateComponentTreeUI(FrameCRUDWizard.this);
-					if(DCOptionPane.showConfirmDialog(getOwner(), "Fechar?")) {
-						dispose();
-					}
+					((AbstractCRUDPanelWizard)currentPage).onFinish();					
 				}
 			}
 		});
