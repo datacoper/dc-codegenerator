@@ -1,12 +1,14 @@
 <#assign entityName = model.entityName>
-<#assign entityNameVariable = model.entityName?uncap_first>
+<#assign entityNameVariable = entityName?uncap_first>
 <#assign module = model.moduleName?lower_case>
+<#assign entityNameMaster = model.entityNameMaster>
+<#assign entityNameMasterVariable = entityNameMaster?uncap_first>
 
 (function () {
     'use strict';
 
     angular
-        .module('cw.${module}.${entityNameVariable}')
+        .module('cw.${module}')
         .factory('${entityNameVariable}Resource', ${entityNameVariable}Resource);
 
     ${entityNameVariable}Resource.$inject = [
@@ -19,9 +21,14 @@
         apiService
     ) {
         var baseUrl = apiService.getApi('${module}').baseUrl;
-        var path = '/${entityName?lower_case}/:id';
+        var path = '/${entityNameMasterVariable}/:parentId/${entityName?lower_case}/:id';
+
         var url = baseUrl + path;
 
-        return RESTFulHelperFactory.configureRESTFulResource(url);
+        var config = {
+            //getPaged: { method: 'GET', url: url + '/paged' }
+        };
+
+        return RESTFulHelperFactory.configureRESTFulResource(url, config);
     }
 })();

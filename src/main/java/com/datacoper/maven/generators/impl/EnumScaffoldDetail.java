@@ -7,6 +7,7 @@ import java.util.List;
 import com.datacoper.maven.enums.properties.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.metadata.TemplateModelDetail;
 
 public enum EnumScaffoldDetail {
     ENTITYGENERATOR(EntityGenerator.class, EnumProject.COMMON),
@@ -19,13 +20,8 @@ public enum EnumScaffoldDetail {
     SERVICEIMPLGENERATOR(ServiceImplDetailGenerator.class, EnumProject.SERVER),
     RESOURCEGENERATOR(ResourceDetailGenerator.class, EnumProject.REST_COMMON),
     RESOURCEIMPLGENERATOR(ResourceImplDetailGenerator.class, EnumProject.REST),
-//	ANGULARCONTROLLERGENERATOR(AngularControllerDetailGenerator.class, EnumProject.ANGULAR), 
-//	ANGULARHTMLGENERATOR(AngularHtmlDetailGenerator.class, EnumProject.ANGULAR),
-//	ANGULARMAINSERVICEGENERATOR(AngularMainServiceDetailGenerator.class, EnumProject.ANGULAR),
-//	ANGULARMODULEGENERATOR(AngularModuleDetailGenerator.class, EnumProject.ANGULAR),
-//	ANGULARRESOURCEGENERATOR(AngularResourceDetailGenerator.class, EnumProject.ANGULAR),
-//	ANGULARROUTEGENERATOR(AngularRouteDetailGenerator.class, EnumProject.ANGULAR),
-//	ANGULARROUTEFACTORYGENERATOR(AngularRouteFactoryDetailGenerator.class, EnumProject.ANGULAR),
+	ANGULARSERVICEDETAILGENERATOR(AngularServiceDetailGenerator.class, EnumProject.ANGULAR),
+	ANGULARRESOURCEDETAILGENERATOR(AngularResourceDetailGenerator.class, EnumProject.ANGULAR),
     
 	;
     private final Class<? extends  AbstractGenerator> generator;
@@ -37,10 +33,10 @@ public enum EnumScaffoldDetail {
         this.projectType = projectType;
     }
 
-    public AbstractGenerator getGenerator(TemplateModel templateModel) {
+    public AbstractGenerator getGenerator(TemplateModelDetail templateModelDetail) {
         try {
         	Constructor<? extends AbstractGenerator> constructor = generator.getConstructor(TemplateModel.class);
-			return constructor.newInstance(templateModel);
+			return constructor.newInstance(templateModelDetail);
         } catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -59,12 +55,12 @@ public enum EnumScaffoldDetail {
         return projectType;
     }
     
-    public static List<AbstractGenerator> getGenerators(EnumProject projectType, TemplateModel templateModel) {
+    public static List<AbstractGenerator> getGenerators(EnumProject projectType, TemplateModelDetail templateModelDetail) {
         List<AbstractGenerator> generators = new ArrayList<>();
         
         for (EnumScaffoldDetail value : values()) {
             if (value.getProjectType().equals(projectType)) {
-            	generators.add(value.getGenerator(templateModel));
+            	generators.add(value.getGenerator(templateModelDetail));
             }
         }
         

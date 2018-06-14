@@ -21,11 +21,6 @@ public class AngularHtmlGenerator extends AbstractGenerator {
 	}
 
 	@Override
-	public String getPackage() {
-		return StringUtil.format("{0}.{1}", getModuleName().toLowerCase(), StringUtil.lowerFirstCharacter(getEntityName()));
-	}
-
-	@Override
 	public String getClassName() {
 		return StringUtil.lowerFirstCharacter(getEntityName())+".html";
 	}

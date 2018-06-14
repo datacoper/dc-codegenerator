@@ -1,12 +1,12 @@
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.generators.AbstractAngularGenerator;
-import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.generators.AbstractAngularDetailGenerator;
+import com.datacoper.maven.metadata.TemplateModelDetail;
 import com.datacoper.maven.util.StringUtil;
 
-public class AngularMainServiceGenerator extends AbstractAngularGenerator {
+public class AngularServiceDetailGenerator extends AbstractAngularDetailGenerator {
 
-	public AngularMainServiceGenerator(TemplateModel templateModel) {
+	public AngularServiceDetailGenerator(TemplateModelDetail templateModel) {
 		super(templateModel);
 	}
 

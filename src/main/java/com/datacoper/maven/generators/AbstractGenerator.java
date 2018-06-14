@@ -31,6 +31,10 @@ public abstract class AbstractGenerator {
     	return templateModel.getCompany();
     }
     
+    public TemplateModel getTemplateModel() {
+		return templateModel;
+	}
+    
 	public void process() {
 		
 		templateModel.setPackag(getPackage());

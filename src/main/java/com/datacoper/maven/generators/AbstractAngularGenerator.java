@@ -1,6 +1,7 @@
 package com.datacoper.maven.generators;
 
 import com.datacoper.maven.metadata.TemplateModel;
+import com.datacoper.maven.util.StringUtil;
 
 public abstract class AbstractAngularGenerator extends AbstractGenerator {
 
@@ -17,5 +18,10 @@ public abstract class AbstractAngularGenerator extends AbstractGenerator {
 	public String getCharsetName() {
     	return "UTF-8";
     }
+	
+	@Override
+	public String getPackage() {
+		return StringUtil.format("{0}.{1}", getModuleName().toLowerCase(), StringUtil.lowerFirstCharacter(getEntityName()));
+	}
 	
 }
