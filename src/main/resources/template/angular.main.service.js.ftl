@@ -10,10 +10,16 @@
         .service('${entityNameVariable}MainService', ${entityNameVariable}MainService);
 
     ${entityNameVariable}MainService.$inject = [
+        <#list mode.attributes as attribute>
+        '${attribute.entityName?cap_first}Resource',
+        </#list>
         '${entityNameVariable}Resource'
     ];
 
     function ${entityNameVariable}MainService(
+        <#list mode.attributes as attribute>
+        ${attribute.entityName?cap_first}Resource,
+        </#list>
         ${entityNameVariable}Resource
     ) {
         // variaveis
@@ -35,7 +41,13 @@
                     <#if attribute.scale gt 0 >.decimalPlaces(${attribute.scale})</#if>
                     //.onlyWhenNew(false)                    
                     <#if attribute.mask??>.dateFormat('${attribute.mask}')</#if>
-                    .toJSON()<#if attribute?has_next>,</#if>
+                    <#if attribute.entity>
+                    //.filterSearchOptions(getFilterSearchOptions())                    
+                    .resourceName('${attribute.name?uncap_first}Resource')
+                    .minSearchLength(0)
+                    .toJSON()
+                    </#if>
+                    <#if attribute?has_next>,</#if>                    
 				</#list>               
             ];
         }

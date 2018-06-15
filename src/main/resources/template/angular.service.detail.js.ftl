@@ -14,7 +14,9 @@
     ${entityNameMaster}Service.$inject = [
         '$state',
         'genericUtilService',
-        'produtoResource',
+        <#list mode.attributes as attribute>
+        '${attribute.entityName?cap_first}Resource',
+        </#list>
         '${entityNameMaster}Resource',
         '${entityNameMasterVariable}MainService',
         'searchConfigOptionsService',
@@ -24,7 +26,9 @@
     function ${entityNameMaster}Service(
         $state,
         genericUtilService,
-        produtoResource,
+        <#list mode.attributes as attribute>
+        ${attribute.entityName?cap_first}Resource,
+        </#list>
         ${entityNameMaster}Resource,
         ${entityNameMasterVariable}MainService,
         searchConfigOptionsService,
@@ -59,25 +63,25 @@
 
         function getFormFields() {
             return [
-
-                new DcGenericCrudField('calculatedField', 'Conta de Estoque', 12, 'contaDeEstoque')
-                    .filterSearchOptions(getFilterSearchOptions())
-                    .require(isNewRegister)
-                    .disable(isRecordLoaded)
-                    .resourceName('contaDeEstoqueFaturamentoResource')
+                <#list model.attributes as attribute>		
+                new DcGenericCrudField('${attribute.frontType}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
+                    .require(<#if attribute.required>true<#else>false</#if>))                    
+                    <#if attribute.number>//.min(${attribute.scale})</#if>
+                    <#if attribute.number>//.max(${attribute.scale})</#if>
+                    .disable(<#if attribute.updatable>false<#else>true</#if>))
+                    <#if attribute.text>.maxlength(${attribute.precision})</#if>
+                    <#if attribute.scale gt 0 >.decimalPlaces(${attribute.scale})</#if>
+                    //.onlyWhenNew(false)                    
+                    <#if attribute.mask??>.dateFormat('${attribute.mask}')</#if>
+                    <#if attribute.entity>
+                    //.filterSearchOptions(getFilterSearchOptions())                    
+                    .resourceName('${attribute.name?uncap_first}Resource')
                     .minSearchLength(0)
-                    .toJSON(),
-
-                new DcGenericCrudField('calculatedField', 'Produto', 6, 'produto')
-                    .filterSearchOptions(getFilterSearchOptions())
-                    .disable(isRecordLoaded)
-                    .toJSON(),
-
-                new DcGenericCrudField('vigencia', null, 6)
-                    .dateFormat('dd/MM/yyyy HH:mm:ss')
-                    .requireInicio(true)
                     .toJSON()
-            ]
+                    </#if>
+                    <#if attribute?has_next>,</#if>                    
+				</#list>               
+            ];
         }
 
         function setUpListingConfig() {
@@ -96,10 +100,6 @@
             });
         }
 
-        function isNewRegister() {
-            return !getModel().${entityNameMaster}.contaDeEstoque && !getModel().${entityNameMaster}.unidadeMedidaProduto;
-        }
-
         function isRecordLoaded() {
             return getModel().${entityNameMaster}.id;
         }
@@ -109,12 +109,18 @@
         }
 
         function getListingColumnsConfigData() {
-            return [
-                new DcGenericListingColumnConfigData('Código', 'unidadeMedidaProduto.produto.codigo').toJSON(),
-                new DcGenericListingColumnConfigData('Descrição', 'unidadeMedidaProduto.produto.descricao').toJSON(),
-                new DcGenericListingColumnConfigData('Sigla', 'unidadeMedidaProduto.sigla').toJSON(),
-                new DcGenericListingColumnConfigData('Inicio Vigência', 'inicioVigencia').mask({ filter: 'date', exp: 'dd/MM/yyyy HH:mm:ss' }).toJSON(),
-                new DcGenericListingColumnConfigData('Fim Vigência', 'fimVigencia').mask({ filter: 'date', exp: 'dd/MM/yyyy HH:mm:ss' }).toJSON()
+            return [                
+                <#list model.attributes as attribute>		
+                	<#if attribute.entity>
+                	new DcGenericListingColumnConfigData('Código', '${attribute.name?cap_first}.codigo').toJSON(),
+                	new DcGenericListingColumnConfigData('Descrição', '${attribute.name?cap_first}.descricao').toJSON()
+                	<#elseif attribute.date>
+                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').mask({ filter: 'date', exp: '<#if attribute.mask != null>${attribute.mask}<#else>dd/MM/yyyy HH:mm:ss</#if>' }).toJSON()               	
+                	<#else>
+                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').toJSON()
+                	</#if>
+                    <#if attribute?has_next>,</#if>                    
+				</#list>  
             ]
         }
 
@@ -125,15 +131,7 @@
         }
 
         function getFilterSearchOptions(type) {
-            if (type == undefined) {
-                return [
-                    new DcSearchConfigOption('Código', 'codigo', true).toJSON(),
-                    new DcSearchConfigOption('Descrição', 'descricao', true).toJSON()
-                ];
-            }
-            else {
-                return searchConfigOptionsService.from(type);
-            }
+			return searchConfigOptionsService.from(type);
         }
     }
 })();

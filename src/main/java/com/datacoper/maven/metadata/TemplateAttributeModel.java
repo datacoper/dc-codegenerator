@@ -158,7 +158,11 @@ public class TemplateAttributeModel {
 			return "boolean";
 		}
 		
-		return "seletor";
+		if(isEntity()) {
+			return "calculatedField";
+		}
+		
+		return "";
 	}
 	
 }

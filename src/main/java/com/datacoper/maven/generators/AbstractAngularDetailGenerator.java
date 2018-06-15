@@ -17,7 +17,7 @@ public abstract class AbstractAngularDetailGenerator extends AbstractGenerator {
 	@Override
 	public String getPackage() {
 		TemplateModelDetail templateModelDetail = getTemplateModelDetail();
-		return StringUtil.format("{0}.{1}", getModuleName().toLowerCase(), 
+		return StringUtil.format("{0}.{1}.{2}", getModuleName().toLowerCase(), 
 				StringUtil.lowerFirstCharacter(templateModelDetail.getEntityNameMaster()), 
 				StringUtil.lowerFirstCharacter(templateModelDetail.getEntityName()));
 	}
