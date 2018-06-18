@@ -2,18 +2,13 @@
 <#assign classVariableName = model.entityName?uncap_first>
 <#assign attributes = model.attributes>
 <#assign company = model.company.packageName>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 package ${model.package};
 
 <#include "attributeImports.ftl">
 
-import com.${company}.cooperate.${module}.common.entities.${model.entityName};
 import com.datacoper.cooperate.arquitetura.common.entities.builder.EntityBuilder;
-<#list model.attributes as attribute>		
-<#if attribute.entity>
-import ${attribute.type};
-</#if>    
-</#list>
+import ${model.entityType};
 
 public class ${className} implements EntityBuilder<${model.entityName}> {
     

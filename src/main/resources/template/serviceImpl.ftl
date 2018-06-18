@@ -1,7 +1,7 @@
 <#assign className = model.className>
 <#assign variableName = model.className?uncap_first>
 <#assign company = model.company.packageName>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 
 package ${model.package};
 
@@ -13,7 +13,7 @@ import com.${company}.cooperate.${module}.common.services.${model.entityName}Ser
 <#list model.details as detail>
 import com.${company}.cooperate.${module}.common.services.${detail.entityName}Service;
 </#list>
-import com.${company}.cooperate.${module}.common.entities.${model.entityName};
+import ${model.entityType};
 import com.datacoper.cooperate.nucleo.server.service.MasterCrudServiceImpl;
 
 public class ${className} extends MasterCrudServiceImpl<${model.entityName}> implements ${model.entityName}Service{

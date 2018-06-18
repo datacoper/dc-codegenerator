@@ -1,6 +1,6 @@
 <#assign entityName = model.entityName>
 <#assign entityNameVariable = model.entityName?uncap_first>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 
 <div ng-controller="${entityNameVariable}Controller as ${entityNameVariable}Ctrl">
     <dc-generic-crud actions="CRUD"

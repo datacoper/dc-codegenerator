@@ -1,7 +1,7 @@
 <#assign className = model.className>
 <#assign variableName = model.className?uncap_first>
 <#assign company = model.company.packageName>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 <#assign entityName = model.entityName>
 
 package ${model.package};
@@ -9,8 +9,8 @@ package ${model.package};
 import java.util.Collection;
 import java.util.List;
 
-import com.${company}.cooperate.${module}.common.entities.${model.entityNameMaster};
-import com.${company}.cooperate.${module}.common.entities.${entityName};
+import ${model.entityPackage}.${model.entityNameMaster};
+import ${model.entityPackage}.${entityName};
 import com.${company}.cooperate.${module}.common.services.${entityName}Service;
 import com.datacoper.cooperate.nucleo.server.service.DetailCrudServiceImpl;
 

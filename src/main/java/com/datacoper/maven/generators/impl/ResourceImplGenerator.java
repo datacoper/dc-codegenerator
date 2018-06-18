@@ -17,7 +17,7 @@ public class ResourceImplGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.{1}.rest.resources.impl", getCompany().getPackageName(), getModuleName().toLowerCase());
+        return StringUtil.format("com.{0}.{1}.rest.resources.impl", getCompany().getPackageName(), getModulePackageName());
     }
 
 	@Override

@@ -17,7 +17,7 @@ public class EaoGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.server.eao", getCompany().getPackageName(), getModuleName().toLowerCase());
+        return StringUtil.format("com.{0}.cooperate.{1}.server.eao", getCompany().getPackageName(), getModulePackageName());
     }
 
 	@Override

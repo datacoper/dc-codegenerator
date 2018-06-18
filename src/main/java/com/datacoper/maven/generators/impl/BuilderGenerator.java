@@ -5,9 +5,9 @@
  */
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.enums.properties.EnumDCModule;
 import com.datacoper.maven.generators.AbstractJavaGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
-import com.datacoper.maven.util.StringUtil;
 
 public class BuilderGenerator extends AbstractJavaGenerator {
     
@@ -22,7 +22,7 @@ public class BuilderGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.common.entities.builder", getCompany().getPackageName(), getModuleName().toLowerCase());
+        return EnumDCModule.from(getModuleName()).resolveCommonPackage(getCompany())+".entities.builder";
     }
 
 	@Override

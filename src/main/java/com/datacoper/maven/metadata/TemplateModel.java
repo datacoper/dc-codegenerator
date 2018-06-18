@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.enums.properties.EnumDCModule;
 
 public class TemplateModel {
 
@@ -15,6 +17,8 @@ public class TemplateModel {
 	private String entityName;
 	
     private String moduleName;
+    
+    private String modulePackageName;
 
     private String packag;
 
@@ -31,6 +35,7 @@ public class TemplateModel {
 	public TemplateModel(String moduleName, File projectParentFile) {
 		this.moduleName = moduleName;
 		this.projectParentFile = projectParentFile;
+		this.modulePackageName = EnumDCModule.from(moduleName).getModulePackageName();
 	}
 
 	public Company getCompany() {
@@ -39,6 +44,19 @@ public class TemplateModel {
 
 	public String getModuleName() {
 		return moduleName;
+	}
+	
+	public String getEntityType() {
+		String getEntityPackage = getEntityPackage();
+		return getEntityPackage+"."+entityName;
+	}
+
+	public String getEntityPackage() {
+		return EnumDCModule.from(getModuleName()).resolveCommonPackage(company)+".entities";
+	}
+	
+	public String getModulePackageName() {
+		return modulePackageName;
 	}
 
 	public String getPackage() {
@@ -74,6 +92,10 @@ public class TemplateModel {
 	
 	public Set<String> getAttributeImports() {
 		return attributeImports;
+	}
+	
+	public Set<String> getAttributeImportsJava() {
+		return attributeImports.stream().filter(a -> a.startsWith("java.")).collect(Collectors.toSet());
 	}
 
 	public String getEntityName() {

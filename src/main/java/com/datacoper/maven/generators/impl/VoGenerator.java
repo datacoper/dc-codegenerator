@@ -17,7 +17,7 @@ public class VoGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", getCompany().getPackageName(), getModuleName().toLowerCase(), getEntityName().toLowerCase());
+        return StringUtil.format("com.{0}.cooperate.{1}.common.consultas", getCompany().getPackageName(), getModulePackageName(), getEntityName().toLowerCase());
     }
 
 	@Override

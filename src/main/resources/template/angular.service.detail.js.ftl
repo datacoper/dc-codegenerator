@@ -1,6 +1,6 @@
 <#assign entityName = model.entityName>
 <#assign entityNameVariable = entityName?uncap_first>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 <#assign entityNameMaster = model.entityNameMaster>
 <#assign entityNameMasterVariable = entityNameMaster?uncap_first>
 
@@ -14,8 +14,8 @@
     ${entityNameMaster}Service.$inject = [
         '$state',
         'genericUtilService',
-        <#list mode.attributes as attribute>
-        '${attribute.entityName?cap_first}Resource',
+        <#list model.attributes as attribute>
+        '${attribute.name?cap_first}Resource',
         </#list>
         '${entityNameMaster}Resource',
         '${entityNameMasterVariable}MainService',
@@ -26,8 +26,8 @@
     function ${entityNameMaster}Service(
         $state,
         genericUtilService,
-        <#list mode.attributes as attribute>
-        ${attribute.entityName?cap_first}Resource,
+        <#list model.attributes as attribute>
+        ${attribute.name?cap_first}Resource,
         </#list>
         ${entityNameMaster}Resource,
         ${entityNameMasterVariable}MainService,

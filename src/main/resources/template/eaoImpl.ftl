@@ -1,6 +1,6 @@
 <#assign className = model.className>
 <#assign company = model.company.packageName>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 package ${model.package};
 
 import com.${company}.cooperate.${module}.common.entities.${model.entityName};

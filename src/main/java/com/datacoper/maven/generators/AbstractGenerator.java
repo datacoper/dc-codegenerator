@@ -23,6 +23,10 @@ public abstract class AbstractGenerator {
     	return templateModel.getModuleName();
     }
     
+    public String getModulePackageName() {
+    	return templateModel.getModulePackageName();
+    }
+    
     public String getEntityName() {
     	return templateModel.getEntityName();
     }

@@ -17,7 +17,7 @@ public class ServiceImplGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.server.{2}", getCompany().getPackageName(), getModuleName().toLowerCase(), getEntityName().toLowerCase());
+        return StringUtil.format("com.{0}.cooperate.{1}.server.{2}", getCompany().getPackageName(), getModulePackageName(), getEntityName().toLowerCase());
     }
 
 	@Override

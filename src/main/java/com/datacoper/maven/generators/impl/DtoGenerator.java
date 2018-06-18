@@ -17,7 +17,7 @@ public class DtoGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.rest.common.dto", getCompany().getPackageName(), getModuleName().toLowerCase());
+        return StringUtil.format("com.{0}.cooperate.{1}.rest.common.dto", getCompany().getPackageName(), getModulePackageName());
     }
 
 	@Override

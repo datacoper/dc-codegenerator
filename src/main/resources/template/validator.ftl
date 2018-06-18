@@ -1,5 +1,5 @@
 <#assign className = model.className>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 <#assign company = model.company.packageName>
 package ${model.package};
 

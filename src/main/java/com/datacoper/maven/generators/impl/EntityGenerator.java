@@ -1,8 +1,8 @@
 package com.datacoper.maven.generators.impl;
 
+import com.datacoper.maven.enums.properties.EnumDCModule;
 import com.datacoper.maven.generators.AbstractJavaGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
-import com.datacoper.maven.util.StringUtil;
 
 public class EntityGenerator extends AbstractJavaGenerator {
 
@@ -17,7 +17,7 @@ public class EntityGenerator extends AbstractJavaGenerator {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.common.entities", getCompany().getPackageName(), getModuleName().toLowerCase());
+        return EnumDCModule.from(getModuleName()).resolveCommonPackage(getCompany())+".entities";
     }
 
 	@Override

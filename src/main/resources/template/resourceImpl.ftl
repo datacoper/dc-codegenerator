@@ -1,7 +1,7 @@
 <#assign className = model.className>
 <#assign variableName = model.className?uncap_first>
 <#assign company = model.company.packageName>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 package ${model.package};
 
 import javax.annotation.ManagedBean;

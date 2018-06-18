@@ -1,6 +1,6 @@
 <#assign entityName = model.entityName>
 <#assign entityNameVariable = model.entityName?uncap_first>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 
 (function () {
     'use strict';
@@ -10,15 +10,15 @@
         .service('${entityNameVariable}MainService', ${entityNameVariable}MainService);
 
     ${entityNameVariable}MainService.$inject = [
-        <#list mode.attributes as attribute>
-        '${attribute.entityName?cap_first}Resource',
+        <#list model.attributes as attribute>
+        '${attribute.name?cap_first}Resource',
         </#list>
         '${entityNameVariable}Resource'
     ];
 
     function ${entityNameVariable}MainService(
-        <#list mode.attributes as attribute>
-        ${attribute.entityName?cap_first}Resource,
+        <#list model.attributes as attribute>
+        ${attribute.name?cap_first}Resource,
         </#list>
         ${entityNameVariable}Resource
     ) {

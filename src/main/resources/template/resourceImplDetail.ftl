@@ -1,6 +1,6 @@
 <#assign className = model.className>
 <#assign company = model.company.packageName>
-<#assign module = model.moduleName?lower_case>
+<#assign module = model.modulePackageName>
 <#assign entityName = model.entityName>
 
 package ${model.package};

@@ -124,7 +124,7 @@ public class TableAttributes extends JTable{
 				if(entityModule == null) {
 					throw new RuntimeException("Erro no atributo "+columnName+". Para o Tipo "+EnumAttributeType.ENTITY+" é necessário informar o Módulo.");
 				}
-				type = entityModule.resolveEntityType(company, attributeName);
+				type = entityModule.resolveCommonPackage(company)+".entities."+attributeName;
 			}
 			
 			attributes.add(new TemplateAttributeModel(columnName, attributeName, type, entityModule, label, mask, precision, scale, required, updatable));

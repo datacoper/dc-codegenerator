@@ -17,7 +17,7 @@ public class QueryGenerator extends AbstractJavaGenerator  {
 
     @Override
     public String getPackage() {
-        return StringUtil.format("com.{0}.cooperate.{1}.server.consultas", getCompany().getPackageName(), getModuleName().toLowerCase());
+        return StringUtil.format("com.{0}.cooperate.{1}.server.consultas", getCompany().getPackageName(), getModulePackageName());
     }
 
 	@Override
