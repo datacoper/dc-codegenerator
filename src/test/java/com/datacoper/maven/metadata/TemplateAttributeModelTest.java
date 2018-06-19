@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.enums.EnumDCModule;
 
 public class TemplateAttributeModelTest {
 

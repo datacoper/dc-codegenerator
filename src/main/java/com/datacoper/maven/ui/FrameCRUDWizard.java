@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.enums.EnumProject;
 import com.datacoper.maven.metadata.TemplateModel;
 
 import se.gustavkarlsson.gwiz.AbstractWizardPage;

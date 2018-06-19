@@ -1,6 +1,6 @@
 package com.datacoper.maven.metadata;
 
-import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.enums.Company;
 
 public class TemplateModelDetail extends TemplateModel{
 

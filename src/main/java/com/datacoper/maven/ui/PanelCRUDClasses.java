@@ -20,7 +20,7 @@ import javax.swing.event.ChangeListener;
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.client.panel.DCCheckBox;
 import com.datacoper.cooperate.arquitetura.common.util.ListUtil;
-import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.enums.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.generators.impl.EnumScaffold;
 import com.datacoper.maven.generators.impl.EnumScaffoldDetail;

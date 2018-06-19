@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.enums.Company;
+import com.datacoper.maven.enums.EnumDCModule;
 
 public class TemplateModel {
 

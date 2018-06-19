@@ -1,4 +1,4 @@
-package com.datacoper.maven.enums.properties;
+package com.datacoper.maven.enums;
 
 public enum EnumPackagingType {
     JAR("jar"),

@@ -5,7 +5,7 @@ import javax.swing.JTextField;
 
 import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.client.panel.DCPanelTitled;
-import com.datacoper.maven.enums.options.Company;
+import com.datacoper.maven.enums.Company;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;
 import com.datacoper.maven.util.StringUtil;

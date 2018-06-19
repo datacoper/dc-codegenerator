@@ -1,6 +1,4 @@
-package com.datacoper.maven.enums.properties;
-
-import com.datacoper.maven.enums.options.Company;
+package com.datacoper.maven.enums;
 
 public enum EnumDCModule {
 	

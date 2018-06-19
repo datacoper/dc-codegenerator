@@ -4,8 +4,8 @@ import java.io.File;
 
 import com.datacoper.freemarker.conf.ConfigurationFreeMarker;
 import com.datacoper.freemarker.conf.TemplateFreeMarker;
-import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.enums.Company;
+import com.datacoper.maven.enums.EnumProject;
 import com.datacoper.maven.generators.impl.EnumScaffold;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.util.FileUtil;

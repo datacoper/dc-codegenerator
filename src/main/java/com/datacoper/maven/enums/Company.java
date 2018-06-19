@@ -1,4 +1,4 @@
-package com.datacoper.maven.enums.options;
+package com.datacoper.maven.enums;
 
 public enum Company {
     DATACOPER("Datacoper", "datacoper"),

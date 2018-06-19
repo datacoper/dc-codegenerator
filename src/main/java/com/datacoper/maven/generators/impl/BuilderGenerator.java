@@ -5,7 +5,7 @@
  */
 package com.datacoper.maven.generators.impl;
 
-import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.enums.EnumDCModule;
 import com.datacoper.maven.generators.AbstractJavaGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 

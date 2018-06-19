@@ -1,9 +1,9 @@
-package com.datacoper.maven.enums.properties;
+package com.datacoper.maven.enums;
 
-import static com.datacoper.maven.enums.properties.EnumPackagingType.EJB;
-import static com.datacoper.maven.enums.properties.EnumPackagingType.JAR;
-import static com.datacoper.maven.enums.properties.EnumPackagingType.POM;
-import static com.datacoper.maven.enums.properties.EnumPackagingType.WAR;
+import static com.datacoper.maven.enums.EnumPackagingType.EJB;
+import static com.datacoper.maven.enums.EnumPackagingType.JAR;
+import static com.datacoper.maven.enums.EnumPackagingType.POM;
+import static com.datacoper.maven.enums.EnumPackagingType.WAR;
 
 public enum EnumProject {
 	COMMON("Common", JAR, EnumSourceFolder.JAVA),

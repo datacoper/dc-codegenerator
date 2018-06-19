@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
-import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.enums.EnumDCAnnotation;
+import com.datacoper.maven.enums.EnumDCModule;
 
 public class TemplateAttributeModel {
 
@@ -32,10 +33,15 @@ public class TemplateAttributeModel {
 	private boolean required;
 	
 	private boolean updatable;
+	
+	private EnumDCAnnotation enumAttributeOptions;
 
-	public TemplateAttributeModel(String columnName, String name, String type, EnumDCModule moduleName, String label, String mask, int precision, int scale,
+	private TemplateModel templateModel;
+	
+	public TemplateAttributeModel(TemplateModel templateModel,  String columnName, String name, String type, EnumDCModule moduleName, String label, EnumDCAnnotation enumAttributeOptions, String mask, int precision, int scale,
 			boolean required, boolean updatable) {
 		
+		Objects.requireNonNull(templateModel);
 		Objects.requireNonNull(columnName);
 		Objects.requireNonNull(name);
 		Objects.requireNonNull(type);
@@ -45,6 +51,7 @@ public class TemplateAttributeModel {
 		this.modulePackageName = moduleName != null ? moduleName.getModulePackageName() : ""; 
 		this.name = name;
 		this.label = label;
+		this.enumAttributeOptions = enumAttributeOptions;
 		this.mask = mask;
 		this.precision = precision;
 		this.scale = scale;
@@ -61,6 +68,10 @@ public class TemplateAttributeModel {
 		
 	}
 
+	public TemplateModel getTemplateModel() {
+		return templateModel;
+	}
+	
 	public String getColumnName() {
 		return columnName;
 	}
@@ -165,4 +176,12 @@ public class TemplateAttributeModel {
 		return "";
 	}
 	
+	
+	public boolean hasDCAnnotation() {
+		return enumAttributeOptions != null;
+	}
+	
+	public String getDCAnnotation() {
+		return enumAttributeOptions != null ? enumAttributeOptions.getAnnotation(this) : null;
+	}
 }

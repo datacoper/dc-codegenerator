@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.datacoper.maven.enums.properties.EnumProject;
+import com.datacoper.maven.enums.EnumProject;
 import com.datacoper.maven.generators.AbstractGenerator;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;

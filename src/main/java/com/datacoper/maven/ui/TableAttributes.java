@@ -10,16 +10,20 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.enums.Company;
+import com.datacoper.maven.enums.EnumDCAnnotation;
+import com.datacoper.maven.enums.EnumDCModule;
 import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
+import com.datacoper.maven.metadata.TemplateModel;
 
 public class TableAttributes extends JTable{
 	private static final long serialVersionUID = 1L;
 
 	private JComboBox<String> comboAttributeType = new JComboBox<>(EnumAttributeType.toStringArray());
 	private JComboBox<String> comboModule = new JComboBox<>(EnumDCModule.toStringArray()); 
+	
+	private JComboBox<String> comboAttributeOptions = new JComboBox<>(EnumDCAnnotation.toStringArray());
 	
 	private DefaultTableModel defaultTableModel;
 	
@@ -38,6 +42,7 @@ public class TableAttributes extends JTable{
 			{"Módulo", String.class, true},
 			{"Obrigatório", Boolean.class, true},
 			{"Atualizável", Boolean.class, true},
+			{"DCAnnotation", String.class, true},
 			{"Máscara", String.class, true},
 			{"Precisão", Integer.class, false},
 			{"Escala", Integer.class, false},
@@ -68,6 +73,9 @@ public class TableAttributes extends JTable{
 		TableColumn columnModules = getColumn("Módulo");
 		columnModules.setCellEditor(new DefaultCellEditor(comboModule));
 	
+		TableColumn columnAttributeOptions = getColumn("Opções");
+		columnAttributeOptions.setCellEditor(new DefaultCellEditor(comboAttributeOptions));
+		
 	}
 
 	private String[] getColumnsNames() {
@@ -95,7 +103,7 @@ public class TableAttributes extends JTable{
 		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, enumDCModule != null ? enumDCModule.name() : null, nullable, updatable, mask, precision, scale});
 	}
 
-	public Set<TemplateAttributeModel> getAsTemplateAttributeModel() {
+	public Set<TemplateAttributeModel> getAsTemplateAttributeModel(TemplateModel templateModel) {
 		Vector<?> dataVector = defaultTableModel.getDataVector();
 		
 		Set<TemplateAttributeModel> attributes = new HashSet<TemplateAttributeModel>(dataVector.size());
@@ -113,10 +121,13 @@ public class TableAttributes extends JTable{
 			
 			boolean required = (boolean)rowValues.get(5);
 			boolean updatable = (boolean)rowValues.get(6);
+			
 			String mask = (String)rowValues.get(7);
 			
-			int precision = (int)rowValues.get(8);
-			int scale = (int)rowValues.get(9);
+			EnumDCAnnotation enumDCAnnotation = EnumDCAnnotation.from((String)rowValues.get(8));
+			
+			int precision = (int)rowValues.get(9);
+			int scale = (int)rowValues.get(10);
 			
 			String type = attributeType.getType().getName();
 			
@@ -127,7 +138,7 @@ public class TableAttributes extends JTable{
 				type = entityModule.resolveCommonPackage(company)+".entities."+attributeName;
 			}
 			
-			attributes.add(new TemplateAttributeModel(columnName, attributeName, type, entityModule, label, mask, precision, scale, required, updatable));
+			attributes.add(new TemplateAttributeModel(templateModel, columnName, attributeName, type, entityModule, label, enumDCAnnotation, mask, precision, scale, required, updatable));
 		}
 		
 		return attributes;

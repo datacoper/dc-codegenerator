@@ -19,6 +19,7 @@ public class ${className} extends EntityImpl {
     private Long id${className};
 
 <#list model.attributes as attribute>		
+    <#if attribute.hasDCAnnotation()>${attribute.getDCAnnotation()}</#if>
     <#if attribute.boolean>
     private Byte ${attribute.name?uncap_first};
     <#elseif attribute.entity>

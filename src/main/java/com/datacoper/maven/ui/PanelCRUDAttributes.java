@@ -22,8 +22,8 @@ import com.datacoper.cooperate.arquitetura.client.layout.VerticalFlowLayout;
 import com.datacoper.cooperate.arquitetura.common.beans.BeanUtil;
 import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
 import com.datacoper.cooperate.arquitetura.common.util.Entry;
-import com.datacoper.maven.enums.options.Company;
-import com.datacoper.maven.enums.properties.EnumDCModule;
+import com.datacoper.maven.enums.Company;
+import com.datacoper.maven.enums.EnumDCModule;
 import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.metadata.TemplateModel;
@@ -230,7 +230,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		
 		TemplateModel templateModel = getTemplateModel();
 		
-		Set<TemplateAttributeModel> attributes = tablesAttributes.get(templateModel.getEntityName()).getAsTemplateAttributeModel();		
+		Set<TemplateAttributeModel> attributes = tablesAttributes.get(templateModel.getEntityName()).getAsTemplateAttributeModel(templateModel);		
 		templateModel.setAttributes(attributes);
 		
 		Set<TemplateModelDetail> details = templateModel.getDetails();
@@ -238,7 +238,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		for (TemplateModelDetail templateModelDetail : details) {
 			TableAttributes tableAttributesDetail = tablesAttributes.get(templateModelDetail.getEntityName());
 			
-			templateModelDetail.setAttributes(tableAttributesDetail.getAsTemplateAttributeModel());
+			templateModelDetail.setAttributes(tableAttributesDetail.getAsTemplateAttributeModel(templateModelDetail));
 			
 		}
 		
