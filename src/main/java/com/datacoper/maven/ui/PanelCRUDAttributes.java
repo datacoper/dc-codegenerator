@@ -144,7 +144,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 					
 					boolean updatable = isUpdatable(attributeName);
 					
-					tableAttributes.addRow(columnName, attributeName, attributeLabel, columnType, enumDCModule, !nullable, mask, precision, scale, updatable);
+					tableAttributes.addRow(columnName, attributeName, attributeLabel, columnType, enumDCModule, null, !nullable, mask, precision, scale, updatable);
 					
 				}
 				

@@ -73,7 +73,7 @@ public class TableAttributes extends JTable{
 		TableColumn columnModules = getColumn("Módulo");
 		columnModules.setCellEditor(new DefaultCellEditor(comboModule));
 	
-		TableColumn columnAttributeOptions = getColumn("Opções");
+		TableColumn columnAttributeOptions = getColumn("DCAnnotation");
 		columnAttributeOptions.setCellEditor(new DefaultCellEditor(comboAttributeOptions));
 		
 	}
@@ -99,8 +99,8 @@ public class TableAttributes extends JTable{
 		return defaultTableModel.getDataVector();
 	}
 
-	public void addRow(String columnName, String attributeName, String attributeLabel, String columnClassName, EnumDCModule enumDCModule, Boolean nullable, String mask, int precision, int scale, boolean updatable) {
-		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, enumDCModule != null ? enumDCModule.name() : null, nullable, updatable, mask, precision, scale});
+	public void addRow(String columnName, String attributeName, String attributeLabel, String columnClassName, EnumDCModule enumDCModule, EnumDCAnnotation enumDCAnnotation, Boolean nullable, String mask, int precision, int scale, boolean updatable) {
+		defaultTableModel.addRow(new Object[] {columnName, attributeName, attributeLabel, columnClassName, enumDCModule != null ? enumDCModule.name() : null, nullable, updatable, mask, enumDCAnnotation, precision, scale});
 	}
 
 	public Set<TemplateAttributeModel> getAsTemplateAttributeModel(TemplateModel templateModel) {
@@ -125,6 +125,11 @@ public class TableAttributes extends JTable{
 			String mask = (String)rowValues.get(7);
 			
 			EnumDCAnnotation enumDCAnnotation = EnumDCAnnotation.from((String)rowValues.get(8));
+			
+			if(enumDCAnnotation != null) {
+				required = false;
+				updatable = false;
+			}
 			
 			int precision = (int)rowValues.get(9);
 			int scale = (int)rowValues.get(10);
