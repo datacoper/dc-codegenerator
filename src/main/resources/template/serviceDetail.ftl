@@ -6,8 +6,8 @@
 package ${model.package};
 
 import com.datacoper.cooperate.arquitetura.common.services.DetailCrudService;
-import com.${model.entityPackage}.${model.entityNameMaster};
-import com.${model.entityPackage}.${model.entityName};
+import ${model.entityPackage}.${model.entityNameMaster};
+import ${model.entityPackage}.${model.entityName};
 
 public interface ${className} extends DetailCrudService<${entityName}, ${model.entityNameMaster}> {
 

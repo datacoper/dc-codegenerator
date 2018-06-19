@@ -39,7 +39,7 @@ public enum EnumDCModule {
 			return prefix;
 		}
 		
-		return prefix+"+common"; 
+		return prefix+".common"; 
 	}
 	
 	
