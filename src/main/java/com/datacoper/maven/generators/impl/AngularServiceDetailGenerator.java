@@ -12,12 +12,12 @@ public class AngularServiceDetailGenerator extends AbstractAngularDetailGenerato
 
 	@Override
 	public String getTemplateName() {
-		return "angular.main.service.js";
+		return "angular.service.detail.js";
 	}
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".main.service";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".service";
 	}
 
 }

@@ -8,6 +8,7 @@ package ${model.package};
 import javax.persistence.*;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityImpl;
 <#if model.hasAttributeBoolean()>import com.datacoper.cooperate.arquitetura.common.util.ByteUtil;</#if>
+<#if model.hasAttributeDCAnnotation()>import com.datacoper.cooperate.arquitetura.common.persistence.entities.*;</#if>
 
 @Entity
 public class ${className} extends EntityImpl {
@@ -25,6 +26,9 @@ public class ${className} extends EntityImpl {
     <#elseif attribute.entity>
     @JoinColumn(name="${attribute.columnName}")
     @ManyToOne(fetch=FetchType.LAZY)
+    private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
+    <#elseif attribute.date>
+    @Temporal(TemporalType.TIMESTAMP)
     private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
     <#else>
     private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
@@ -44,7 +48,6 @@ public class ${className} extends EntityImpl {
 <#list attributes as attribute>
     <#assign attributeType = attribute.type>
     <#assign attributeName = attribute.name?uncap_first>
-	
 	<#if attribute.boolean>
     public void set${attributeName?cap_first}(Boolean ${attributeName}) {
         this.${attributeName} = ByteUtil.toByte(${attributeName});
@@ -53,7 +56,6 @@ public class ${className} extends EntityImpl {
     public ${attributeType} get${attributeName?cap_first}() {
         return ByteUtil.toBoolean(${attributeName});
     }
-    
     <#else>
     public void set${attributeName?cap_first}(${attribute.typeSimpleName} ${attributeName}) {
         this.${attributeName} = ${attributeName};
@@ -62,8 +64,8 @@ public class ${className} extends EntityImpl {
     public ${attribute.typeSimpleName} get${attributeName?cap_first}() {
         return ${attributeName};
     }
+    
     </#if>
-	
 </#list>
     
 <#list model.details as detail>
@@ -77,7 +79,6 @@ public class ${className} extends EntityImpl {
     }	
 	
 </#list>
-    
     
     @Override
     public Long getId() {

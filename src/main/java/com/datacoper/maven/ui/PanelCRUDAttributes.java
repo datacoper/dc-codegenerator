@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,7 +25,6 @@ import com.datacoper.cooperate.arquitetura.common.util.DateUtil;
 import com.datacoper.cooperate.arquitetura.common.util.Entry;
 import com.datacoper.maven.enums.Company;
 import com.datacoper.maven.enums.EnumDCModule;
-import com.datacoper.maven.metadata.EnumAttributeType;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 import com.datacoper.maven.metadata.TemplateModel;
 import com.datacoper.maven.metadata.TemplateModelDetail;
@@ -106,6 +106,24 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 	private void populateAttributes(String entityName, Connection connection, TableAttributes tableAttributes) throws SQLException {
 		try(Statement statement = connection.createStatement()){
 		
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+			
+			ResultSet rs = databaseMetaData.getImportedKeys(null, null, entityName.toUpperCase());
+			
+			ResultSet primaryKeys = databaseMetaData.getPrimaryKeys(null, null, entityName.toUpperCase());
+			
+			primaryKeys.next();
+			
+			String primaryKey =  primaryKeys.getString("COLUMN_NAME");
+			
+			Map<String, String> mapForeignTables = new HashMap<>();
+			
+			while(rs.next()) {
+				String fkColumnName = rs.getString("FKCOLUMN_NAME");
+				String pkTableName = rs.getString("PKTABLE_NAME");
+				mapForeignTables.put(fkColumnName, pkTableName);
+			}
+			
 			ResultSet resultSet = statement.executeQuery("select * from "+entityName+" where 0 = 1");
 			
 			ResultSetMetaData metaData = resultSet.getMetaData();
@@ -117,7 +135,7 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 			for (int i = 1; i <= columnCount; i++) {
 				String columnName = metaData.getColumnName(i);
 				
-				if(!isPrimaryKey(entityName, columnName)) {
+				if(!isPrimaryKey(primaryKey, columnName)) {
 					Entry<String, String> revolverFieldAndLabel = columnNameResolver.revolverFieldAndLabel(columnName);
 					String attributeName = revolverFieldAndLabel.getKey();
 					String attributeLabel = StringUtil.isNotNullOrEmpty(revolverFieldAndLabel.getValue()) ? revolverFieldAndLabel.getValue() : attributeName;
@@ -132,13 +150,13 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 					
 					String mask = getMascaraDefault(columnType);
 					
-					boolean isEntityType = attributeName.startsWith("id");
+					String fkTableName = mapForeignTables.get(columnName);
 					
 					EnumDCModule enumDCModule = null;
 					
-					if(isEntityType) {
+					if(fkTableName != null) {
 						attributeName = attributeName.substring(2); //remover o prefixo "id"
-						columnType = EnumAttributeType.ENTITY.getType().getName();
+						columnType = StringUtil.upperFirstCharacter(columnNameResolver.revolverFieldAndLabel(fkTableName).getKey());
 						enumDCModule = EnumDCModule.from(getTemplateModel().getModuleName());
 					}
 					
@@ -196,8 +214,8 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 		return null;
 	}
 
-	private boolean isPrimaryKey(String entityName, String columnName) {
-		return ("id"+entityName.toLowerCase()).equals(columnName.toLowerCase());
+	private boolean isPrimaryKey(String primaryKeyName, String columnName) {
+		return primaryKeyName.toLowerCase().equals(columnName.toLowerCase());
 	}
 
 	@Override

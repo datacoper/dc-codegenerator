@@ -47,6 +47,7 @@ public class TemplateAttributeModel {
 		Objects.requireNonNull(type);
 		Objects.requireNonNull(label);
 		
+		this.templateModel = templateModel;
 		this.columnName = columnName;
 		this.modulePackageName = moduleName != null ? moduleName.getModulePackageName() : ""; 
 		this.name = name;
@@ -182,6 +183,6 @@ public class TemplateAttributeModel {
 	}
 	
 	public String getDCAnnotation() {
-		return enumAttributeOptions != null ? enumAttributeOptions.getAnnotation(this) : null;
+		return enumAttributeOptions != null ? enumAttributeOptions.getAnnotation(this) : "";
 	}
 }

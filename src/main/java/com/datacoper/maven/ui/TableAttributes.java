@@ -115,32 +115,37 @@ public class TableAttributes extends JTable{
 			String columnName = (String)rowValues.get(0);
 			String attributeName = (String)rowValues.get(1);
 			String label = (String)rowValues.get(2);
-			EnumAttributeType attributeType = EnumAttributeType.from((String)rowValues.get(3));
 			
 			EnumDCModule entityModule = EnumDCModule.from((String)rowValues.get(4));
 			
 			boolean required = (boolean)rowValues.get(5);
 			boolean updatable = (boolean)rowValues.get(6);
 			
-			String mask = (String)rowValues.get(7);
-			
-			EnumDCAnnotation enumDCAnnotation = EnumDCAnnotation.from((String)rowValues.get(8));
+			EnumDCAnnotation enumDCAnnotation = EnumDCAnnotation.from((String)rowValues.get(7));
 			
 			if(enumDCAnnotation != null) {
 				required = false;
 				updatable = false;
 			}
 			
+			String mask = (String)rowValues.get(8);
+			
 			int precision = (int)rowValues.get(9);
 			int scale = (int)rowValues.get(10);
 			
-			String type = attributeType.getType().getName();
+			String attributeTypeStr = (String)rowValues.get(3);
 			
-			if(attributeType == EnumAttributeType.ENTITY) {
+			EnumAttributeType attributeType = EnumAttributeType.from(attributeTypeStr);
+			
+			String type;
+			
+			if(attributeType == null) {
 				if(entityModule == null) {
-					throw new RuntimeException("Erro no atributo "+columnName+". Para o Tipo "+EnumAttributeType.ENTITY+" é necessário informar o Módulo.");
+					throw new RuntimeException("Erro no atributo "+columnName+". Para o Tipo "+attributeTypeStr+" é necessário informar o Módulo.");
 				}
-				type = entityModule.resolveCommonPackage(company)+".entities."+attributeName;
+				type = entityModule.resolveCommonPackage(company)+".entities."+attributeTypeStr;
+			}else {
+				type = attributeType.getType().getName();
 			}
 			
 			attributes.add(new TemplateAttributeModel(templateModel, columnName, attributeName, type, entityModule, label, enumDCAnnotation, mask, precision, scale, required, updatable));

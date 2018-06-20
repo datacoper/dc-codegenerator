@@ -86,6 +86,10 @@ public class TemplateModel {
 		return attributes.stream().filter(a -> a.isBoolean()).findFirst().isPresent();
 	}
 	
+	public boolean hasAttributeDCAnnotation() {
+		return attributes.stream().filter(a -> a.hasDCAnnotation()).findFirst().isPresent();
+	}
+	
 	public boolean addImport(String importPackage) {
 		return attributeImports.add(importPackage);
 	}

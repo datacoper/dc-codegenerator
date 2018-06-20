@@ -31,6 +31,7 @@ public class ${className} extends AbstractDTO {
     <#else>
     private ${attribute.typeSimpleName} ${attribute.name?uncap_first};
     </#if>
+    
 </#list>
 
     <#include "defaultConstructor.ftl">

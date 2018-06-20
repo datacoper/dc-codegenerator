@@ -1,5 +1,9 @@
 package com.datacoper.maven.enums;
 
+import com.datacoper.cooperate.arquitetura.common.persistence.entities.DCContextField;
+import com.datacoper.cooperate.arquitetura.common.persistence.entities.DCContextInfo;
+import com.datacoper.cooperate.arquitetura.common.persistence.entities.DCCurrentDate;
+import com.datacoper.cooperate.arquitetura.common.persistence.entities.DCSequence;
 import com.datacoper.maven.metadata.TemplateAttributeModel;
 
 public enum EnumDCAnnotation {
@@ -7,41 +11,39 @@ public enum EnumDCAnnotation {
 	DCSEQUENCE {
 		@Override
 		public String getAnnotation(TemplateAttributeModel attributeModel) {
-			return null;
+			String sequenceName = attributeModel.getTemplateModel().getEntityName().toUpperCase();
+			sequenceName += "_"+attributeModel.getColumnName();
+			return "@"+DCSequence.class.getName()+"(\""+sequenceName+"\")";
 		}
 	},
 	DCCONTEXTFIELD_FILIAL {
 		@Override
 		public String getAnnotation(TemplateAttributeModel attributeModel) {
-			String sequenceName = attributeModel.getTemplateModel().getEntityName().toUpperCase();
-			
-			sequenceName += "_"+attributeModel.getColumnName();
-			
-			return "@com.datacoper.cooperate.arquitetura.common.persistence.entity.DCSequence(\""+sequenceName+"\")";
+			return "@"+DCContextInfo.class.getName()+"("+DCContextField.FILIAL.name()+")";
 		}
 	},
 	DCCONTEXTFIELD_USUARIO {
 		@Override
 		public String getAnnotation(TemplateAttributeModel attributeModel) {
-			return "@com.datacoper.cooperate.arquitetura.common.persistence.entity.DCContextField(\"USUARIO\")";
+			return "@"+DCContextInfo.class.getName()+"("+DCContextField.USUARIO.name()+")";
 		}
 	},
 	DCCONTEXTFIELD_GRUPOEMPRESARIAL {
 		@Override
 		public String getAnnotation(TemplateAttributeModel attributeModel) {
-			return "@com.datacoper.cooperate.arquitetura.common.persistence.entity.DCContextField(\"GRUPOEMPRESARIAL\")";
+			return "@"+DCContextInfo.class.getName()+"("+DCContextField.GRUPOEMPRESARIAL.name()+")";
 		}
 	},
 	DCCONTEXTFIELD_EMPRESA {
 		@Override
 		public String getAnnotation(TemplateAttributeModel attributeModel) {
-			return "@com.datacoper.cooperate.arquitetura.common.persistence.entity.DCContextField(\"EMPRESA\")";
+			return "@"+DCContextInfo.class.getName()+"("+DCContextField.EMPRESA.name()+")";
 		}
 	},
 	DCCURRENTDATE {
 		@Override
 		public String getAnnotation(TemplateAttributeModel attributeModel) {
-			return "@com.datacoper.cooperate.arquitetura.common.persistence.entity.DCCurrentDate";
+			return "@"+DCCurrentDate.class.getName();
 		}
 	},
 	
@@ -65,9 +67,9 @@ public enum EnumDCAnnotation {
 		if(value != null) {
 			EnumDCAnnotation[] values = values();
 			
-			for (EnumDCAnnotation enumModule : values) {
-				if(enumModule.name().toLowerCase().equals(value.toLowerCase())) {
-					return enumModule;
+			for (EnumDCAnnotation enumDCAnnotation : values) {
+				if(enumDCAnnotation.name().toLowerCase().equals(value.toLowerCase())) {
+					return enumDCAnnotation;
 				}
 			}
 		}

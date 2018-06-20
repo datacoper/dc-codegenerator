@@ -12,12 +12,12 @@ public class AngularResourceDetailGenerator extends AbstractAngularDetailGenerat
 
 	@Override
 	public String getTemplateName() {
-		return "angular.service.detail.js";
+		return "angular.resource.detail.js";
 	}
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".service";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".resource";
 	}
 
 }

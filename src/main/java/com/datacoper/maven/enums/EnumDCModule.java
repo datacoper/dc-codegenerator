@@ -2,7 +2,8 @@ package com.datacoper.maven.enums;
 
 public enum EnumDCModule {
 	
-	AGRICOLA("agricola"),	
+	AGRICOLA("agricola"),
+	ARQUITETURA("arquitetura"),
 	BUSINESSCORE("nucleo"),
 	CAPITALSOCIAL("capitalsocial"),
 	COMERCIAL("comercial"),

@@ -3,7 +3,6 @@ package com.datacoper.maven.metadata;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
-import com.datacoper.Entity;
 
 public enum EnumAttributeType {
 
@@ -14,8 +13,6 @@ public enum EnumAttributeType {
 	DATE(Date.class),
 	TIMESTAMP(Timestamp.class),
 	BIGDECIMAL(BigDecimal.class),
-	ENTITY(Entity.class)
-	
 	;
 	
 	private Class<?> type;
@@ -36,7 +33,7 @@ public enum EnumAttributeType {
 			}
 		}
 		
-		throw new IllegalArgumentException("Invalid type of: "+EnumAttributeType.class.getName()+": "+type);
+		return null;
 	}
 	
 	public static String[] toStringArray(){

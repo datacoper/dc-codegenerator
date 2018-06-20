@@ -22,7 +22,7 @@ public class AngularHtmlGenerator extends AbstractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".html";
+		return StringUtil.lowerFirstCharacter(getEntityName());
 	}
 
 }

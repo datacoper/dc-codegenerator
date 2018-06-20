@@ -17,7 +17,7 @@ public class AngularControllerGenerator extends AbstractAngularGenerator {
 
 	@Override
 	public String getClassName() {
-		return StringUtil.lowerFirstCharacter(getEntityName())+".controller.js";
+		return StringUtil.lowerFirstCharacter(getEntityName())+".controller";
 	}
 
 }

@@ -95,7 +95,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String projectParentPath = System.getProperty("projectParentPath", "/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/BusinessCore-Parent");
+					String projectParentPath = System.getProperty("projectParentPath", "/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/Faturamento-Parent");
 					
 					FrameCRUDWizard frame = new FrameCRUDWizard(projectParentPath);
 					frame.setVisible(true);
