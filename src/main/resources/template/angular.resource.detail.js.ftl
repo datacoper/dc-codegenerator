@@ -26,7 +26,7 @@
         var url = baseUrl + path;
 
         var config = {
-            //getPaged: { method: 'GET', url: url + '/paged' }
+            //getXYZ: { method: 'GET', url: url + '/xyz' }
         };
 
         return RESTFulHelperFactory.configureRESTFulResource(url, config);

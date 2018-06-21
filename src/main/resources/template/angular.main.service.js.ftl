@@ -9,17 +9,11 @@
         .module('cw.${module}.${entityNameVariable}')
         .service('${entityNameVariable}MainService', ${entityNameVariable}MainService);
 
-    ${entityNameVariable}MainService.$inject = [
-        <#list model.attributes as attribute>
-        '${attribute.name?cap_first}Resource',
-        </#list>
+    ${entityNameVariable}MainService.$inject = [        
         '${entityNameVariable}Resource'
     ];
 
-    function ${entityNameVariable}MainService(
-        <#list model.attributes as attribute>
-        ${attribute.name?cap_first}Resource,
-        </#list>
+    function ${entityNameVariable}MainService(        
         ${entityNameVariable}Resource
     ) {
         // variaveis
@@ -34,20 +28,30 @@
                 <#list model.attributes as attribute>		
                 new DcGenericCrudField('${attribute.frontType}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
                     .require(<#if attribute.required>true<#else>false</#if>)    
-                    <#if attribute.number>//.min(${attribute.scale})</#if>
-                    <#if attribute.number>//.max(${attribute.scale})</#if>
+                    <#if attribute.number>
+                    //.min(${attribute.scale})
+                    //.max(${attribute.scale})
+                    <#if attribute.scale gt 0 >
+                    .decimalPlaces(${attribute.scale})
+                    </#if>
+                    </#if>
                     .disable(<#if attribute.updatable>false<#else>true</#if>)
-                    <#if attribute.text>.maxlength(${attribute.precision})</#if>
-                    <#if attribute.scale gt 0 >.decimalPlaces(${attribute.scale})</#if>
+                    <#if attribute.text>
+                    .maxlength(${attribute.precision})
+                    </#if>                    
                     //.onlyWhenNew(false)                    
-                    <#if attribute.mask??>.dateFormat('${attribute.mask}')</#if>
+                    <#if attribute.date>                    
+                    .dateFormat('<#if attribute.mask??>${attribute.mask}<#else>dd/MM/yyyy</#if>')
+                    </#if>
                     <#if attribute.entity>
                     //.filterSearchOptions(getFilterSearchOptions())                    
                     .resourceName('${attribute.name?uncap_first}Resource')
-                    .minSearchLength(0)
-                    .toJSON()
+                    .minSearchLength(0)                    
                     </#if>
-                    <#if attribute?has_next>,</#if>                    
+                    .toJSON()
+                <#if attribute?has_next>
+                ,
+                </#if>                    
 				</#list>               
             ];
         }

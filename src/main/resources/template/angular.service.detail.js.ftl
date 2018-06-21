@@ -9,27 +9,21 @@
 
     angular
         .module('cw.${module}.${entityNameMasterVariable}')
-        .service('${entityNameMaster}Service', ${entityNameMaster}Service);
+        .service('${entityNameVariable}Service', ${entityNameVariable}Service);
 
-    ${entityNameMaster}Service.$inject = [
+    ${entityNameVariable}Service.$inject = [
         '$state',
-        'genericUtilService',
-        <#list model.attributes as attribute>
-        '${attribute.name?cap_first}Resource',
-        </#list>
-        '${entityNameMaster}Resource',
+        'genericUtilService',        
+        '${entityNameVariable}Resource',
         '${entityNameMasterVariable}MainService',
         'searchConfigOptionsService',
         'dateUtilService'
     ];
 
-    function ${entityNameMaster}Service(
+    function ${entityNameVariable}Service(
         $state,
-        genericUtilService,
-        <#list model.attributes as attribute>
-        ${attribute.name?cap_first}Resource,
-        </#list>
-        ${entityNameMaster}Resource,
+        genericUtilService,        
+        ${entityNameVariable}Resource,
         ${entityNameMasterVariable}MainService,
         searchConfigOptionsService,
         dateUtilService
@@ -47,7 +41,7 @@
             var tab = new DcGenericCrudTabForm();
             tab.label('${model.entityName}');
             tab.fields(getFormFields());
-            tab.modelProperty('${entityNameMaster}');
+            tab.modelProperty('${entityNameVariable}');
             tab.listingConfig(listingConfig);
             tab.deleteCallbackSuccess(function () {
                 $state.reload();
@@ -65,21 +59,31 @@
             return [
                 <#list model.attributes as attribute>		
                 new DcGenericCrudField('${attribute.frontType}', '${attribute.label}', 12, '${attribute.name?uncap_first}')
-                    .require(<#if attribute.required>true<#else>false</#if>)                 
-                    <#if attribute.number>//.min(${attribute.scale})</#if>
-                    <#if attribute.number>//.max(${attribute.scale})</#if>
+                    .require(<#if attribute.required>true<#else>false</#if>)    
+                    <#if attribute.number>
+                    //.min(${attribute.scale})
+                    //.max(${attribute.scale})
+                    <#if attribute.scale gt 0 >
+                    .decimalPlaces(${attribute.scale})
+                    </#if>
+                    </#if>
                     .disable(<#if attribute.updatable>false<#else>true</#if>)
-                    <#if attribute.text>.maxlength(${attribute.precision})</#if>
-                    <#if attribute.scale gt 0 >.decimalPlaces(${attribute.scale})</#if>
+                    <#if attribute.text>
+                    .maxlength(${attribute.precision})
+                    </#if>                    
                     //.onlyWhenNew(false)                    
-                    <#if attribute.mask??>.dateFormat('${attribute.mask}')</#if>
+                    <#if attribute.date>                    
+                    .dateFormat('<#if attribute.mask??>${attribute.mask}<#else>dd/MM/yyyy</#if>')
+                    </#if>
                     <#if attribute.entity>
                     //.filterSearchOptions(getFilterSearchOptions())                    
                     .resourceName('${attribute.name?uncap_first}Resource')
-                    .minSearchLength(0)
-                    .toJSON()
+                    .minSearchLength(0)                    
                     </#if>
-                    <#if attribute?has_next>,</#if>                    
+                    .toJSON()
+                <#if attribute?has_next>
+                ,
+                </#if>                    
 				</#list>               
             ];
         }
@@ -112,8 +116,8 @@
             return [                
                 <#list model.attributes as attribute>		
                 	<#if attribute.entity>
-                	new DcGenericListingColumnConfigData('Código', '${attribute.name?cap_first}.codigo').toJSON(),
-                	new DcGenericListingColumnConfigData('Descrição', '${attribute.name?cap_first}.descricao').toJSON()
+                	new DcGenericListingColumnConfigData('CÃ³digo', '${attribute.name?cap_first}.codigo').toJSON(),
+                	new DcGenericListingColumnConfigData('DescriÃ§Ã£o', '${attribute.name?cap_first}.descricao').toJSON()
                 	<#elseif attribute.date>
                 	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').mask({ filter: 'date', exp: '<#if attribute.mask != null>${attribute.mask}<#else>dd/MM/yyyy HH:mm:ss</#if>' }).toJSON()               	
                 	<#else>

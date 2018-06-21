@@ -111,6 +111,10 @@ public class TemplateModel {
 		details.add(templateModelDetail);
 	}
 
+	public boolean hasDetails() {
+		return !details.isEmpty();
+	}
+	
 	public Set<TemplateModelDetail> getDetails() {
 		return details;
 	}

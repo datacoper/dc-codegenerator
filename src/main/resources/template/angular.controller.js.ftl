@@ -10,30 +10,32 @@
         .controller('${entityNameVariable}Controller', ${entityNameVariable}Controller);
 
     ${entityNameVariable}Controller.$inject = [
-        '${entityNameVariable}MainService',
-        //'${entityNameVariable}DetailService',        
+        <#list model.details as detail>
+        '${detail.entityName?cap_first}Resource',
+        </#list>
+        '${entityNameVariable}MainService'
+                
     ];
 
     function ${entityNameVariable}Controller(
-        ${entityNameVariable}MainService,
-        //${entityNameVariable}DetailService,        
+        <#list model.details as detail>
+        ${detail.entityName?cap_first}Resource,
+        </#list>
+        ${entityNameVariable}MainService                
     ) {
 
-        /**
-         * Registro das details do case
-         *
-         * @returns {*}
-         */
+        <#if model.hasDetails()>
         function getTabs() {
-            var tabs = new DcTabs();
-            //var ${entityNameVariable}DetailTab = ${entityNameVariable}DetailService.getTabConfig();
-            //tabs.setTab(${entityNameVariable}DetailTab);
+            var tabs = new DcTabs();            
+            <#list model.details as detail>
+            tabs.setTab(${detail.entityName?uncap_first}Service.getTabConfig());
+            </#list>
             return tabs.toJSON();
         }
-
+		</#if>
 
         /***************************************
-         * Funções Genericas
+         * Funcoes Genericas
          ***************************************/
         var vm = this;
         var genericCrudConfig = new DcGenericCrud();
@@ -51,7 +53,9 @@
         function getFormFieldsConfig() {
             var formFieldsConfig = new DcGenericCrudFormConfig();
             formFieldsConfig.main(${entityNameVariable}MainService.getFormConfig());
-            //formFieldsConfig.tabs(getTabs());
+          	<#if model.hasDetails()>
+          	formFieldsConfig.tabs(getTabs());
+          	</#if>
             return formFieldsConfig.toJSON();
         }
 
