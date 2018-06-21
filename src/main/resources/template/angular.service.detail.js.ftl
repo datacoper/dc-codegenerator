@@ -1,6 +1,6 @@
 <#assign entityName = model.entityName>
 <#assign entityNameVariable = entityName?uncap_first>
-<#assign module = model.modulePackageName>
+<#assign module = model.moduleName?uncap_first>
 <#assign entityNameMaster = model.entityNameMaster>
 <#assign entityNameMasterVariable = entityNameMaster?uncap_first>
 

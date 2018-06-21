@@ -17,6 +17,6 @@ import com.datacoper.arquiteturarest.interfaces.IDetailCRUDResource;
 @Consumes(MediaType.APPLICATION_JSON)
 public interface ${className} extends IDetailCRUDResource<${entityName}DTO> {
     
-    public static final String PATH = "/${entityName?lower_case}"; 
+    public static final String PATH = TesteResource.PATH+"/{"+PARENT_ID+"}/${entityName?lower_case}"; 
     
 }

@@ -21,7 +21,7 @@ public abstract class AbstractAngularGenerator extends AbstractGenerator {
 	
 	@Override
 	public String getPackage() {
-		return StringUtil.format("{0}.{1}", getModuleName().toLowerCase(), StringUtil.lowerFirstCharacter(getEntityName()));
+		return StringUtil.format("{0}.{1}", StringUtil.lowerFirstCharacter(getModuleName()), StringUtil.lowerFirstCharacter(getEntityName()));
 	}
 	
 }

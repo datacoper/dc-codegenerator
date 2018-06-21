@@ -2,29 +2,36 @@ package com.datacoper.maven.enums;
 
 public enum EnumDCModule {
 	
-	AGRICOLA("agricola"),
-	ARQUITETURA("arquitetura"),
-	BUSINESSCORE("nucleo"),
-	CAPITALSOCIAL("capitalsocial"),
-	COMERCIAL("comercial"),
-	ESTOQUE("estoque"),
-	FATURAMENTO("faturamento"),
-	FINANCEIRO("financeiro"),
-	FISCAL("fiscal"),
-	PRODUCAOINTEGRADA("producaointegrada"),
-	PROGRAMASDOGOVERNO("programagoverno"),
-	SUINOS("producaointegrada.suinos"),
-	LEITE("producaointegrada.leite"),
-	INDUSTRIA("industria"),
-	CONTABIL("contabil"),
-	INTEGRACOESSOFTWARETERCEIRO("integracaosoftwareterceiro"),
-	INTEGRACOES("integracoes")
+	AGRICOLA("Agricola", "agricola"),
+	ARQUITETURA("Arquitetura","arquitetura"),
+	BUSINESSCORE("BusinnesCore", "nucleo"),
+	CAPITALSOCIAL("CapitalSocial", "capitalsocial"),
+	COMERCIAL("Comercial", "comercial"),
+	ESTOQUE("Estoque", "estoque"),
+	FATURAMENTO("Faturamento","faturamento"),
+	FINANCEIRO("Financeiro","financeiro"),
+	FISCAL("Fiscal","fiscal"),
+	PRODUCAOINTEGRADA("ProducaoIntegrada","producaointegrada"),
+	PROGRAMASDOGOVERNO("ProgramaGoverno","programagoverno"),
+	SUINOS("Suinos","producaointegrada.suinos"),
+	LEITE("Leite","producaointegrada.leite"),
+	INDUSTRIA("Industria","industria"),
+	CONTABIL("Contabil","contabil"),
+	INTEGRACOESSOFTWARETERCEIRO("IntegracaoSoftwareTerceiro","integracaosoftwareterceiro"),
+	INTEGRACOES("IntegracoesEE","integracoes")
 	;
 	
 	private String modulePackageName;
 	
-	private EnumDCModule(String modulePackageName) {
+	private String moduleName;
+	
+	private EnumDCModule(String moduleName, String modulePackageName) {
+		this.moduleName = moduleName;
 		this.modulePackageName = modulePackageName;
+	}
+	
+	public String getModuleName() {
+		return moduleName;
 	}
 	
 	public String getModulePackageName() {
@@ -50,7 +57,7 @@ public enum EnumDCModule {
 		String[] types = new String[values.length];
 		
 		for (int i = 0; i < types.length; i++) {
-			types[i] = values[i].name();
+			types[i] = values[i].getModuleName();
 		}
 		
 		return types;
@@ -60,8 +67,14 @@ public enum EnumDCModule {
 		if(value != null) {
 			EnumDCModule[] values = values();
 			
+			value = value.toLowerCase();
+			
 			for (EnumDCModule enumModule : values) {
-				if(enumModule.name().toLowerCase().equals(value.toLowerCase())) {
+				if(enumModule.getModuleName().toLowerCase().equals(value)) {
+					return enumModule;
+				}
+				
+				if(enumModule.name().toLowerCase().equals(value)) {
 					return enumModule;
 				}
 			}

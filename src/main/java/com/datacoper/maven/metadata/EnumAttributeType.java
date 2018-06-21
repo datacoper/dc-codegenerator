@@ -1,7 +1,6 @@
 package com.datacoper.maven.metadata;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 
 public enum EnumAttributeType {
@@ -11,7 +10,6 @@ public enum EnumAttributeType {
 	LONG(Long.class),
 	BOOLEAN(Boolean.class),
 	DATE(Date.class),
-	TIMESTAMP(Timestamp.class),
 	BIGDECIMAL(BigDecimal.class),
 	;
 	

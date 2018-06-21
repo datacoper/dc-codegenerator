@@ -8,7 +8,6 @@ package ${model.package};
 import javax.persistence.*;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityImpl;
 <#if model.hasAttributeBoolean()>import com.datacoper.cooperate.arquitetura.common.util.ByteUtil;</#if>
-<#if model.hasAttributeDCAnnotation()>import com.datacoper.cooperate.arquitetura.common.persistence.entities.*;</#if>
 
 @Entity
 public class ${className} extends EntityImpl {
@@ -63,9 +62,9 @@ public class ${className} extends EntityImpl {
 	
     public ${attribute.typeSimpleName} get${attributeName?cap_first}() {
         return ${attributeName};
-    }
-    
+    }    
     </#if>
+    
 </#list>
     
 <#list model.details as detail>

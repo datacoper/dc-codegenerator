@@ -3,6 +3,7 @@ package com.datacoper.maven.metadata;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -86,8 +87,8 @@ public class TemplateModel {
 		return attributes.stream().filter(a -> a.isBoolean()).findFirst().isPresent();
 	}
 	
-	public boolean hasAttributeDCAnnotation() {
-		return attributes.stream().filter(a -> a.hasDCAnnotation()).findFirst().isPresent();
+	public List<String> getDCAnnotations() {
+		return attributes.stream().filter(a -> a.hasDCAnnotation()).map(a -> a.getDCAnnotation()).collect(Collectors.toList());
 	}
 	
 	public boolean addImport(String importPackage) {
