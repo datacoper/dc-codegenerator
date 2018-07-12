@@ -119,7 +119,7 @@
                 	new DcGenericListingColumnConfigData('Código', '${attribute.name?cap_first}.codigo').toJSON(),
                 	new DcGenericListingColumnConfigData('Descrição', '${attribute.name?cap_first}.descricao').toJSON()
                 	<#elseif attribute.date>
-                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').mask({ filter: 'date', exp: '<#if attribute.mask != null>${attribute.mask}<#else>dd/MM/yyyy HH:mm:ss</#if>' }).toJSON()               	
+                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').mask({ filter: 'date', exp: '<#if attribute.mask??>${attribute.mask}<#else>dd/MM/yyyy HH:mm:ss</#if>' }).toJSON()               	
                 	<#else>
                 	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').toJSON()
                 	</#if>
