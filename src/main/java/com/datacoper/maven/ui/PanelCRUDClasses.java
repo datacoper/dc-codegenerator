@@ -141,18 +141,19 @@ public class PanelCRUDClasses extends AbstractCRUDPanelWizard {
 			this.abstractGenerator = abstractGenerator;
 			
 			File javaFile = abstractGenerator.getJavaFile();
-			
-			setSelected(!javaFile.exists());
-			
-			addChangeListener(new ChangeListener() {
-				@Override
-				public void stateChanged(ChangeEvent e) {
-					updateText();
-				}
-			});
-			
-			updateText();
-			
+
+			if (javaFile != null) {
+				setSelected(!javaFile.exists());
+
+				addChangeListener(new ChangeListener() {
+					@Override
+					public void stateChanged(ChangeEvent e) {
+						updateText();
+					}
+				});
+
+				updateText();
+			}
 		}
 		
 		private void updateText() {
