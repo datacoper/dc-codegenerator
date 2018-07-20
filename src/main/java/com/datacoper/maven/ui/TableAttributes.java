@@ -117,9 +117,9 @@ public class TableAttributes extends JTable{
 			String label = (String)rowValues.get(2);
 			
 			EnumDCModule entityModule = EnumDCModule.from((String)rowValues.get(4));
-			
-			boolean required = (boolean)rowValues.get(5);
-			boolean updatable = (boolean)rowValues.get(6);
+
+			Boolean required = (Boolean) rowValues.get(5);
+			Boolean updatable = (Boolean)rowValues.get(6);
 			
 			EnumDCAnnotation enumDCAnnotation = EnumDCAnnotation.from((String)rowValues.get(7));
 			
@@ -129,9 +129,9 @@ public class TableAttributes extends JTable{
 			}
 			
 			String mask = (String)rowValues.get(8);
-			
-			int precision = (int)rowValues.get(9);
-			int scale = (int)rowValues.get(10);
+
+			Integer precision = (Integer)rowValues.get(9);
+			Integer scale = (Integer)rowValues.get(10);
 			
 			String attributeTypeStr = (String)rowValues.get(3);
 			
