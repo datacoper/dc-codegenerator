@@ -62,18 +62,18 @@ public abstract class AbstractGenerator {
 
 	public File getJavaFile() {
 		File sourceFolder = new File(new File(templateModel.getProjectParentFile(), templateModel.getModuleName()+getProject().getSuffix()), getProject().getSourceFolder().getSourceFolder());
+		File finalJavaFile = null;
 
-        if(!sourceFolder.exists()) {
-        	throw new RuntimeException("Source folder not exists: "+sourceFolder);
+        if(sourceFolder.exists()) {
+	        String packageName = getPackage();
+
+	        packageName = packageName.replace('.', File.separatorChar);
+
+	        File packageFolder = new File(sourceFolder, packageName);
+
+	        finalJavaFile = new File(packageFolder, getClassName().concat(getFileExtension()));
         }
-        
-        String packageName = getPackage();
-        
-        packageName = packageName.replace('.', File.separatorChar);
-        
-        File packageFolder = new File(sourceFolder, packageName);
-        
-        File finalJavaFile = new File(packageFolder, getClassName().concat(getFileExtension()));
+
 		return finalJavaFile;
 	}
 
