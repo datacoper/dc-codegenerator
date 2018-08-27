@@ -68,6 +68,7 @@ public class TableAttributes extends JTable{
 		
 		TableColumn columnAttributes = getColumn("Tipo");
 		
+		comboAttributeType.setEditable(true);
 		columnAttributes.setCellEditor(new DefaultCellEditor(comboAttributeType));
 		
 		TableColumn columnModules = getColumn("Módulo");
