@@ -18,8 +18,6 @@ import ${import};
 </#list>
 
 public class ${className} extends AbstractMasterCRUD<${model.classNameBasic}, Void> {
-    
-    <#include "defaultConstructor.ftl">
 
     private Validador${model.classNameBasic} validador = new Validador${model.classNameBasic}();
 

@@ -29,8 +29,6 @@ public class ${className} implements ${model.entityName}Remote {
     private ${module?cap_first}EAO ${module}EAO = new ${module?cap_first}EAO();
     
     private Gerenciador${model.entityName} gerenciador = new Gerenciador${model.entityName}();
-    
-    <#include "defaultConstructor.ftl">    
 
     @Override
     public Optional<${model.entityName}> find(Long id) {

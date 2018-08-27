@@ -13,9 +13,7 @@ import ${model.entityType};
 public class ${className} implements EntityBuilder<${model.entityName}> {
     
     private ${model.entityName} ${classVariableName} = new ${model.entityName}();
-
-    <#include "defaultConstructor.ftl">
-
+    
     @Override
     public ${model.entityName} build() {
         return ${classVariableName};

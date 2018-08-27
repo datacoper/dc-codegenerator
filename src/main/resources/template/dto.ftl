@@ -34,8 +34,6 @@ public class ${className} extends AbstractDTO {
     
 </#list>
 
-    <#include "defaultConstructor.ftl">
-
     <#include "getterAndSetterForID.ftl">
 
 <#list attributes as attribute>

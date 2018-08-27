@@ -39,8 +39,6 @@ public class ${className} extends EntityImpl {
 	@OneToMany(mappedBy="${className?uncap_first}")
 	private java.util.Set<${detail.entityName}> ${detail.entityName?uncap_first}s = new java.util.HashSet<>();
 </#list>
-	
-	<#include "defaultConstructor.ftl">
 	            
     <#include "getterAndSetterForID.ftl">
 

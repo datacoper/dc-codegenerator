@@ -29,8 +29,6 @@ public class ${className} extends EqualsIdentifier {
     </#if>
 </#list>
 
-    <#include "defaultConstructor.ftl">
-
     <#include "getterAndSetterForID.ftl">
 
 <#list attributes as attribute>
