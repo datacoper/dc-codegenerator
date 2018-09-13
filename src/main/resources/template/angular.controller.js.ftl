@@ -19,7 +19,7 @@
 
     function ${entityNameVariable}Controller(
         <#list model.details as detail>
-        ${detail.entityName?cap_first}Resource,
+        ${detail.entityName?cap_first}Service,
         </#list>
         ${entityNameVariable}MainService                
     ) {
