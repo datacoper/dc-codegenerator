@@ -1,17 +1,15 @@
 package com.datacoper.maven.ui;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import com.datacoper.maven.enums.EnumProject;
 import com.datacoper.maven.metadata.TemplateModel;
 
+import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 import se.gustavkarlsson.gwiz.AbstractWizardPage;
 import se.gustavkarlsson.gwiz.WizardController;
 
@@ -59,7 +57,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 	private static void setLookAndFeel() {
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
+		        if ("Metal".equals(info.getName())) {
 		            UIManager.setLookAndFeel(info.getClassName());
 		            break;
 		        }
@@ -95,7 +93,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String projectParentPath = System.getProperty("projectParentPath", "/home/thiago/dev/projetos/Cooperalfa/Homolog/CooperateEE/BusinessCore-Parent");
+					String projectParentPath = System.getProperty("projectParentPath", "/home/lucas/Projetos/Cooperalfa/Desenv-1.0.3/CooperateEE/Faturamento-Parent");
 					
 					FrameCRUDWizard frame = new FrameCRUDWizard(projectParentPath);
 					frame.setVisible(true);
