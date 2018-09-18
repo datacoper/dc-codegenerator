@@ -16,7 +16,7 @@ public class ${className} implements ValidatorGenericCRUD<${model.entityName}> {
 
         <#list model.attributes as attribute>
                 <#if attribute.required>
-		validateMandatoryFields.add(entity.get${attribute.name?cap_first}(), "${attribute.label}")
+		validateMandatoryFields.add(entity.get${attribute.name?cap_first}(), "${attribute.label}");
                 </#if>
         </#list>
 
