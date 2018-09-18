@@ -60,7 +60,7 @@
          * Funcoes Genericas
          ***************************************/
         var vm = this;
-        var model = {};
+        var model = { main: {} };
 
         vm.getFormConfig = getFormConfig;
         vm.getModel = getModel;

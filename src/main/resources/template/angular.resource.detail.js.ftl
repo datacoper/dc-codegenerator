@@ -21,7 +21,7 @@
         apiService
     ) {
         var baseUrl = apiService.getApi('${module}').baseUrl;
-        var path = '/${entityNameMasterVariable}/:parentId/${entityName?lower_case}/:id';
+        var path = '/${entityNameMasterVariable?lower_case}/:parentId/${entityName?lower_case}/:id';
 
         var url = baseUrl + path;
 

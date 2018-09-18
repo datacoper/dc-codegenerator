@@ -41,12 +41,12 @@
             return [
                 <#list model.attributes as attribute>
                 	<#if attribute.entity>
-                	new DcGenericListingColumnConfigData('Código', '${attribute.name?cap_first}.codigo').toJSON(),
-                	new DcGenericListingColumnConfigData('Descrição', '${attribute.name?cap_first}.descricao').toJSON()
+                	new DcGenericListingColumnConfigData('Código', '${attribute.name?uncap_first}.codigo').toJSON(),
+                	new DcGenericListingColumnConfigData('Descrição', '${attribute.name?uncap_first}.descricao').toJSON()
                 	<#elseif attribute.date>
-                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').mask({ filter: 'date', exp: '<#if attribute.mask??>${attribute.mask}<#else>dd/MM/yyyy HH:mm:ss</#if>' }).toJSON()
+                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?uncap_first}').mask({ filter: 'date', exp: '<#if attribute.mask??>${attribute.mask}<#else>dd/MM/yyyy HH:mm:ss</#if>' }).toJSON()
                 	<#else>
-                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?cap_first}').toJSON()
+                	new DcGenericListingColumnConfigData('${attribute.label}', '${attribute.name?uncap_first}').toJSON()
                 	</#if>
                     <#if attribute?has_next>,</#if>
 				</#list>
