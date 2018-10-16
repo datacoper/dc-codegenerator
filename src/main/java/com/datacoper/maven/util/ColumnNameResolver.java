@@ -1,6 +1,8 @@
 package com.datacoper.maven.util;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Properties;
@@ -15,7 +17,8 @@ public class ColumnNameResolver {
 	
 	public ColumnNameResolver() {
 		try {
-			dictionary.load(getClass().getClassLoader().getResourceAsStream("dicionario.properties"));
+			InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream("dicionario.properties");
+			dictionary.load( new InputStreamReader(resourceAsStream, "UTF-8"));
 		} catch (IOException e) {
 			throw new RuntimeException("Erro ao ler o dicionário de dados",e);
 		}
