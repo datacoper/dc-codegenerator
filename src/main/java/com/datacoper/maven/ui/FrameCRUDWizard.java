@@ -16,7 +16,7 @@ import se.gustavkarlsson.gwiz.WizardController;
 public class FrameCRUDWizard extends JFrameWizard {
 	private static final long serialVersionUID = 1L;
 
-	public FrameCRUDWizard(String projectParentPath) {
+	public FrameCRUDWizard(String projectParentPath, String entityName) {
 		
 		File projectParentFile = getAndValidateProjectFile(projectParentPath);
 		
@@ -27,7 +27,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 		
 		WizardController controller = new WizardController(this);
 		
-		AbstractWizardPage startPage = new PanelCRUDEntity(templateModel);
+		AbstractWizardPage startPage = new PanelCRUDEntity(templateModel, entityName);
 		controller.startWizard(startPage);
 		
 		getNextButton().addActionListener(new ActionListener() {
@@ -93,9 +93,10 @@ public class FrameCRUDWizard extends JFrameWizard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String projectParentPath = System.getProperty("projectParentPath", "/home/lucas/Projetos/Cooperalfa/Desenv-1.0.3/CooperateEE/Faturamento-Parent");
-					
-					FrameCRUDWizard frame = new FrameCRUDWizard(projectParentPath);
+					String projectParentPath = System.getProperty("projectParentPath", "/home/lucas/Projetos/Cooperalfa/Homolog/CooperateEE/IntegracoesCooperalfa-Parent/IntegracoesCooperalfaFaturamentoCommon");
+					String entityName = args.length > 0 ? args[0] : "";
+
+					FrameCRUDWizard frame = new FrameCRUDWizard(projectParentPath, entityName);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -27,7 +27,7 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 	
 	private PanelCRUDAttributes panelCRUDAttributes;
 	
-	public PanelCRUDEntity(TemplateModel templateModel) {
+	public PanelCRUDEntity(TemplateModel templateModel, String entityName) {
 		super(templateModel);
 		
 		setLayout(new VerticalFlowLayout());
@@ -36,10 +36,11 @@ public class PanelCRUDEntity extends AbstractCRUDPanelWizard {
 		panelCompany.setTitle("Empresa");
 		panelCompany.setMandatory(true);
 		panelCompany.add(comboCompany);
-		
+
 		DCPanelTitled panelEntity = new DCPanelTitled();
 		panelEntity.setTitle("Entidade Master");
 		panelEntity.setMandatory(true);
+		fieldEntity  = new JTextField(entityName);
 		panelEntity.add(fieldEntity);
 		
 		DCPanelTitled panelEntityDetail1 = new DCPanelTitled();
