@@ -5,6 +5,8 @@ package ${model.package};
 
 <#include "attributeImports.ftl">
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.*;
 import com.datacoper.cooperate.arquitetura.common.persistence.entities.EntityImpl;
 <#if model.hasAttributeBoolean()>import com.datacoper.cooperate.arquitetura.common.util.ByteUtil;</#if>
@@ -16,6 +18,7 @@ public class ${className} extends EntityImpl {
     @Id
     @SequenceGenerator(allocationSize = 1, name = "SEQ_${classNameUpper}", sequenceName = "ID${classNameUpper}")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_${classNameUpper}")
+	@Access(AccessType.PROPERTY)
     private Long id${className};
 
 <#list model.attributes as attribute>		

@@ -11,7 +11,7 @@
 
     ${entityNameVariable}Controller.$inject = [
         <#list model.details as detail>
-        '${detail.entityName?cap_first}Service',
+        '${detail.entityName}Service',
         </#list>
         '${entityNameVariable}MainService'
                 
@@ -19,7 +19,7 @@
 
     function ${entityNameVariable}Controller(
         <#list model.details as detail>
-        ${detail.entityName?cap_first}Service,
+        ${detail.entityName}Service,
         </#list>
         ${entityNameVariable}MainService                
     ) {
@@ -28,7 +28,7 @@
         function getTabs() {
             var tabs = new DcTabs();            
             <#list model.details as detail>
-            tabs.setTab(${detail.entityName?uncap_first}Service.getTabConfig());
+            tabs.setTab(${detail.entityName}Service.getTabConfig());
             </#list>
             return tabs.toJSON();
         }

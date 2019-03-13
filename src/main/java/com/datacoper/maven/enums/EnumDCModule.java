@@ -18,6 +18,10 @@ public enum EnumDCModule {
 	INDUSTRIA("Industria","industria"),
 	CONTABIL("Contabil","contabil"),
 	INTEGRACOESSOFTWARETERCEIRO("IntegracaoSoftwareTerceiro","integracaosoftwareterceiro"),
+
+	INTEGRACOESCOOPERALFA("IntegracoesCooperalfa","integracoescooperalfa"),
+	INEGRACOESCOOPERALFAFATURAMENTO("IntegracoesCooperalfaFaturamento","integracoescooperalfafaturamento"),
+
 	INTEGRACOES("IntegracoesEE","integracoes")
 	;
 	
