@@ -112,57 +112,18 @@
             tab.fields(getFormFields());
             tab.modelProperty(modelProperty);
             tab.listingConfig(listingConfig);
-            tab.saveFn(saveRequest);
-            tab.editRequestFn(editRequest);
-            tab.deleteFn(deleteRequest);
+            tab.resourceName('${entityNameVariable}Resource');
 
             return tab.toJSON();
         }
 
         ///////////////////////
 
-        function saveRequest(detail) {
-            var payload = angular.copy(detail);
-
-            var params = {
-                parentId: genericUtilService.getUrlId()
-            };
-
-            return resource.saveOrUpdate(params, payload);
-        }
-
-        function editRequest(detail) {
-            var params = {
-                parentId: genericUtilService.getUrlId(),
-                id: detail.id
-            };
-            return resource.get(params);
-        }
-
-        function deleteRequest(detail) {
-            var payload = {
-                parentId: genericUtilService.getUrlId(),
-                id: detail.id
-            };
-
-            return resource.delete(payload);
-        }
-
         function setUpListingConfig() {
             var listingConfigObj = new DcGenericListing();
             listingConfigObj.callFnOnStart(true);
-            listingConfigObj.pageChangeCallbackFn(pageChangeCallbackFn);
             listingConfigObj.columnsConfig(getListingColumnsConfig());
             listingConfig = listingConfigObj.toJSON();
-        }
-
-        function pageChangeCallbackFn(params) {
-            params = params || {};
-            params.parentId = genericUtilService.getUrlId();
-
-            return resource.query(params, function (data) {
-                listingConfig.data = data;
-            });
         }
 
         function getListingColumnsConfig() {

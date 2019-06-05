@@ -9,7 +9,7 @@
         .module('cw.${module}.${entityNameVariable}')
         .run(${entityNameVariable}RouteRun);
 
-        ${entityNameVariable}RouteRun.$inject = [
+    ${entityNameVariable}RouteRun.$inject = [
         'routerHelper',
         '${entityNameVariable}RouteConstants'
     ];
