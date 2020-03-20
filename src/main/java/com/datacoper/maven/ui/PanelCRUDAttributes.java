@@ -155,7 +155,6 @@ public class PanelCRUDAttributes extends AbstractCRUDPanelWizard {
 					EnumDCModule enumDCModule = null;
 					
 					if(fkTableName != null) {
-						String teste = StringUtil.convertToCamelCase(attributeName.substring(2));
 						attributeName = StringUtil.lowerFirstCharacter(attributeName.substring(2)); //remover o prefixo "id"
 						columnType = StringUtil.upperFirstCharacter(columnNameResolver.revolverFieldAndLabel(fkTableName).getKey());
 						enumDCModule = EnumDCModule.from(getTemplateModel().getModuleName());
