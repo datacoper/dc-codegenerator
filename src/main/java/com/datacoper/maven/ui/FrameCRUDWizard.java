@@ -93,7 +93,7 @@ public class FrameCRUDWizard extends JFrameWizard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String projectParentPath = System.getProperty("projectParentPath", "/home/lucas/Projetos/Cooperalfa/Homolog/CooperateEE/IntegracoesCooperalfa-Parent/IntegracoesCooperalfaFaturamentoCommon");
+					String projectParentPath = System.getProperty("projectParentPath", "C:\\Datacoper\\fontes\\Cooperalfa\\Homolog\\CooperateEE\\Estoque-Parent");
 					String entityName = args.length > 0 ? args[0] : "";
 
 					FrameCRUDWizard frame = new FrameCRUDWizard(projectParentPath, entityName);

@@ -16,6 +16,7 @@ import com.datacoper.arquitetura.server.persistence.impl.GenericEAOImpl;
 public class ${className} extends GenericEAOImpl<${model.entityName}> implements ${model.entityName}EAO {
     
     <#if model.master>
+    @Override
     public PageResult<${model.entityName}VO> find(BeanConsultaGroup consultaGroup) {
         return getPagedBeanList(new Query${model.entityName}(), consultaGroup);
     }

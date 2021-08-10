@@ -25,6 +25,5 @@ public class ${className} extends MasterCRUDResource<${model.entityName}, ${mode
 	protected PageResult<${model.entityName}VO> consultar(SeletorParams seletorParams) {
 		return getEAO().find(seletorParams.getBeanConsultaGroup());
 	}
-
     
 }
